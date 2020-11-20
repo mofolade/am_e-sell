@@ -13,9 +13,38 @@ export default {
         <source media="(min-width: 1681px)" srcset="/src/assets/headerpic.jpg">
         <img src="/src/assets/headerpic.jpg">
       </-picture-->     
-        <nav>
-          <router-link to="/">Home</router-link>
+        <nav class="navbar">
+          <router-link to="/">Auctionista</router-link>
+          <div class="dropdown">
+            <button class="dropbtn" id="show-menu-button" @click="showNavMenu()">☰ 
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <button class="dropbtn" id="close-menu-button" @click="closeNavMenu()">X
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div id="myDropdown">
+              <a href="#" class="border-bottom">Sista chansen</a>
+              <a href="#" class="border-bottom">Pågående</a>
+              <a href="#" class="border-bottom">Såld</a>
+            </div>
+          </div> 
         </nav>
     </header>
-    `
+    `,
+    methods: {
+      showNavMenu() {
+        document.getElementById("myDropdown").style.visibility = "visible";
+        document.getElementById("show-menu-button").style.visibility = "hidden";
+        document.getElementById("show-menu-button").style.display = "none";
+        document.getElementById("close-menu-button").style.display = "block";
+        document.getElementById("close-menu-button").style.visibility = "visible";
+      },
+      closeNavMenu() {
+        document.getElementById("myDropdown").style.visibility = "hidden";
+        document.getElementById("show-menu-button").style.display = "block";
+        document.getElementById("show-menu-button").style.visibility = "visible";
+        document.getElementById("close-menu-button").style.visibility = "hidden";
+        document.getElementById("close-menu-button").style.display = "none";
+      }
+    }
 }
