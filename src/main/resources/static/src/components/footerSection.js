@@ -18,7 +18,7 @@ export default {
                     </ul>
                 </div>
                 <div class="flex">
-                    <h5 class="white-text mt30">KONTAKT & HJÄLP</h5>
+                    <h5 class="white-text mt30">Kontakt & Hjälp</h5>
                     <ul  class="mt30">
                         <li>
                             <router-link to="/about"><a class="grey-text text-lighten-3" href="#!">Kontakta oss</a></router-link>
