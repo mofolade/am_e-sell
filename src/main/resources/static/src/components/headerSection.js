@@ -28,6 +28,13 @@ export default {
               <a href="#" class="border-bottom">Såld</a>
             </div>
           </div> 
+          
+          <div id="navbar-r">
+              <router-link to="/signUp">Bli medlem</router-link>
+              <router-link to="/loginForm">Logga in</router-link>
+              <router-link to="/about">Om oss</router-link>
+            </div>
+          
         </nav>
     </header>
     `,

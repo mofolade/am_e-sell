@@ -1,12 +1,12 @@
-import signInButton from '../components/loginForm.js'
+import loginForm from '../components/loginForm.js'
 
 export default {
   components: {
-    signInButton
+    loginForm
   },
     template: `
       <div class="content">
-        <h2>Home Page</h2>
+        <loginForm />
       </div>
     `
   }

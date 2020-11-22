@@ -1,12 +1,12 @@
-import signInButton from '../components/loginForm.js'
+import signUp from '../components/signUp.js'
 
 export default {
   components: {
-    signInButton
+    signUp
   },
     template: `
       <div class="content">
-        <h2>Home Page</h2>
+        <signUp />
       </div>
     `
   }
