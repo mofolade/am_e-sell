@@ -6,7 +6,7 @@ export default {
   },
     template: `
       <div class="content">
-        <div id="cover">
+        <div id="search-cover">
           <form method="get" action="">
             <div class="tb">
               <div class="td"><input type="text" placeholder="Search" required></div>
