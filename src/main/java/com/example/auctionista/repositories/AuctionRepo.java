@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AuctionRepo extends JpaRepository<Auction, Long> {
 
+    public Auction findById(int id);
 }
