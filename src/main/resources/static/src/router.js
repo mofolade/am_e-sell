@@ -6,6 +6,7 @@ import home from './views/home.js'
 import about from './views/about.js'
 import list from './views/list.js'
 import auction from './views/auction.js'
+import auctionForm from './views/auctionForm.js'
 import loginForm from './views/loginForm.js'
 import signUp from './views/signUp.js'
 
@@ -31,6 +32,11 @@ export const router = new VueRouter({
       name: "auction",
       path: '/auction', 
       component: auction
+    },
+    {
+      name: "auctionForm",
+      path: '/newauction', 
+      component: auctionForm
     },
     {
       name: "signUp",
