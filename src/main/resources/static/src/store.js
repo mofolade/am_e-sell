@@ -4,26 +4,26 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
-    messages: [],
+    //messages: [],
     categories: [],
-    user: null
+    //user: null
   },
   mutations: {
-    setUser(state, user) {
+    /*setUser(state, user) {
       state.user = user
-    },
-    setMessages(state, messages) {
+    },*/
+    /*setMessages(state, messages) {
         state.messages = messages
-    },
+    },*/
     setCategories(state, categories) {
-      state.categories = categories
-  },
-    prependMessage(state, message) {
+        state.categories = categories
+    },
+    /*prependMessage(state, message) {
         state.messages.unshift(message)
-    }
+    }*/
   },
   actions: {
-    async fetchAllMessages(store) {
+    /*async fetchAllMessages(store) {
         let messages = await fetch('/rest/messages')
         messages = await messages.json()
 
@@ -32,14 +32,12 @@ export const store = new Vuex.Store({
         console.log(messages);
 
         store.commit('setMessages', messages)
-    },
-    
+    },*/
     async fetchAllCategories(store) {
       let categories = await fetch('/rest/categories')
       categories = await categories.json()
 
       console.log(categories);
-
       store.commit('setCategories', categories)
   }
   }

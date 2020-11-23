@@ -16,5 +16,9 @@ export default {
         </main>
         <footerSection />
       </div>
-    `
+    `,
+    async created() {
+      this.$store.dispatch('fetchAllCategories')  
+      
+    }
   }
