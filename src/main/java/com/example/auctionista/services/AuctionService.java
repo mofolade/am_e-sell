@@ -15,4 +15,9 @@ public class AuctionService {
     public List<Auction> getAllAuctions() {
         return auctionRepo.findAll();
     }
+
+    public Auction createAuction(Auction auction) {
+        return auctionRepo.save(auction);
+    }
+
 }

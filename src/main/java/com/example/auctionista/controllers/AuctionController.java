@@ -3,9 +3,7 @@ package com.example.auctionista.controllers;
 import com.example.auctionista.entities.Auction;
 import com.example.auctionista.services.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,5 +17,10 @@ public class AuctionController {
     @GetMapping
     public List<Auction> getAllAuctions() {
         return auctionService.getAllAuctions();
+    }
+
+    @PostMapping
+    public Auction createAuction(@RequestBody Auction auction) {
+        return auctionService.createAuction(auction);
     }
 }
