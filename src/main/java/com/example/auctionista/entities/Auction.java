@@ -20,11 +20,12 @@ public class Auction {
     private double final_price;
     private long bidder_user_id;
     private long timestamp;
+    private long count_bud;
 
     public Auction() {
     }
 
-    public Auction(long id, String name, long category_id, long owner_user_id, long start_date, long stop_date, double start_price, String description, double current_price, double final_price, long bidder_user_id, long timestamp) {
+    public Auction(long id, String name, long category_id, long owner_user_id, long start_date, long stop_date, double start_price, String description, double current_price, double final_price, long bidder_user_id, long timestamp,long count_bud) {
         this.id = id;
         this.name = name;
         this.category_id = category_id;
@@ -37,6 +38,7 @@ public class Auction {
         this.final_price = final_price;
         this.bidder_user_id = bidder_user_id;
         this.timestamp = timestamp;
+        this.count_bud = count_bud;
     }
 
     public long getId() {
@@ -133,5 +135,13 @@ public class Auction {
 
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public long getCount_bud() {
+        return count_bud;
+    }
+
+    public void setCount_bud(long count_bud) {
+        this.count_bud = count_bud;
     }
 }
