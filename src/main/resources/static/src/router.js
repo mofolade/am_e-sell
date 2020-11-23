@@ -4,6 +4,7 @@ Vue.use(VueRouter)
 
 import home from './views/home.js'
 import about from './views/about.js'
+import list from './views/list.js'
 import loginForm from './views/loginForm.js'
 import signUp from './views/signUp.js'
 
@@ -19,6 +20,11 @@ export const router = new VueRouter({
       name: "about",
       path: '/about', 
       component: about
+    },
+    {
+      name: "list",
+      path: '/list', 
+      component: list
     },
     {
       name: "signUp",
