@@ -105,6 +105,7 @@ body {
   text-align: center;
   background-color: #474e5d;
   color: white;
+  border-radius: 5px;
 }
 
 .about-container {
@@ -126,21 +127,13 @@ body {
 .about-title {
   color: grey;
 }
-
-.contact-button {
-  border: none;
-  outline: 0;
-  display: inline-block;
-  padding: 8px;
-  color: white;
-  background-color: #000;
-  text-align: center;
-  cursor: pointer;
-  width: 100%;
-}
-
-.contact-button:hover {
-  background-color: #555;
+.clearboth {
+  display: block;
+  visibility: hidden;
+  clear: both;
+  overflow: hidden;
+  width: 0;
+  height: 0;
 }
 
 @media screen and (max-width: 650px) {
