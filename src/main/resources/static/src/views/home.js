@@ -1,10 +1,12 @@
 import signInButton from '../components/loginForm.js'
 import categoryButtons from '../components/categoryButtons.js'
+import auctionCards from '../components/auctionCards.js'
 
 export default {
   components: {
     signInButton,
-    categoryButtons
+    categoryButtons,
+    auctionCards
   },
     template: `
       <div class="content">
@@ -26,7 +28,9 @@ export default {
           <categoryButtons />
           
         </div>
-        <h2>Home Page</h2>
+        <div>
+          <auctionCards />
+        </div>
       </div>
     `
   }
