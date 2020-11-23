@@ -5,6 +5,7 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
   state: {
     messages: [],
+    categories: [],
     user: null
   },
   mutations: {
@@ -14,6 +15,9 @@ export const store = new Vuex.Store({
     setMessages(state, messages) {
         state.messages = messages
     },
+    setCategories(state, categories) {
+      state.categories = categories
+  },
     prependMessage(state, message) {
         state.messages.unshift(message)
     }
@@ -28,6 +32,15 @@ export const store = new Vuex.Store({
         console.log(messages);
 
         store.commit('setMessages', messages)
-    }
+    },
+    
+    async fetchAllCategories(store) {
+      let categories = await fetch('/rest/categories')
+      categories = await categories.json()
+
+      console.log(categories);
+
+      store.commit('setCategories', categories)
+  }
   }
 })
