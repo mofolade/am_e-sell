@@ -34,6 +34,5 @@ export default {
         </div>
     </form>
     </div>
-    <button v-else @click="logoutButton">Logout</button>
   `,
 }

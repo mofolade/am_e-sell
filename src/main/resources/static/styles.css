@@ -117,7 +117,20 @@ body {
 .auction-item-container {
   padding: 2px 16px;
 }
-
+.img-upload-wrapper {
+  border: 2px dotted gray;
+  margin-bottom: 15px;
+  padding: 10px;
+}
+.img-upload-container{
+  margin: 15px 0px;
+  border: 2px dotted gray;
+  padding: 15px;
+}
+.img-upload-container h4 {
+  text-align: center;
+  font-family: sans-serif;
+}
 .login-col *:focus {
   outline: none !important;
   border:1px solid rgb(187, 182, 182);
@@ -578,4 +591,223 @@ footer h5, footer{
 }
 .footer ul{
     list-style-type: none;
+}
+.file-btn{
+  width: 300px;
+}
+.clear-btn{
+  width: 100px;
+  padding: 12px;
+  border: none;
+  border-color: #a8a7a7;
+  border-radius: 4px;
+  margin: 5px 0;
+  opacity: 0.85;
+  display: inline-block;
+  font-size: 17px;
+  line-height: 20px;
+  text-decoration: none;
+}
+.file-upload-form {
+  margin: 0 auto;
+}
+
+.file-upload {
+  background: white;
+  box-shadow: var(--box-shadow);
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  align-items: center;
+}
+
+.img-card {
+  background: white;
+  box-shadow: var(--box-shadow);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  transition: all 200ms ease;
+  position: relative;
+}
+
+.is-uploading .upload-overlay {
+  display: flex;
+}
+
+.upload-overlay {
+  background: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  display: none;
+  right: 0;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.card-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+[type="submit"] {
+  display: block;
+  background: #3676e8;
+  color: white;
+  appearance: none;
+  width: 100%;
+  border: 0;
+  padding: 1rem;
+  font-size: 1.4rem;
+}
+
+.thumb img {
+  width: 7rem;
+  height: 9rem;
+  display: block;
+  margin-bottom: 0;
+  object-fit: cover;
+  align-self: stretch;
+}
+
+label {
+  font-size: 0.8rem;
+  display: block;
+}
+
+.details {
+  padding: 0 0.6rem;
+  flex-grow: 2;
+}
+
+.details h1 {
+  font-size: 0.8rem;
+}
+
+.details h2 {
+  font-size: 1.1rem;
+  word-wrap: break-word;
+  max-width: 60%;
+}
+
+.details h3 {
+  font-size: 0.9rem;
+}
+
+.details h1, .details h2, .details h3, .details h4, .details h5, .details h6 {
+  margin: 0.6rem 0;
+}
+
+.hidden {
+  opacity: 0;
+  transform: translateY(-20%);
+  transition: all 200ms ease;
+}
+
+[type="checkbox"] {
+  display: none;
+}
+.checkbox-wrap-inner label {
+  display: block;
+  border: 2px solid var(--black);
+  padding: 1rem;
+  border-radius: 2rem;
+  margin: 0 20px;
+  opacity: 0.4;
+  position: relative;
+}
+.checkbox-wrap-inner label:before {
+  content: "\f00c";
+  font-size: 1.2rem;
+  font-family: "FontAwesome";
+  display: block;
+  color: var(--black);
+  position: absolute;
+  transform: scale(0.8);
+  transform-origin: 50% 50%;
+  opacity: 0;
+  transition: scale 300ms var(--easing-cubic-bezier), opacity 300ms var(--easing-cubic-bezier);
+  left: 0.4rem;
+  top: 0.4rem;
+}
+.checkbox-wrap-inner:checked, .checkbox-wrap-inner label:before {
+  transform: scale(1.3);
+  transition: scale 300ms var(--easing-cubic-bezier), opacity 300ms var(--easing-cubic-bezier);
+  opacity: 1;
+}
+
+.checkbox-sub-label {
+  display: block;
+  color: var(--black);
+  opacity: 0.4;
+  font-size: 11px;
+  text-align: center;
+  margin: 0.6rem;
+}
+
+.remove-card {
+  flex-grow: 2;
+  align-self: stretch;
+  display: flex;
+  flex-basis: 10%;
+  flex-grow: 0;
+}
+.remove-card-btn {
+  appearance: none;
+  border: 0;
+  color: var(--red);
+}
+.remove-card-btn:hover {
+  text-decoration: underline;
+}
+
+.checkbox-wrap {
+  background: #41f290;
+  align-self: stretch;
+  display: flex;
+  padding-top: 1rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.softIn-enter {
+  opacity: 0;
+  transform: translateY(-20%);
+}
+
+.softIn-enter-to {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.softIn-enter-active {
+  transition: all 200ms ease;
+}
+
+.softIn-leave {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.softIn-leave-to {
+  opacity: 0;
+  transform: translateY(-20%);
+}
+
+.softIn-leave-active {
+  transition: all 200ms ease;
+}
+
+.softIn-move {
+  transition: all 200ms ease;
 }
