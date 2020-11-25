@@ -10,16 +10,16 @@ public class AuctionImages {
     private int id;
     @Column(name = "auction_id")
     private int auction_id;
-    private String image_url;
+    private String image_path;
     private int is_primary;
 
     public AuctionImages() {
     }
 
-    public AuctionImages(int id, int auction_id, String image_url, int is_primary) {
+    public AuctionImages(int id, int auction_id, String image_path, int is_primary) {
         this.id = id;
         this.auction_id = auction_id;
-        this.image_url = image_url;
+        this.image_path = image_path;
         this.is_primary = is_primary;
     }
 
@@ -39,12 +39,12 @@ public class AuctionImages {
         this.auction_id = auction_id;
     }
 
-    public String getImage_url() {
-        return image_url;
+    public String getImage_path() {
+        return image_path;
     }
 
-    public void setImage_url(String image_url) {
-        this.image_url = image_url;
+    public void setImage_path(String image_path) {
+        this.image_path = image_path;
     }
 
     public int getIs_primary() {
