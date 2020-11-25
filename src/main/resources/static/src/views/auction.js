@@ -10,24 +10,36 @@ export default {
             <li class="flex-item">
               <div class="auction-gallery">
                 <div class="auction-big-image">
-                  <img src="../uploads/5bc7c1fa-04b1-44e7-bdf8-60f0a608e8a4.jpg" alt="">
+                  <img v-bind:src="default_image" alt="">
                 </div>
                 <div>Gallery</div>
               </div>
             </li>
             <li class="flex-item">
               <div class="auction-card-container">
-                <h2>{{name}}</h2> 
-                <section>
-                  <div class="price-wrapper">
-                  <span class="price">
-                    <span class="price-label">Pris:</span>
-                    <span class="price-value" itemprop="price" content=current_price>{{start_price}}</span>
-                    <span class="price-unit" itemprop="priceCurrency" content="Ft">Kr</span>
-                  </span>
-                  </div>
-                </section>
-                <p class="auction-card-category">kategori</p> 
+                <h2>{{name}}</h2>
+                <div class="d-flex justify-content-space-around mb15">
+                  <router-link v-bind:to="'/list?id='+category_id">
+                    <button class="category-item">
+                        <div class="d-flex flex-row align-items-center">
+                            <div class="icon-container">
+                                <img v-bind:src=category_image_path style="width: 20px;">
+                            </div>
+                            {{category_name}}
+                        </div>
+                    </button>
+                  </router-link>
+                  <section>
+                    <div class="price-wrapper">
+                      <span class="price">
+                        <span class="price-label">Pris:</span>
+                        <span class="price-value" itemprop="price" content=current_price>{{start_price}}</span>
+                        <span class="price-unit" itemprop="priceCurrency" content="Ft">Kr</span>
+                      </span>
+                    </div>
+                  </section>
+                </div>
+                <span><b>Beskrivning</b></span>
                 <p>{{description}}</p>
               </div>
 
@@ -59,7 +71,9 @@ export default {
   data() {
     return {
         name: '',
-        category_id: '',
+        category_id: 0,
+        category_name: '',
+        category_image_path: '',
         owner_uder_id: 0,
         start_date: 0,
         stop_date: 0,
@@ -68,6 +82,7 @@ export default {
         current_price: 0 ,
         final_price: 0 ,
         bidden_user_id: 0,
+        default_image: '',
         images: [],
         auction_id: 0,
     }
@@ -75,11 +90,10 @@ export default {
   async mounted() {
     
     let auction_id = this.$route.params.id
-    console.log(auction_id)
 
-    let auction = await fetch(`/rest/auction/`+ auction_id);
+    let auction = await fetch(`/rest/auctioninfo/`+ auction_id);
     auction = await auction.json();
-    console.log(auction)
+    
     this.name=auction.name;
     this.category_id=auction.category_id;
     this.owner_uder_id=auction.owner_uder_id;
@@ -90,6 +104,17 @@ export default {
     this.current_price=auction.current_price;
     this.final_price=auction.final_price;
     this.bidden_user_id=auction.bidden_user_id;
+    this.category_name=auction.category_name;
+    this.category_image_path = auction.category_image_path;
+    let images = auction.images.split(',');
+    var comma_index = 0;
+    comma_index = auction.images.indexOf(",");
+
+    if(comma_index > 0){
+      this.default_image = images[1];
+    }else{
+      this.default_image = images;
+    }
 
   },
   }
