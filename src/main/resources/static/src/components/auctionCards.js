@@ -13,9 +13,22 @@ export default {
             />
         </div>
     `,
-    computed: {
-        auctions() {
-            return this.$store.state.auctions
+    data() {
+        return {
+            auctions: []
         }
-    }
+    },
+    computed: {
+        /*auctions() {
+            return this.$store.state.auctions
+        }*/
+    },
+    async mounted(){
+      let auctions = await fetch('/rest/auctionsinfo')
+      auctions = await auctions.json()
+      this.auctions = auctions;
+
+      console.log(auctions);
+    },
+
 }

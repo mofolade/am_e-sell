@@ -73,7 +73,6 @@ body {
 .auction-column{
   margin-bottom: 16px;
   padding: 0 8px;
-  width: 80%;
 }
 .auction-card-big {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -126,6 +125,7 @@ body {
 }
 .auction-gallery{
   margin: 15px;
+  min-width: 350px;
 }
 .auction-big-image{
   flex-shrink: 0;
@@ -133,6 +133,79 @@ body {
 .auction-big-image img{
   width: 100%;
 }
+
+.bid-section{
+  background-color: #f9f9f9!important;
+  padding: 1.5rem!important;
+  border-radius: .6rem!important;
+}
+
+.bid-input{
+  margin-bottom: 1.5rem!important;
+  position: relative!important;
+  font-size: 1.3rem;
+}
+.bid-input .form-control {
+  font-size: 1.6rem;
+  line-height: 4.5rem;
+  height: 4.5rem;
+  border-radius: .45rem;
+  text-align: center!important;
+  background-color: #fff!important;
+  padding: .5rem 1rem;
+  display: block;
+    width: 100%;
+    color: #383838;
+    background-clip: padding-box;
+    overflow: visible;
+    margin: 0;
+
+}
+
+.bid-input h4{  
+  position: absolute!important;
+  top: 0px;
+  right: 0px;
+  font-size: 1.6rem;
+  line-height: 4.5rem;
+  color: #b0b0b0!important;
+  padding-left: 1rem!important;
+  padding-right: 1rem!important;
+  margin-bottom: 0!important;
+  margin: 0 0 1rem;
+}
+
+.description-box{
+  margin: 15px;
+}
+
+/* The grid: Four equal columns that floats next to each other */
+.gallery-column {
+  float: left;
+  width: 25%;
+  padding: 10px;
+}
+
+/* Style the images inside the grid */
+.gallery-column img {
+  opacity: 0.8; 
+  cursor: pointer; 
+}
+
+.gallery-column img:hover {
+  opacity: 1;
+}
+.gallery-row{
+  display: flex;
+  justify-content: center;
+}
+/* Clear floats after the columns */
+.gallery-row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 .price-wrapper {
   margin-bottom: 15px;
 }
@@ -281,13 +354,23 @@ body {
 
 #auction-cover{
   justify-content: center;
-  max-width: 90%;
+ flex-wrap: wrap;
 }
 
 .auction-card {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
   margin-right: 15px;
+  height: 300px;
+  width: 300px;
+}
+.auction-card-little-picture{
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  -webkit-flex: 1 1 auto;
+  flex: 1 1 auto;
+  margin: 5px;
 }
 
 .auction-card:hover {
@@ -347,7 +430,10 @@ body {
   right: 0;   
   padding: 15px;
   margin: -83px auto 0 auto;
-  text-align: center;
+  text-align: center;  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #search-cover
@@ -355,19 +441,20 @@ body {
   padding: 5px 15px;
   background-color: #E2E2E2;
   border-radius: 10px;
-  transform: scale(0.5);
+  width: 50%;
+  /*transform: scale(0.5);*/
 }
 
 #search-cover form
 {
-    height: 96px;
+    /*height: 96px;*/
 }
 
 #search-cover input[type="text"]
 {
     width: 100%;
-    height: 96px;
-    font-size: 40px;
+    /*height: 96px;*/
+    font-size: 30px;
     line-height: 1;
 }
 
@@ -387,20 +474,20 @@ body {
     position: relative;
     display: block;
     width: 84px;
-    height: 96px;
+    /*height: 96px;*/
     cursor: pointer;
 }
 
 #s-circle
 {
     position: relative;
-    top: -8px;
-    left: 0;
-    width: 43px;
-    height: 43px;
+    top: -5px;
+    left: 20px;
+    width: 25px;
+    height: 25px;
     margin-top: 0;
     border-width: 15px;
-    border: 5px solid #6F8394;
+    border: 3px solid #6F8394;
     background-color: transparent;
     border-radius: 50%;
     transition: 0.5s ease all;
@@ -424,26 +511,27 @@ body {
 {
     content: '';
     position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 43px;
-    height: 10px;
+    bottom: 8px;
+    right: 12px;
+    width: 25px;
+    height: 8px;
     background-color: #6F8394;
-    border-radius: 10px;
+    border-radius: 6px;
     transform: rotateZ(0);
     transition: 0.5s ease all;
 }
 
+/*nyil szara*/
 #s-cover:hover #s-circle
 {
-    top: 3px;
-    width: 60px;
+    top: 0px;
+    width: 35px;
     height: 10px;
     border-width: 0;
-    background-color: #fff;
-    border-radius: 10px;
+    background-color: #f7f4f4;
+    border-radius: 5px;
 }
-
+/*nyil szara*/
 #s-cover:hover span
 {
     top: 50%;
@@ -452,23 +540,26 @@ body {
     margin-top: -9px;
     transform: rotateZ(0);
 }
-
+/* nyil balszara , nekem jobb */
 #s-cover:hover .search-button:before
 {
-    bottom: 11px;
-    transform: rotateZ(52deg);
+    bottom: 5px;    
+    top: 0px;
+    transform: rotateZ(50deg);
 }
-
+/* nyil jobbszara , nekem bal */
 #s-cover:hover .search-button:after
 {
-    bottom: -11px;
-    transform: rotateZ(-52deg);
+    bottom: -10px; 
+    top: 14px;
+    transform: rotateZ(-50deg);
 }
+/*nyil*/
 #s-cover:hover .search-button:before, #s-cover:hover .search-button:after
 {
-    right: -6px;
-    width: 40px;
-    background-color: #fff;
+    right: 15px;
+    width: 25px;
+    background-color: #f7f4f4;
 }
 
 #ytd-url {
