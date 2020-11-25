@@ -252,8 +252,16 @@ body {
   align-items: center;
 }
 
+.justify-content-space-around{
+  justify-content: space-around;
+}
+
 .justify-content-center{
   justify-content: center;
+}
+
+.mb15{
+  margin-bottom: 15px;
 }
 
 .bp .bg-light {
