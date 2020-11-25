@@ -5,6 +5,7 @@ Vue.use(VueRouter)
 import home from './views/home.js'
 import about from './views/about.js'
 import list from './views/list.js'
+import search from './views/search.js'
 import auction from './views/auction.js'
 import auctionForm from './views/auctionForm.js'
 import loginForm from './views/loginForm.js'
@@ -25,8 +26,13 @@ export const router = new VueRouter({
     },
     {
       name: "list",
-      path: '/list', 
+      path: '/list/:id', 
       component: list
+    },
+    {
+      name: "search",
+      path: '/search/:text', 
+      component: search
     },
     {
       name: "auction",
