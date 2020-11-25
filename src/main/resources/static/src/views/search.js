@@ -1,26 +1,22 @@
 import signInButton from '../components/loginForm.js'
 import searchBar from '../components/searchBar.js'
 import categoryButtons from '../components/categoryButtons.js'
-import auctionCards from '../components/auctionCards.js'
 
 export default {
   components: {
     signInButton,
     searchBar,
-    categoryButtons,
-    auctionCards
+    categoryButtons
   },
     template: `
       <div class="content">
         <div id="search-categories-container">
-          <searchBar />
+            <searchBar />
 
-          <categoryButtons />
+            <categoryButtons />
           
         </div>
-        <div>
-          <auctionCards />
-        </div>
+        <h2>Search</h2>
       </div>
     `
   }
