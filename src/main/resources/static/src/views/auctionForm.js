@@ -166,7 +166,7 @@ export default {
             const formData = new FormData();
             let fileCount = this.files.length;
 
-            var photos='';
+            var auction_images='';
             
             if (!fileCount) return;
 
@@ -174,14 +174,14 @@ export default {
             Array.from(Array(this.files.length).keys())
             .map(x => {
                 formData.append("files", this.files[x], this.files[x].name);
-                photos = photos+this.files[x].name+' ';
+                auction_images = auction_images+this.files[x].name+' ';
             });
 
             let image_upload_response = await fetch('/rest/newauction/uploadfiles', {
                 method: 'POST',
                 body: formData
             }).catch(console.warn)
-
+            image_upload_response = await image_upload_response.json()
 
             for(let i = 0; i < fileCount; i++) {
               cardArray.push(`card-${i}`);
@@ -263,25 +263,27 @@ export default {
 
                 let new_auction_response = await response.json()
                 console.log(new_auction_response.id)
-                /*if(new_auction_response.id){
-                    let new_auction_id = new_auction_response.id;
+                if(new_auction_response.id){
+                    console.log('kep feltöltes')
+                    let auction_id = new_auction_response.id;
 
                     for(var i = 0; i < image_upload_response.length; i++) {
                         var img_path = image_upload_response[i];
+          
                         const img = {
-                            new_auction_id, 
-                            path: img_path
+                            auction_id, 
+                            img_path: img_path
                         }
-            
-                        let auction_img_res = await fetch('/rest/auction_images', {
+
+                        let auction_img_res = await fetch('/rest/auctionimages', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify(img)
                         })
                         auction_img_res = await auction_img_res.json()
-                        console.log(auction_img_res)
+
                     }
-                }*/
+                }
 
                 return response;
 
