@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name ="auctions")
+//@SecondaryTable(name = "auction_images", pkJoinColumns = @PrimaryKeyJoinColumn(name = "auction_id"))
 public class Auction {
 
     @Id
@@ -21,6 +22,7 @@ public class Auction {
     private long bidder_user_id;
     private long timestamp;
     private long count_bud;
+
 
     public Auction() {
     }
