@@ -30,7 +30,7 @@ export const router = new VueRouter({
     },
     {
       name: "auction",
-      path: '/auction', 
+      path: '/auction/:id', 
       component: auction
     },
     {
