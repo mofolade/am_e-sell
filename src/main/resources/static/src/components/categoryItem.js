@@ -1,6 +1,6 @@
 export default {
     template: `
-        <router-link v-bind:to="'/list?id='+category.id">
+        <router-link v-bind:to="'/list/'+category.id">
             <button class="category-item">
                 <div class="d-flex flex-row align-items-center">
                     <div class="icon-container">

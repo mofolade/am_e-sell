@@ -1,7 +1,7 @@
 export default {
   template: `
     <div class="login-container">
-    <form action="/action_page.php">
+    <form action="">
         <div class="row">
         <h2 style="text-align:center">Logga in</h2>
 
