@@ -65,8 +65,7 @@ export default {
                         </div>    
                     </div>
                     <input type="submit" value="Skapa ny auktion">
-                </div>
-            
+                </div>            
             </div>
          </form>
       </div>
@@ -89,9 +88,6 @@ export default {
             itemToDelete: '',
             checkboxes: [],
         }
-    },
-    mounted() {
-        //this.ConvertImages();
     },
     components: {
         'vue-upload-multiple-image': () => import('../components/vue-upload-multiple-image.js')
@@ -138,15 +134,12 @@ export default {
               // generate a new FileReader object
               var reader = new FileReader();
       
-              // inject an image with the src url
               reader.onload = function(event) {
                 const imageUrl = event.target.result;
                 const thumb = document.querySelectorAll('.thumb')[index];
                 self.imageUrlArray.push(imageUrl);
               }
       
-              // when the file is read it triggers the onload 
-              // event above.
               reader.readAsDataURL(files[index]);
             }
         },
@@ -161,7 +154,6 @@ export default {
             }, 1000);
         },
         async addAuction(e) {
-            /* Upload files begin */
             let cardArray = [];
             const formData = new FormData();
             let fileCount = this.files.length;
@@ -197,7 +189,6 @@ export default {
             
             cardIdsArray.forEach((id) => {
               // check if card is ticked for upload
-              
               // if checkbox for this card is checked, set flag
               const uploadFlag = id.querySelectorAll('[type="checkbox"]:checked');
       
@@ -215,11 +206,8 @@ export default {
               }
             });
       
-            // clear files
             this.files = []; 
 
-
-            /* Upload files end */
             var name = this.name;
             var category_id = this.category_id;
             var user_id = 2;
@@ -229,14 +217,10 @@ export default {
             var final_price = 0;
             var bidder_user = 0;
             var timestamp= Math.round(+new Date()/1000);
-
-
             var stadate = new Date(this.start_date);
             var start_date = stadate.getTime();
-
             var stodate = new Date(this.stop_date);
             var stop_date = stodate.getTime();
-
             var images = this.images;
 
             const auction = {
@@ -272,7 +256,7 @@ export default {
           
                         const img = {
                             auction_id, 
-                            img_path: img_path
+                            image_path: img_path
                         }
 
                         let auction_img_res = await fetch('/rest/auctionimages', {
@@ -281,7 +265,6 @@ export default {
                             body: JSON.stringify(img)
                         })
                         auction_img_res = await auction_img_res.json()
-
                     }
                 }
 
@@ -292,19 +275,16 @@ export default {
             }
         }
     },
-    filters: {
-    
+    filters: {    
         addOne(val) {
           let output = Number(val);
           output += 1;
           return output;
-        },
-        
+        },        
         getIndexedImage(val, index) {
           // console.log(`This: ${val}`);
           return val[index];
-        },
-        
+        },        
         formatBytes(a, b) {
           if (0 == a) return "0 Bytes";
           var c = 1024,
