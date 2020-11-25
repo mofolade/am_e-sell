@@ -45,7 +45,7 @@ export const store = new Vuex.Store({
       store.commit('setCategories', categories)
     },
     async fetchAllAuctions(store) {
-      let auctions = await fetch('/rest/auctions')
+      let auctions = await fetch('/rest/auctionsinfo')
       auctions = await auctions.json()
 
       console.log(auctions);

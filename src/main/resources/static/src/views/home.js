@@ -28,7 +28,7 @@ export default {
           <categoryButtons />
           
         </div>
-        <div class="d-flex  flex-row justify-content-center">
+        <div>
           <auctionCards />
         </div>
       </div>

@@ -19,6 +19,6 @@ export default {
     `,
     async created() {
       this.$store.dispatch('fetchAllCategories') 
-      this.$store.dispatch('fetchAllAuctions')     
+      //this.$store.dispatch('fetchAllAuctions')     
     }
   }

@@ -9,10 +9,14 @@ export default {
           <ul class="flex-container">
             <li class="flex-item">
               <div class="auction-gallery">
-                <div class="auction-big-image">
+                <div id="expandedImg" class="auction-big-image">
                   <img v-bind:src="default_image" alt="">
                 </div>
-                <div>Gallery</div>
+                <div class="gallery-row">
+                  <div class="gallery-column" v-for="image of images" :key="image.image_path">
+                    <img v-bind:src=image style="width:100%" v-on:click="myGalleryFunction(image)">
+                  </div>
+                </div>
               </div>
             </li>
             <li class="flex-item">
@@ -39,8 +43,21 @@ export default {
                     </div>
                   </section>
                 </div>
-                <span><b>Beskrivning</b></span>
-                <p>{{description}}</p>
+                <section class="bid-section">
+                  <form>
+                    <div class="bid-input">
+                      <input type="number" class="form-control" v-model="newbid" name="newbid" autocomplete="off" pattern="[0-9]*" inputmode="numeric" value="">
+                      <h4 style="top: 0px; right: 0px;">kr</h4>
+                    </div>
+                    <button data-test-submit-button="" data-bid-submit-button="" class="btn btn-lg btn-success btn-fluid mb-4 " type="submit"> 
+                      Lägg bud
+                    </button>
+                  </form>
+                </section>
+                <div class="description-box">
+                  <b>Beskrivning</b>
+                  <p>{{description}}</p>
+                </div>
               </div>
 
             </li>
@@ -85,6 +102,7 @@ export default {
         default_image: '',
         images: [],
         auction_id: 0,
+        newbid: 0,
     }
   },
   async mounted() {
@@ -93,7 +111,7 @@ export default {
 
     let auction = await fetch(`/rest/auctioninfo/`+ auction_id);
     auction = await auction.json();
-    
+
     this.name=auction.name;
     this.category_id=auction.category_id;
     this.owner_uder_id=auction.owner_uder_id;
@@ -112,9 +130,16 @@ export default {
 
     if(comma_index > 0){
       this.default_image = images[1];
+      this.images=images;
     }else{
       this.default_image = images;
     }
 
+  },
+  methods: {
+    myGalleryFunction(image){
+      var expandImg = document.getElementById("expandedImg");
+      document.getElementById("expandedImg").innerHTML='<img src="'+image+'" alt="">';
+    }
   },
   }
