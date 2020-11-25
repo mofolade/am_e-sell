@@ -248,7 +248,6 @@ export default {
                 let new_auction_response = await response.json()
                 console.log(new_auction_response.id)
                 if(new_auction_response.id){
-                    console.log('kep feltöltes')
                     let auction_id = new_auction_response.id;
 
                     for(var i = 0; i < image_upload_response.length; i++) {
