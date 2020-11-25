@@ -8,18 +8,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/rest/auctions")
+//@RequestMapping("/rest/auctions")
 public class AuctionController {
 
     @Autowired
     AuctionService auctionService;
 
-    @GetMapping
+    @GetMapping("/rest/auction/{id}")
+    public Auction getOneAuction(@PathVariable int id) {
+        return auctionService.getOneAuction(id);
+    }
+
+    @GetMapping("/rest/auctions")
     public List<Auction> getAllAuctions() {
         return auctionService.getAllAuctions();
     }
 
-    @PostMapping
+    @PostMapping("/rest/auctions")
     public Auction createAuction(@RequestBody Auction auction) {
         return auctionService.createAuction(auction);
     }

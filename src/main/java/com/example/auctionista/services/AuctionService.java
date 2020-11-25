@@ -12,6 +12,10 @@ public class AuctionService {
     @Autowired
     private AuctionRepo auctionRepo;
 
+    public Auction getOneAuction(int id) {
+        return auctionRepo.findById(id);
+    }
+
     public List<Auction> getAllAuctions() {
         return auctionRepo.findAll();
     }

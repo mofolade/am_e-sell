@@ -23,7 +23,7 @@ export default {
     let auction_id = this.$route.params.id
     console.log(auction_id)
 
-    let auction = await fetch(`/rest/auction/${auction_id}`);
+    let auction = await fetch(`/rest/auctioninfo/${auction_id}`);
     console.log(auction)
 
   },
