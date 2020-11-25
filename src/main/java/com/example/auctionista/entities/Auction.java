@@ -8,7 +8,7 @@ public class Auction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private int id;
     private String name;
     private long category_id;
     private long owner_user_id;
@@ -25,7 +25,7 @@ public class Auction {
     public Auction() {
     }
 
-    public Auction(long id, String name, long category_id, long owner_user_id, long start_date, long stop_date, double start_price, String description, double current_price, double final_price, long bidder_user_id, long timestamp,long count_bud) {
+    public Auction(int id, String name, long category_id, long owner_user_id, long start_date, long stop_date, double start_price, String description, double current_price, double final_price, long bidder_user_id, long timestamp,long count_bud) {
         this.id = id;
         this.name = name;
         this.category_id = category_id;
@@ -45,7 +45,7 @@ public class Auction {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
