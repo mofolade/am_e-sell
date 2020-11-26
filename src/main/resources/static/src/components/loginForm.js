@@ -5,7 +5,7 @@ export default {
         <div class="row">
         <h2 style="text-align:center">Logga in</h2>
 
-        <div v-if="!$store.state.user" class="login-col">
+        <div class="login-col">
             <div class="hide-md-lg">
             <p>Or sign in manually:</p>
             </div>
