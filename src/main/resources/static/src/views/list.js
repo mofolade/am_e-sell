@@ -22,11 +22,27 @@ export default {
               </div>
             </form>
           </div>
-
           <categoryButtons />
           
         </div>
         <h2>Kategori</h2>
       </div>
-    `
+    `,
+    data () {
+      return {
+        auctions: {},
+        error: null
+      }
+    },
+    methods: {
+      async getAuctionsByCategoryId() {
+      
+        let category_id = this.$route.params.id
+
+        let auctions = await fetch(`/rest/auctionsbycategoryid/`+ category_id);
+        auctions = await auctions.json();
+        this.auctions = auctions;
+        console.log(auctions)
+      },
+    }
   }
