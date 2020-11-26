@@ -23,15 +23,13 @@ public class User {
     private String email;
     private String password;
     private String picture_url;
-    private String image_url;
     private String organize_number;
 
-    public User(String name, String email, String password, String picture_url, String image_url, String organize_number) {
+    public User(String name, String email, String password, String picture_url, String organize_number) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.picture_url = picture_url;
-        this.image_url = image_url;
         this.organize_number = organize_number;
     }
 
@@ -75,14 +73,6 @@ public class User {
 
     public void setPicture_url(String picture_url) {
         this.picture_url = picture_url;
-    }
-
-    public String getImage_url() {
-        return image_url;
-    }
-
-    public void setImage_url(String image_url) {
-        this.image_url = image_url;
     }
 
     public String getOrganize_number() {

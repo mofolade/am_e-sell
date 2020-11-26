@@ -99,7 +99,6 @@ public class UserController {
         boolean emailVerified = Boolean.valueOf(payload.getEmailVerified());
         String name = (String) payload.get("name");
         String pictureUrl = (String) payload.get("picture");
-        String imageUrl = (String) payload.get("image_url");
         String locale = (String) payload.get("locale");
         String familyName = (String) payload.get("family_name");
         String givenName = (String) payload.get("given_name");
@@ -111,7 +110,6 @@ public class UserController {
         System.out.println("emailVerified: " + emailVerified);
         System.out.println("name: " + name);
         System.out.println("pictureUrl: " + pictureUrl);
-        System.out.println("image_url: " + imageUrl);
         System.out.println("locale: " + locale);
         System.out.println("familyName: " + familyName);
         System.out.println("givenName: " + givenName);
@@ -120,7 +118,7 @@ public class UserController {
         // generate custom password with unique info
         // from the user and a secret salt
         String password = email + passwordSalt + userId;
-        userService.registerUser(name, email, password, pictureUrl, imageUrl, organize_number);
+        userService.registerUser(name, email, password, pictureUrl, organize_number);
 
         // manual login with session
         securityLogin(email, password, req);
