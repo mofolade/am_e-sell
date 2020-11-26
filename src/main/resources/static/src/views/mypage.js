@@ -1,22 +1,21 @@
 export default {
     template: `
       <div>
-        Profil sida
+        <h2 style="text-align:center">Profil</h2>
+        <div id="mypage-container">
+          <div class="profile">
+            <img src="./src/assets/eva.jpg" alt="" class="profile_image">
+            <div class="profile_name">Name</div>
+            <div class="profile_email"> Email </div>
+            <div class="profile_orgnm"> Organize number </div>
+          </div>
+          <div>list</div>
+        </div>
       </div>
     `,
   data() {
     return {
-        name: '',
-        email: '',
-        picture_url: '',
-        image_url: '',
-        organize_number: '',
+      current_user: [],
     }
-  },
-  mounted() {
-    
-  },
-  methods: {
-    
   },
   }
