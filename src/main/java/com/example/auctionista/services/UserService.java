@@ -22,8 +22,8 @@ public class UserService {
         return userRepo.findByEmail(email);
     }
 
-    public User registerUser(String name, String email, String password, String picture_url, String image_url, String organize_number) {
-        return myUserDetailsService.addUser(name, email, password, picture_url, image_url, organize_number);
+    public User registerUser(String name, String email, String password, String picture_url, String organize_number) {
+        return myUserDetailsService.addUser(name, email, password, picture_url, organize_number);
     }
 
 
