@@ -20,4 +20,10 @@ public class AuctionInformationService {
     public List<AuctionInformation> getAllAuctions() {
         return auctionInformationRepo.findAll();
     }
+
+
+    public List<AuctionInformation> getAllAuctionsByCategoryId(int category_id) {
+        return auctionInformationRepo.findByCategoryId(category_id);
+    }
+
 }
