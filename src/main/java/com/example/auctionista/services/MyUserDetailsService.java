@@ -27,7 +27,7 @@ public class MyUserDetailsService implements UserDetailsService {
         return toUserDetails(user);
     }
 
-    public User addUser(String name, String email, String pictureUrl, String password, String organize_number){
+    public User addUser(String name, String email, String password, String picture_url, String image_url, String organize_number){
         User dbUser = userRepo.findByEmail(email);
         if(dbUser != null) {
             System.out.println("Password match: " + encoder.matches(password, dbUser.getPassword()));
@@ -35,7 +35,7 @@ public class MyUserDetailsService implements UserDetailsService {
             return dbUser;
         }
 
-        User user = new User(name, email, pictureUrl, encoder.encode(password), organize_number);
+        User user = new User(name, email, encoder.encode(password), picture_url, image_url, organize_number);
         try {
             return userRepo.save(user);
         } catch (Exception ex) {
