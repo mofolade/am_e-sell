@@ -50,6 +50,12 @@ export const store = new Vuex.Store({
 
       console.log(auctions);
       store.commit('setAuctions', auctions)
+    },
+    async fetchUser(store){
+      let user = await fetch('/whoami')
+      user = await user.json()
+      console.log(user);
+      store.commit('setUser', user)
     }
   }
 })
