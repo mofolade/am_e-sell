@@ -1,38 +1,46 @@
 import signInButton from '../components/loginForm.js'
+import searchBar from '../components/searchBar.js'
 import categoryButtons from '../components/categoryButtons.js'
+import auctionItem from '../components/auctionItem.js'
 
 export default {
   components: {
     signInButton,
-    categoryButtons
+    searchBar,
+    categoryButtons,
+    auctionItem
   },
     template: `
       <div class="content">
         <div id="search-categories-container">
-          <div id="search-cover">
-            <form method="get" action="">
-              <div class="tb">
-                <div class="td"><input type="text" placeholder="Search" required></div>
-                <div class="td" id="s-cover">
-                  <button type="submit" class="search-button">
-                    <div id="s-circle"></div>
-                    <span></span>
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
+          <searchBar />
           <categoryButtons />
           
         </div>
         <h2>Kategori</h2>
+        <div class="d-flex flex-row align-items-center" id="auction-cover">
+            <auctionItem 
+                v-for="auction of auctions" 
+                :auction="auction"
+                :key="auction.id"
+            />
+        </div>
       </div>
     `,
     data () {
       return {
-        auctions: {},
+        auctions: [],
         error: null
       }
+    },
+    created () {
+      // fetch the data when the view is created and the data is
+      // already being observed
+      this.getAuctionsByCategoryId()
+    },
+    watch: {
+      // call again the method if the route changes
+      '$route': 'getAuctionsByCategoryId'
     },
     methods: {
       async getAuctionsByCategoryId() {
