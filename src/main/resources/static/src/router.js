@@ -10,6 +10,7 @@ import auction from './views/auction.js'
 import auctionForm from './views/auctionForm.js'
 import loginForm from './views/loginForm.js'
 import signUp from './views/signUp.js'
+import mypage from './views/mypage.js'
 
 export const router = new VueRouter({
   mode: 'history',
@@ -53,6 +54,11 @@ export const router = new VueRouter({
       name: "loginForm",
       path: '/loginForm', 
       component: loginForm
+    },
+    {
+      name: "mypage",
+      path: '/mypage', 
+      component: mypage
     }
   ]
 });
