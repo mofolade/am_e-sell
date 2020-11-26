@@ -25,4 +25,10 @@ public class AuctionInformationController {
     public List<AuctionInformation> getAllAuctions() {
         return auctionInformationService.getAllAuctions();
     }
+
+    @GetMapping("/rest/auctionsbycategoryid/{category_id}")
+    public List<AuctionInformation> getAllAuctionsByCategoryId(@PathVariable int category_id) {
+        return auctionInformationService.getAllAuctionsByCategoryId(category_id);
+    }
+
 }
