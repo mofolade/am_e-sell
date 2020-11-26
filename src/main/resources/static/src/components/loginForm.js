@@ -29,8 +29,14 @@ export default {
   `,
   data() {
       return {
-          auth2: null
+          auth2: null,
+          current_user: null
       }
+  },
+  computed: {
+     user(){
+        this.current_user = this.$store.state.user;
+     }
   },
   methods: {
       logoutButton() {
