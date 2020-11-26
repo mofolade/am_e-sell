@@ -5,7 +5,7 @@ export default {
         <div class="row">
         <h2 style="text-align:center">Logga in</h2>
 
-        <div class="login-col">
+        <div v-if="!$store.state.user" class="login-col">
             <div class="hide-md-lg">
             <p>Or sign in manually:</p>
             </div>
@@ -18,7 +18,7 @@ export default {
               <span class="hl-innertext">eller</span>
             </div>
 
-            <button v-if="!$store.state.user" @click="signInButton" class="google btn"><i class="fa fa-google fa-fw">
+            <button  @click="signInButton" class="google btn"><i class="fa fa-google fa-fw">
             </i> Logga in med Google
             </button>
         </div>
