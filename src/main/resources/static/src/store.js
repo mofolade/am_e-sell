@@ -7,12 +7,12 @@ export const store = new Vuex.Store({
     //messages: [],
     categories: [],
     auctions: [],
-    //user: null
+    user: null
   },
   mutations: {
-    /*setUser(state, user) {
+    setUser(state, user) {
       state.user = user
-    },*/
+    },
     /*setMessages(state, messages) {
         state.messages = messages
     },*/
