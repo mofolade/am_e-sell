@@ -67,6 +67,10 @@ import javax.persistence.*;
         "                      a.count_bud,\n" +
         "                      c.name category_name,\n" +
         "                      c.image_path category_image_path,\n" +
+        "                      (SELECT ai.image_path\n" +
+        "                      FROM auction_images ai\n" +
+        "                      WHERE ai.auction_id = a.id\n" +
+        "                      limit 1) default_image,\n" +
         "                      (SELECT GROUP_CONCAT(ai.image_path) \n" +
         "                         FROM auction_images ai \n" +
         "                         WHERE ai.auction_id = a.id \n" +
@@ -102,6 +106,8 @@ public class AuctionInformation {
     @Column
     private String category_name;
     @Column
+    private  String default_image;
+    @Column
     private String category_image_path;
     @Column
     private String images;
@@ -109,7 +115,7 @@ public class AuctionInformation {
     public AuctionInformation() {
     }
 
-    public AuctionInformation(int id, String name, long category_id, long owner_user_id, long start_date, long stop_date, double start_price, String description, double current_price, double final_price, long bidder_user_id, long count_bud, String category_name, String category_image_path, String images) {
+    public AuctionInformation(int id, String name, long category_id, long owner_user_id, long start_date, long stop_date, double start_price, String description, double current_price, double final_price, long bidder_user_id, long count_bud, String category_name, String default_image, String category_image_path, String images) {
         this.id = id;
         this.name = name;
         this.category_id = category_id;
@@ -123,6 +129,7 @@ public class AuctionInformation {
         this.bidder_user_id = bidder_user_id;
         this.count_bud = count_bud;
         this.category_name = category_name;
+        this.default_image = default_image;
         this.category_image_path = category_image_path;
         this.images = images;
     }
@@ -229,6 +236,14 @@ public class AuctionInformation {
 
     public void setCategory_name(String category_name) {
         this.category_name = category_name;
+    }
+
+    public String getDefault_image() {
+        return default_image;
+    }
+
+    public void setDefault_image(String default_image) {
+        this.default_image = default_image;
     }
 
     public String getCategory_image_path() {

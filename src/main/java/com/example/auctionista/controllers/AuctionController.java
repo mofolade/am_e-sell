@@ -28,4 +28,9 @@ public class AuctionController {
     public Auction createAuction(@RequestBody Auction auction) {
         return auctionService.createAuction(auction);
     }
+
+    @DeleteMapping("/rest/auction/{id}")
+    public void deleteAuction(@PathVariable int id) {
+        auctionService.deleteAuction(id);
+    }
 }
