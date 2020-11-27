@@ -2,12 +2,14 @@
 import signInButton from '../components/loginForm.js'
 import searchBar from '../components/searchBar.js'
 import categoryButtons from '../components/categoryButtons.js'
+import newBudInput from '../components/newBudInput.js'
 
 export default {
   components: {
     signInButton,
     searchBar,
     categoryButtons,
+    newBudInput
   },
   template: `
     <div>
@@ -23,7 +25,7 @@ export default {
               <li class="flex-item">
                 <div class="auction-gallery">
                   <div id="expandedImg" class="auction-big-image">
-                    <img v-bind:src="default_image" alt="">
+                    <img v-bind:src="auction.default_image" alt="">
                   </div>
                   <div class="gallery-row">
                     <div class="gallery-column" v-for="image of images" :key="image.image_path">
@@ -34,15 +36,15 @@ export default {
               </li>
               <li class="flex-item">
                 <div class="auction-card-container">
-                  <h2>{{name}}</h2>
+                  <h2>{{auction.name}}</h2>
                   <div class="d-flex justify-content-space-around mb15">
-                    <router-link v-bind:to="'/list?id='+category_id">
+                    <router-link v-bind:to="'/list?id='+auction.category_id">
                       <button class="category-item">
                           <div class="d-flex flex-row align-items-center">
                               <div class="icon-container">
-                                  <img v-bind:src=category_image_path style="width: 20px;">
+                                  <img v-bind:src=auction.category_image_path style="width: 20px;">
                               </div>
-                              {{category_name}}
+                              {{auction.category_name}}
                           </div>
                       </button>
                     </router-link>
@@ -50,26 +52,18 @@ export default {
                       <div class="price-wrapper">
                         <span class="price">
                           <span class="price-label">Pris:</span>
-                          <span class="price-value" itemprop="price" content=current_price>{{start_price}}</span>
+                          <span class="price-value" itemprop="price" content=current_price>{{auction.start_price}}</span>
                           <span class="price-unit" itemprop="priceCurrency" content="Ft">Kr</span>
                         </span>
                       </div>
                     </section>
                   </div>
                   <section class="bid-section">
-                    <form>
-                      <div class="bid-input">
-                        <input type="number" class="form-control" v-model="newbid" name="newbid" autocomplete="off" pattern="[0-9]*" inputmode="numeric" value="">
-                        <h4 style="top: 0px; right: 0px;">kr</h4>
-                      </div>
-                      <button data-test-submit-button="" data-bid-submit-button="" class="btn btn-lg btn-success btn-fluid mb-4 " type="submit"> 
-                        Lägg bud
-                      </button>
-                    </form>
+                    <newBudInput />
                   </section>
                   <div class="description-box">
                     <b>Beskrivning</b>
-                    <p>{{description}}</p>
+                    <p>{{auction.description}}</p>
                   </div>
                 </div>
 
@@ -101,22 +95,9 @@ export default {
   `,
   data() {
     return {
-        name: '',
-        category_id: 0,
-        category_name: '',
-        category_image_path: '',
-        owner_uder_id: 0,
-        start_date: 0,
-        stop_date: 0,
-        start_price: 0,
-        description: '',
-        current_price: 0 ,
-        final_price: 0 ,
-        bidden_user_id: 0,
-        default_image: '',
+        auction: [],
         images: [],
         auction_id: 0,
-        newbid: 0,
     }
   },
   async mounted() {
@@ -125,19 +106,9 @@ export default {
 
     let auction = await fetch(`/rest/auctioninfo/`+ auction_id);
     auction = await auction.json();
+    this.auction = auction;
 
     this.name=auction.name;
-    this.category_id=auction.category_id;
-    this.owner_uder_id=auction.owner_uder_id;
-    this.start_date=auction.start_date;
-    this.stop_date=auction.stop_date;
-    this.start_price=auction.start_price;
-    this.description=auction.description;
-    this.current_price=auction.current_price;
-    this.final_price=auction.final_price;
-    this.bidden_user_id=auction.bidden_user_id;
-    this.category_name=auction.category_name;
-    this.category_image_path = auction.category_image_path;
     let images = auction.images.split(',');
     var comma_index = 0;
     comma_index = auction.images.indexOf(",");
