@@ -66,7 +66,8 @@ public class Message {
         return timestamp;
     }
 
-    public void setTimestamp(long toEpochMilli) {
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 
 }
