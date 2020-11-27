@@ -1,12 +1,16 @@
 import searchBar from '../components/searchBar.js'
 import categoryButtons from '../components/categoryButtons.js'
 import newBudInput from '../components/newBudInput.js'
+import newMessageInput from '../components/newMessageInput.js'
+import messageItem from '../components/messageItem.js'
 
 export default {
   components: {
     searchBar,
     categoryButtons,
-    newBudInput
+    newBudInput,
+    newMessageInput,
+    messageItem
   },
   template: `
     <div>
@@ -80,17 +84,22 @@ export default {
                       <div class="name">{{auction.owner_user_name}}</a></div>
                     </div>
                   </div>
-                  <div class="contact-block">
+                  <div class="contact-block" v-bind:class="visibleCheck ? 'isVisble' : 'notVisible'">
                     <div class="contact-block-row-desktop">
                       <span class="mdi mdi-message-text-outline contact-block-row-icon-desktop"></span>
                       <span class="contact-block-row-label closed ng-binding ng-scope">
                       <button class="open-button" v-on:click="openForm()">Chat</button>
                       <div class="chat-popup" id="myChatBoxForm">
-                        <form action="" class="chat-form-container">
-                          <textarea placeholder="Skriv meddelande.." name="msg" required></textarea>
-                          <button type="submit" class="btn">Skicka</button>
-                          <button type="button" class="btn cancel" v-on:click="closeForm()">Stäng</button>
-                        </form>
+                        <newMessageInput :auction_id="auction.id" :owner_user_id="auction.owner_user_id" />
+                        <div class="messages-box-little">
+                          <ul>
+                          <messageItem 
+                              v-for="message of getMessages"
+                              :message="message"
+                              :key="message.id"
+                          />
+                          </ul>
+                      </div>
                       </div>
                       </span>
                     </div>
@@ -108,7 +117,7 @@ export default {
         auction: [],
         images: [],
         auction_id: 0,
-        visibleCheck: false,
+        visibleCheck: false
     }
   },
   computed: {
@@ -117,6 +126,11 @@ export default {
     },
     stopDateTime() {
       return new Date(this.auction.stop_date).toLocaleString()
+    },
+    getMessages(){
+      let auction_id = this.$route.params.id
+      console.log(this.$store.state.messagesByUserId)
+      return this.$store.state.messagesByUserId.filter(function (message) {  return message.auction_id == auction_id});
     }
   },
   async mounted() {    
