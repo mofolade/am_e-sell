@@ -20,6 +20,14 @@ public interface AuctionInformationRepo extends JpaRepository<AuctionInformation
             "          a.name,\n" +
             "          a.category_id,\n" +
             "          a.owner_user_id,\n" +
+            "          (SELECT u.name\n" +
+            "              FROM users u\n" +
+            "             WHERE u.id = a.owner_user_id\n" +
+            "             limit 1) owner_user_name,\n" +
+            "          (SELECT u.picture_url\n" +
+            "             FROM users u\n" +
+            "            WHERE u.id = a.owner_user_id\n" +
+            "            limit 1) owner_picture_url,\n" +
             "          a.start_date,\n" +
             "          a.stop_date,\n" +
             "          a.start_price,\n" +
@@ -49,6 +57,14 @@ public interface AuctionInformationRepo extends JpaRepository<AuctionInformation
             "                      a.name, \n" +
             "                      a.category_id,\n" +
             "                      a.owner_user_id, \n" +
+            "                      (SELECT u.name\n" +
+            "                           FROM users u\n" +
+            "                         WHERE u.id = a.owner_user_id\n" +
+            "                       limit 1) owner_user_name,\n" +
+            "                      (SELECT u.picture_url\n" +
+            "                         FROM users u\n" +
+            "                        WHERE u.id = a.owner_user_id\n" +
+            "                        limit 1) owner_picture_url,\n" +
             "                      a.start_date,\n" +
             "                      a.stop_date,\n" +
             "                      a.start_price,\n" +
