@@ -11,6 +11,14 @@ import javax.persistence.*;
         "                      a.name, \n" +
         "                      a.category_id,\n" +
         "                      a.owner_user_id, \n" +
+        "                      (SELECT u.name\n" +
+        "                           FROM users u\n" +
+        "                         WHERE u.id = a.owner_user_id\n" +
+        "                       limit 1) owner_user_name,\n" +
+        "                      (SELECT u.picture_url\n" +
+        "                         FROM users u\n" +
+        "                        WHERE u.id = a.owner_user_id\n" +
+        "                        limit 1) owner_picture_url,\n" +
         "                      a.start_date,\n" +
         "                      a.stop_date,\n" +
         "                      a.start_price,\n" +
@@ -42,6 +50,10 @@ public class AuctionInformation {
     @Column
     private long owner_user_id;
     @Column
+    private String owner_user_name;
+    @Column
+    private String owner_picture_url;
+    @Column
     private long start_date;
     @Column
     private long stop_date;
@@ -69,11 +81,13 @@ public class AuctionInformation {
     public AuctionInformation() {
     }
 
-    public AuctionInformation(int id, String name, long category_id, long owner_user_id, long start_date, long stop_date, double start_price, String description, double current_price, double final_price, long bidder_user_id, long count_bud, String category_name, String default_image, String category_image_path, String images) {
+    public AuctionInformation(int id, String name, long category_id, long owner_user_id, String owner_user_name, String owner_picture_url, long start_date, long stop_date, double start_price, String description, double current_price, double final_price, long bidder_user_id, long count_bud, String category_name, String default_image, String category_image_path, String images) {
         this.id = id;
         this.name = name;
         this.category_id = category_id;
         this.owner_user_id = owner_user_id;
+        this.owner_user_name = owner_user_name;
+        this.owner_picture_url = owner_picture_url;
         this.start_date = start_date;
         this.stop_date = stop_date;
         this.start_price = start_price;
@@ -118,6 +132,22 @@ public class AuctionInformation {
 
     public void setOwner_user_id(long owner_user_id) {
         this.owner_user_id = owner_user_id;
+    }
+
+    public String getOwner_user_name() {
+        return owner_user_name;
+    }
+
+    public void setOwner_user_name(String owner_user_name) {
+        this.owner_user_name = owner_user_name;
+    }
+
+    public String getOwner_picture_url() {
+        return owner_picture_url;
+    }
+
+    public void setOwner_picture_url(String owner_picture_url) {
+        this.owner_picture_url = owner_picture_url;
     }
 
     public long getStart_date() {
