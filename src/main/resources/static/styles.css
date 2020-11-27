@@ -175,6 +175,21 @@ body {
   margin: 0 0 1rem;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.noHover{
+  pointer-events: none;
+}
+
 .description-box{
   margin: 15px;
 }

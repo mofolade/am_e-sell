@@ -16,6 +16,16 @@ export default {
                     </router-link>
                 </div>
                 <div class="auction-message-box">
+                    <router-link v-bind:to="'/list?id='+auction.category_id">
+                      <button class="category-item">
+                          <div class="d-flex flex-row align-items-center">
+                              <div class="icon-container">
+                                  <img v-bind:src=auction.category_image_path style="width: 20px;">
+                              </div>
+                              {{auction.category_name}}
+                          </div>
+                      </button>
+                    </router-link>                    
                     <b>{{ auction.name }}</b>
                     <p>
                         <button class="collapsible" data-toggle="collapse" v-bind:data-target="'#collapse'+auction.id" aria-expanded="false" aria-controls="collapseExample">
@@ -47,7 +57,6 @@ export default {
         },
     },
     async mounted() {        
-        console.log(this.auction.id)
         let messages = await fetch(`/rest/auctionmessagesbyauctionid/`+ this.auction.id+`/`+ this.$store.state.user.id);
         messages = await messages.json();
         this.messages = messages;
