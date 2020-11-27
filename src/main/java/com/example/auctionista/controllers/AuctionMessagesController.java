@@ -21,8 +21,9 @@ public class AuctionMessagesController {
         return auctionMessagesService.getOneAuctionMessages(id);
     }
 
-    @GetMapping("/rest/auctionmessages")
-    public List<AuctionMessages> getAllAuctionsMessages() {
-        return auctionMessagesService.getAllAuctionsMessages();
+    @GetMapping("/rest/auctionmessagesbyauctionid/{auction_id}/{user_id}")
+    public List<AuctionMessages> getAllAuctionsMessagesByAuctionId(@PathVariable int auction_id, @PathVariable int user_id) {
+        return auctionMessagesService.getAllAuctionsMessagesByAuctionId(auction_id, user_id);
     }
+
 }
