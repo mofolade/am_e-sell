@@ -7,6 +7,7 @@ import javax.persistence.*;
 @Entity
 @Immutable
 @Subselect("SELECT distinct me.id, \n" +
+        "            me.auction_id, \n" +
         "            (SELECT u.name\n" +
         "            FROM users u\n" +
         "            WHERE u.id = me.sender_user_id\n" +
@@ -31,6 +32,8 @@ import javax.persistence.*;
 public class AuctionMessages {
     @Id
     private Integer id;
+    @Column(name = "auction_id")
+    private Integer auction_id;
     @Column(name = "sender_user_name")
     private String sender_user_name;
     @Column(name = "sender_picture_url")
@@ -51,8 +54,9 @@ public class AuctionMessages {
     public AuctionMessages() {
     }
 
-    public AuctionMessages(Integer id, String sender_user_name, String sender_picture_url, String recipient_user_name, String recipient_picture_url, String content, Integer sender_user_id, Integer recipient_user_id, long timestamp) {
+    public AuctionMessages(Integer id, Integer auction_id, String sender_user_name, String sender_picture_url, String recipient_user_name, String recipient_picture_url, String content, Integer sender_user_id, Integer recipient_user_id, long timestamp) {
         this.id = id;
+        this.auction_id = auction_id;
         this.sender_user_name = sender_user_name;
         this.sender_picture_url = sender_picture_url;
         this.recipient_user_name = recipient_user_name;
@@ -69,6 +73,14 @@ public class AuctionMessages {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getAuction_id() {
+        return auction_id;
+    }
+
+    public void setAuction_id(Integer auction_id) {
+        this.auction_id = auction_id;
     }
 
     public String getSender_user_name() {

@@ -21,4 +21,8 @@ public class AuctionMessagesService {
         return auctionMessagesRepo.findAllAuctionMessagesByAuctionId(auction_id, user_id);
     }
 
+    public List<AuctionMessages> getAllAuctionsMessagesByUserId(int user_id){
+        return auctionMessagesRepo.findAllAuctionMessagesByUserId(user_id);
+    }
+
 }
