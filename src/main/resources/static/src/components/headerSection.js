@@ -31,7 +31,7 @@ export default {
           
           <div id="navbar-r">
               <router-link v-if="!$store.state.user" to="/signUp">Bli medlem</router-link>
-              <router-link v-if="!$store.state.user" to="/loginForm">Logga in</router-link>
+              <router-link to="/loginForm">Logga in</router-link>
               <router-link v-if="$store.state.user" to="/mypage">Profil</router-link>
               <router-link to="/about">Om oss</router-link>
             </div>
