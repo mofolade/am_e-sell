@@ -1,12 +1,9 @@
-
-import signInButton from '../components/loginForm.js'
 import searchBar from '../components/searchBar.js'
 import categoryButtons from '../components/categoryButtons.js'
 import newBudInput from '../components/newBudInput.js'
 
 export default {
   components: {
-    signInButton,
     searchBar,
     categoryButtons,
     newBudInput
@@ -70,18 +67,27 @@ export default {
               </li>
               <li class="flex-item">
                 <div class="chat-box">
-                  <h3 class="title">Om säljaren</h3>
+                  <h2 class="title">Om säljaren</h2>
                   <div class="auction-avatar-box ng-isolate-scope" data-advertiser="adReplyTemps.advertiser">
-                    <a class="auction-avatar-img" style="background-image: url(&quot;/src/assets/default_avatar.png&quot;);"></a>
+                    <div class="message-avatar">
+                      <img  v-bind:src=auction.owner_picture_url  alt="">
+                    </div>
                     <div class="user-info">
-                      <div class="name">Bidden user name</a></div>
+                      <div class="name">{{auction.owner_user_name}}</a></div>
                     </div>
                   </div>
                   <div class="contact-block">
                     <div class="contact-block-row-desktop">
                       <span class="mdi mdi-message-text-outline contact-block-row-icon-desktop"></span>
                       <span class="contact-block-row-label closed ng-binding ng-scope">
-                        Chat
+                      <button class="open-button" v-on:click="openForm()">Chat</button>
+                      <div class="chat-popup" id="myChatBoxForm">
+                        <form action="" class="chat-form-container">
+                          <textarea placeholder="Skriv meddelande.." name="msg" required></textarea>
+                          <button type="submit" class="btn">Skicka</button>
+                          <button type="button" class="btn cancel" v-on:click="closeForm()">Stäng</button>
+                        </form>
+                      </div>
                       </span>
                     </div>
                   </div>
@@ -125,6 +131,12 @@ export default {
     myGalleryFunction(image){
       var expandImg = document.getElementById("expandedImg");
       document.getElementById("expandedImg").innerHTML='<img src="'+image+'" alt="">';
+    },
+    openForm() {
+      document.getElementById("myChatBoxForm").style.display = "block";
+    },    
+    closeForm() {
+      document.getElementById("myChatBoxForm").style.display = "none";
     }
   },
   }
