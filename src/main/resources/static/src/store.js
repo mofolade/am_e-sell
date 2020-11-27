@@ -28,7 +28,7 @@ export const store = new Vuex.Store({
   },
   actions: {
     async fetchAllMessages(store) {
-        let messages = await fetch('/rest/auctionmessages')
+        let messages = await fetch('/rest/messages')
         messages = await messages.json()
 
         messages.sort((m1, m2) => m1.timestamp > m2.timestamp ? -1 : 1)
