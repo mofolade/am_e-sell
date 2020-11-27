@@ -2,7 +2,6 @@ import signInButton from '../components/loginForm.js'
 import searchBar from '../components/searchBar.js'
 import categoryButtons from '../components/categoryButtons.js'
 import auctionCards from '../components/auctionCards.js'
-
 export default {
   components: {
     signInButton,
