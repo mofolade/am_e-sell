@@ -4,53 +4,7 @@ import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.Subselect;
 
 import javax.persistence.*;
-/*
-@NamedNativeQuery(name = "AuctionInformation.getAuctionById",
-        query = "SELECT a.id,\n" +
-                "       a.name,\n" +
-                "       a.category_id,\n" +
-                "       a.owner_user_id,\n" +
-                "       a.start_date,\n" +
-                "       a.stop_date,\n" +
-                "       a.start_price,\n" +
-                "       a.description,\n" +
-                "       a.current_price,\n" +
-                "       a.final_price,\n" +
-                "       a.bidder_user_id,\n" +
-                "       a.count_bud,\n" +
-                "       c.name category_name,\n" +
-                "       (SELECT GROUP_CONCAT(ai.image_path)\n" +
-                "          FROM auction_images ai\n" +
-                "          WHERE ai.auction_id = a.id\n" +
-                "        Group BY ai.auction_id) images\n" +
-                "      FROM auctions a,\n" +
-                "           categories c\n" +
-                "     WHERE a.category_id = c.id",
-        resultClass = AuctionInformation.class)*/
-/*@SqlResultSetMapping(
-        name = "AuctionInformation",
-        classes = {
-                @ConstructorResult(
-                        targetClass = AuctionInformation.class,
-                        columns = {
-                                @ColumnResult(name="id"),
-                                @ColumnResult(name="name"),
-                                @ColumnResult(name="category_id"),
-                                @ColumnResult(name="owner_user_id"),
-                                @ColumnResult(name="start_date"),
-                                @ColumnResult(name="stop_date"),
-                                @ColumnResult(name="start_price"),
-                                @ColumnResult(name="description"),
-                                @ColumnResult(name="current_price"),
-                                @ColumnResult(name="bidden_user_id"),
-                                @ColumnResult(name="count_bud"),
-                                @ColumnResult(name="start_price"),
-                                @ColumnResult(name="category_name"),
-                                @ColumnResult(name="images")
-                        }
-                )
-        }
-)*/
+
 @Entity
 @Immutable
 @Subselect("SELECT a.id, \n" +
