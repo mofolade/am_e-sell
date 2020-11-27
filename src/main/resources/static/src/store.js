@@ -5,6 +5,7 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
   state: {
     messages: [],
+    messagesByUserId: [],
     categories: [],
     auctions: [],
     user: null
@@ -15,6 +16,9 @@ export const store = new Vuex.Store({
     },
     setMessages(state, messages) {
         state.messages = messages
+    },
+    setMessagesByUserId(state, messages){
+      state.messagesByUserId = messages
     },
     setCategories(state, categories) {
       state.categories = categories
@@ -27,21 +31,36 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
+    async fetchUser(store){
+      let user = await fetch('/whoami')
+      user = await user.json()
+      console.log(user);
+      store.commit('setUser', user)
+    },
     async fetchAllMessages(store) {
         let messages = await fetch('/rest/messages')
         messages = await messages.json()
 
         messages.sort((m1, m2) => m1.timestamp > m2.timestamp ? -1 : 1)
 
-        console.log(messages);
+        //console.log(messages);
 
         store.commit('setMessages', messages)
+    },
+    async fetchAllMessagesByUserId(store) {
+        let user = await fetch('/whoami')
+        user = await user.json()
+        let messages = await fetch(`/rest/auctionmessagesbyuserid/`+ user.id);
+        messages = await messages.json();
+        messages.sort((m1, m2) => m1.timestamp > m2.timestamp ? -1 : 1)
+        this.messages = messages;
+        store.commit('setMessagesByUserId', messages)
     },
     async fetchAllCategories(store) {
       let categories = await fetch('/rest/categories')
       categories = await categories.json()
 
-      console.log(categories);
+      //console.log(categories);
       store.commit('setCategories', categories)
     },
     async fetchAllAuctions(store) {
@@ -50,12 +69,6 @@ export const store = new Vuex.Store({
 
       console.log(auctions);
       store.commit('setAuctions', auctions)
-    },
-    async fetchUser(store){
-      let user = await fetch('/whoami')
-      user = await user.json()
-      console.log(user);
-      store.commit('setUser', user)
     }
   }
 })
