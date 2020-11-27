@@ -6,156 +6,101 @@ import javax.persistence.*;
 
 @Entity
 @Immutable
-@Subselect("SELECT distinct a.id, \n" +
-        "          a.name, \n" +
-        "          a.category_id,\n" +
-        "          a.owner_user_id, \n" +
-        "          a.start_date,\n" +
-        "          a.stop_date,\n" +
-        "          c.name category_name,\n" +
-        "          c.image_path category_image_path,\n" +
-        "                      (SELECT ai.image_path\n" +
-        "                      FROM auction_images ai\n" +
-        "                      WHERE ai.auction_id = a.id\n" +
-        "                      limit 1) default_image,\n" +
-        "           m.id message_id,\n" +
-        "           m.content,\n" +
-        "           m.sender_user_id,\n" +
-        "           m.recipient_user_id,\n" +
-        "           m.timestamp\n" +
-        "       FROM auctions a,\n" +
-        "            categories c,\n" +
-        "            messages m \n" +
-        "      WHERE a.category_id = c.id \n" +
-        "        AND a.id = m.auction_id")
+@Subselect("SELECT distinct me.id, \n" +
+        "            (SELECT u.name\n" +
+        "            FROM users u\n" +
+        "            WHERE u.id = me.sender_user_id\n" +
+        "            limit 1) sender_user_name,\n" +
+        "            (SELECT u.picture_url\n" +
+        "            FROM users u\n" +
+        "            WHERE u.id = me.sender_user_id\n" +
+        "            limit 1) sender_picture_url,\n" +
+        "            (SELECT u.name\n" +
+        "            FROM users u\n" +
+        "            WHERE u.id = me.recipient_user_id\n" +
+        "            limit 1) recipient_user_name,\n" +
+        "            (SELECT u.picture_url\n" +
+        "            FROM users u\n" +
+        "            WHERE u.id = me.recipient_user_id\n" +
+        "            limit 1) recipient_picture_url,\n" +
+        "           me.content,\n" +
+        "           me.sender_user_id,\n" +
+        "           me.recipient_user_id,\n" +
+        "           me.timestamp\n" +
+        "       FROM messages me")
 public class AuctionMessages {
     @Id
-    private int id;
-    @Column
-    private String name;
-    @Column
-    private long category_id;
-    @Column
-    private long owner_user_id;
-    @Column
-    private long start_date;
-    @Column
-    private long stop_date;
-    @Column
-    private String category_name;
-    @Column
-    private String category_image_path;
-    @Column
-    private String default_image;
-    @Column
-    private long message_id;
-    @Column
+    private Integer id;
+    @Column(name = "sender_user_name")
+    private String sender_user_name;
+    @Column(name = "sender_picture_url")
+    private String sender_picture_url;
+    @Column(name = "recipient_user_name")
+    private String recipient_user_name;
+    @Column(name = "recipient_picture_url")
+    private String recipient_picture_url;
+    @Column(name = "content")
     private String content;
-    @Column
+    @Column(name = "sender_user_id")
     private Integer sender_user_id;
-    @Column
-    private String recipient_user_id;
-    @Column
+    @Column(name = "recipient_user_id")
+    private Integer recipient_user_id;
+    @Column(name = "timestamp")
     private long timestamp;
 
     public AuctionMessages() {
     }
 
-    public AuctionMessages(int id, String name, long category_id, long owner_user_id, long start_date, long stop_date, String category_name, String category_image_path, String default_image, long message_id, String content, Integer sender_user_id, String recipient_user_id, long timestamp) {
+    public AuctionMessages(Integer id, String sender_user_name, String sender_picture_url, String recipient_user_name, String recipient_picture_url, String content, Integer sender_user_id, Integer recipient_user_id, long timestamp) {
         this.id = id;
-        this.name = name;
-        this.category_id = category_id;
-        this.owner_user_id = owner_user_id;
-        this.start_date = start_date;
-        this.stop_date = stop_date;
-        this.category_name = category_name;
-        this.category_image_path = category_image_path;
-        this.default_image = default_image;
-        this.message_id = message_id;
+        this.sender_user_name = sender_user_name;
+        this.sender_picture_url = sender_picture_url;
+        this.recipient_user_name = recipient_user_name;
+        this.recipient_picture_url = recipient_picture_url;
         this.content = content;
         this.sender_user_id = sender_user_id;
         this.recipient_user_id = recipient_user_id;
         this.timestamp = timestamp;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getSender_user_name() {
+        return sender_user_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSender_user_name(String sender_user_name) {
+        this.sender_user_name = sender_user_name;
     }
 
-    public long getCategory_id() {
-        return category_id;
+    public String getSender_picture_url() {
+        return sender_picture_url;
     }
 
-    public void setCategory_id(long category_id) {
-        this.category_id = category_id;
+    public void setSender_picture_url(String sender_picture_url) {
+        this.sender_picture_url = sender_picture_url;
     }
 
-    public long getOwner_user_id() {
-        return owner_user_id;
+    public String getRecipient_user_name() {
+        return recipient_user_name;
     }
 
-    public void setOwner_user_id(long owner_user_id) {
-        this.owner_user_id = owner_user_id;
+    public void setRecipient_user_name(String recipient_user_name) {
+        this.recipient_user_name = recipient_user_name;
     }
 
-    public long getStart_date() {
-        return start_date;
+    public String getRecipient_picture_url() {
+        return recipient_picture_url;
     }
 
-    public void setStart_date(long start_date) {
-        this.start_date = start_date;
-    }
-
-    public long getStop_date() {
-        return stop_date;
-    }
-
-    public void setStop_date(long stop_date) {
-        this.stop_date = stop_date;
-    }
-
-    public String getCategory_name() {
-        return category_name;
-    }
-
-    public void setCategory_name(String category_name) {
-        this.category_name = category_name;
-    }
-
-    public String getCategory_image_path() {
-        return category_image_path;
-    }
-
-    public void setCategory_image_path(String category_image_path) {
-        this.category_image_path = category_image_path;
-    }
-
-    public String getDefault_image() {
-        return default_image;
-    }
-
-    public void setDefault_image(String default_image) {
-        this.default_image = default_image;
-    }
-
-    public long getMessage_id() {
-        return message_id;
-    }
-
-    public void setMessage_id(long message_id) {
-        this.message_id = message_id;
+    public void setRecipient_picture_url(String recipient_picture_url) {
+        this.recipient_picture_url = recipient_picture_url;
     }
 
     public String getContent() {
@@ -174,11 +119,11 @@ public class AuctionMessages {
         this.sender_user_id = sender_user_id;
     }
 
-    public String getRecipient_user_id() {
+    public Integer getRecipient_user_id() {
         return recipient_user_id;
     }
 
-    public void setRecipient_user_id(String recipient_user_id) {
+    public void setRecipient_user_id(Integer recipient_user_id) {
         this.recipient_user_id = recipient_user_id;
     }
 
