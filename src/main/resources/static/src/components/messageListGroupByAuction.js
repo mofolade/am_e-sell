@@ -1,32 +1,41 @@
-import messageItem from './messageItem.js'
+import messageAuctionItem from './messageAuctionItem.js'
 
 export default {
     components: {
-        messageItem,
-        current_user: null,
-        messages: []
+        messageAuctionItem,
+        current_user: null
     },
     template: `
         <div>
-            <span>Meddelande</span>
+            <div class="message-wrapper-title">Meddelande</div>
             <div class="messages-box">
                 <ul>
-                <messageItem 
-                    v-for="message of messages" 
-                    :message="message"
-                    :key="message.id"
+                <messageAuctionItem 
+                    v-for="auction of auctions" 
+                    :auction="auction"
+                    :key="auction.id"
                 />
                 </ul>
             </div>
         </div>
     `,
+    data() {
+        return {
+            auctions: []
+        }
+    },
     computed: {
         user() {
             return this.$store.state.user
         },
-        messages() {
-            return this.$store.state.messages.filter(message => message.sender_user_id === this.$store.state.user.id)
+        auctionsByUserId() {
+            return this.$store.state.auctions
         }
+    },
+    async mounted() {        
+        let auctions = await fetch(`/rest/auctionsmessagesbyuserid/`+ this.$store.state.user.id);
+        auctions = await auctions.json();
+        this.auctions = auctions;
     },
     methods: {
         

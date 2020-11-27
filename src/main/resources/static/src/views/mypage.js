@@ -1,14 +1,26 @@
+
+import searchBar from '../components/searchBar.js'
+import categoryButtons from '../components/categoryButtons.js'
 import messageListGroupByAuction from '../components/messageListGroupByAuction.js'
-import messageList from '../components/messageList.js'
 
 
 export default {
   components: {
+    searchBar,
+    categoryButtons,
     messageListGroupByAuction
   },
     template: `
-      <div>
-        <h2 style="text-align:center">Profil</h2>
+      <div class="content">
+        <div id="search-categories-container">
+          <searchBar />
+
+          <categoryButtons />
+          
+        </div>
+        <div class="about-section">
+          <h2>Profil</h2>
+        </div>
         <div id="mypage-container">
           <div class="profile">
             <img v-bind:src=user.picture_url alt="" class="profile_image">
@@ -19,13 +31,11 @@ export default {
           </div>
           <div class="messages-container">
             <div class="d-flex flex-direction-column">
-              <div class="col-md-8">
-                <div class="chat_container">
-                    <messageListGroupByAuction />
-                </div>
+              <div class="chat_container">
+                  <messageListGroupByAuction />
               </div>
             </div>
-</div>
+          </div>
         </div>
       </div>
     `,
