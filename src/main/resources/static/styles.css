@@ -70,6 +70,13 @@ body {
   justify-content: center;
 }
 
+.auction-cat-pris-date-info-box{
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 15px;
+  align-items: center;
+}
+
 .auction-column{
   margin-bottom: 16px;
   padding: 0 8px;
@@ -135,7 +142,7 @@ body {
 }
 
 .bid-section{
-  background-color: #f9f9f9!important;
+  background-color: #e9e5e5!important;
   padding: 1.5rem!important;
   border-radius: .6rem!important;
 }
@@ -310,6 +317,7 @@ input[type=number] {
 .open-button {
   background-color: #555;
   color: white;
+  border-radius: 5px;
   padding: 16px 20px;
   border: none;
   cursor: pointer;
@@ -327,6 +335,13 @@ input[type=number] {
   z-index: 9;  
   max-width: 80%;
 }
+
+.isVisible {
+  display:block;
+ }
+ .notVisible {
+  display:none;
+ }
 
 /* Add styles to the form container */
 .form-container {
@@ -450,6 +465,10 @@ input[type=number] {
 }
 
 .new-auction-container label{
+  color: rgb(148, 141, 141);
+}
+
+label{
   color: rgb(148, 141, 141);
 }
 
@@ -999,6 +1018,11 @@ background:#2196f3;
 }
 .img-input-group{
   padding: 10px;
+}
+
+.bid-btn{  
+  background-color: #4CAF50;
+  color: white;
 }
   
 /* style inputs and link buttons */

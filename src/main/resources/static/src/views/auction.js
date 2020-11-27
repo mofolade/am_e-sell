@@ -34,7 +34,7 @@ export default {
               <li class="flex-item">
                 <div class="auction-card-container">
                   <h2>{{auction.name}}</h2>
-                  <div class="d-flex justify-content-space-around mb15">
+                  <div class="auction-cat-pris-date-info-box">
                     <router-link v-bind:to="'/list?id='+auction.category_id">
                       <button class="category-item">
                           <div class="d-flex flex-row align-items-center">
@@ -53,9 +53,13 @@ export default {
                           <span class="price-unit" itemprop="priceCurrency" content="Ft">Kr</span>
                         </span>
                       </div>
+                    </section>                      
+                    <section>
+                      <label>Slutar:</label>
+                      {{stopDateTime}}
                     </section>
                   </div>
-                  <section class="bid-section">
+                  <section class="bid-section" v-bind:class="visibleCheck ? 'isVisble' : 'notVisible'">
                     <newBudInput />
                   </section>
                   <div class="description-box">
@@ -104,12 +108,19 @@ export default {
         auction: [],
         images: [],
         auction_id: 0,
+        visibleCheck: false,
     }
   },
-  async mounted() {
-    
+  computed: {
+    user() {
+        return this.$store.state.user
+    },
+    stopDateTime() {
+      return new Date(this.auction.stop_date).toLocaleString()
+    }
+  },
+  async mounted() {    
     let auction_id = this.$route.params.id
-
     let auction = await fetch(`/rest/auctioninfo/`+ auction_id);
     auction = await auction.json();
     this.auction = auction;
@@ -120,10 +131,13 @@ export default {
     comma_index = auction.images.indexOf(",");
 
     if(comma_index > 0){
-      this.default_image = images[1];
       this.images=images;
+    }
+    //new bid input visible or not visible
+    if(this.$store.state.user.id !== auction.owner_user_id){
+      this.visibleCheck = true;
     }else{
-      this.default_image = images;
+      this.visibleCheck = false;
     }
 
   },
