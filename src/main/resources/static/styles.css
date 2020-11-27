@@ -632,10 +632,12 @@ body {
   margin-left: 85px;
   font-size: 15px;
   color:#62748F;
-  width: 100%;
+  width: 80%;
 }
 .message-body-heading{
-  width: 100%;
+  margin-bottom: 5px;
+}
+.message-body-content{  
   display: flex;
   flex-direction: row;  
   justify-content: space-between;
