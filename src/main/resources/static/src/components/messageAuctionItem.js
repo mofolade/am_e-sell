@@ -2,8 +2,7 @@ import messageItem from './messageItem.js'
 
 export default {
     components: {
-        messageItem,
-        messages: []
+        messageItem
     },
     template: `
         <li class="d-flex">
@@ -35,7 +34,7 @@ export default {
                     <div class="collapse-content" v-bind:id="'collapse'+auction.id">
                         <ul>
                         <messageItem 
-                            v-for="message of messages" 
+                            v-for="message of getMessages"
                             :message="message"
                             :key="message.id"
                         />
@@ -47,7 +46,7 @@ export default {
     `,
     data() {
         return {
-            messages: []
+            messages : []
         }
     },
     props: ['auction'],
@@ -55,10 +54,13 @@ export default {
         time() {
             return new Date(this.message.timestamp).toLocaleString()
         },
+        getMessages(){
+            let self = this;
+            let messages = this.$store.state.messagesByUserId;
+            return this.$store.state.messagesByUserId.filter(function (message) {  return message.auction_id === self.auction.id});
+        }
     },
-    async mounted() {        
-        let messages = await fetch(`/rest/auctionmessagesbyauctionid/`+ this.auction.id+`/`+ this.$store.state.user.id);
-        messages = await messages.json();
-        this.messages = messages;
-    },
+    methods:{
+        
+    }
 }
