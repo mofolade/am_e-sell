@@ -7,7 +7,7 @@ export default {
                 <input type="number" class="form-control" v-model="bid" name="bid" autocomplete="off" value="">
                 <h4 style="top: 0px; right: 0px;">kr</h4>
             </div>
-            <button data-test-submit-button="" data-bid-submit-button="" class="btn btn-lg btn-success btn-fluid mb-4 " type="submit"> 
+            <button data-test-submit-button="" data-bid-submit-button="" class="bid-btn btn btn-lg btn-fluid mb-4 " type="submit"> 
             Lägg bud
             </button>
         </form>
