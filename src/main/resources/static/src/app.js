@@ -18,8 +18,9 @@ export default {
       </div>
     `,
     async created() {
+      this.$store.dispatch('fetchUser')
       this.$store.dispatch('fetchAllCategories')
-      this.$store.dispatch('fetchUser') 
+      this.$store.dispatch('fetchAllMessages')
       //this.$store.dispatch('fetchAllAuctions')     
     }
   }
