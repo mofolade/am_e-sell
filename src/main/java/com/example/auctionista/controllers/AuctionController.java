@@ -33,4 +33,6 @@ public class AuctionController {
     public void deleteAuction(@PathVariable int id) {
         auctionService.deleteAuction(id);
     }
+
+    
 }
