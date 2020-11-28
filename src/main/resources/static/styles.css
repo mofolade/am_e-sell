@@ -230,8 +230,11 @@ input[type=number] {
 
 .price-wrapper {
   margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.price-wrapper .price {
+.price-wrapper .start-price {
   font-size: 15px;
   font-size: 2rem;
   -webkit-font-smoothing: antialiased;
@@ -255,6 +258,9 @@ input[type=number] {
   font-smooth: always;
   text-rendering: optimizeLegibility;
   text-shadow: rgba(0,0,0,0.01) 0 0 1px;
+}
+.startprice{
+  font-size: 11px;
 }
 .chat-box{
   margin: 15px 15px;
