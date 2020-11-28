@@ -21,6 +21,7 @@ export default {
       this.$store.dispatch('fetchUser')
       this.$store.dispatch('fetchAllCategories')
       this.$store.dispatch('fetchAllMessages')
+      this.$store.dispatch('fetchAllBids')
       this.$store.dispatch('fetchAllMessagesByUserId')
 
       //this.$store.dispatch('fetchAllAuctions')     

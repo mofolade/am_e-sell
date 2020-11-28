@@ -51,10 +51,15 @@ export default {
                     </router-link>
                     <section>
                       <div class="price-wrapper">
-                        <span class="price">
+                        <span class="">
                           <span class="price-label">Pris:</span>
-                          <span class="price-value" itemprop="price" content=current_price>{{auction.start_price}}</span>
-                          <span class="price-unit" itemprop="priceCurrency" content="Ft">Kr</span>
+                          <span class="price-value" itemprop="price" content=current_price>{{auction.current_price}}</span>
+                          <span class="price-unit" itemprop="priceCurrency" content="Kr">Kr</span>
+                        </span>
+                        <span class="startprice">
+                          <span class="price-label">(Utropspris:</span>
+                          <span content=start_price>{{auction.start_price}}</span>
+                          <span class="price-unit" content="Kr">Kr)</span>
                         </span>
                       </div>
                     </section>                      
@@ -64,7 +69,9 @@ export default {
                     </section>
                   </div>
                   <section class="bid-section" v-bind:class="visibleCheck ? 'isVisble' : 'notVisible'">
-                    <newBudInput />
+                    <newBudInput 
+                      :auction_id="auction.id"
+                    />
                   </section>
                   <div class="description-box">
                     <b>Beskrivning</b>
