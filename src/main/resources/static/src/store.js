@@ -5,6 +5,7 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
   state: {
     messages: [],
+    bids: [],
     messagesByUserId: [],
     categories: [],
     auctions: [],
@@ -15,7 +16,10 @@ export const store = new Vuex.Store({
       state.user = user
     },
     setMessages(state, messages) {
-        state.messages = messages
+      state.messages = messages
+    },
+    setBids(state, bids){
+      state.bids = bids;
     },
     setMessagesByUserId(state, messages){
       state.messagesByUserId = messages
@@ -28,7 +32,10 @@ export const store = new Vuex.Store({
     },
     prependMessage(state, message) {
         state.messages.unshift(message)
-    }
+    },
+    prependBid(state, bid) {
+      state.bids.unshift(bid)
+  },
   },
   actions: {
     async fetchUser(store){
@@ -47,6 +54,14 @@ export const store = new Vuex.Store({
 
         store.commit('setMessages', messages)
     },
+    async fetchAllBids(store) {
+      let bids = await fetch('/rest/bids')
+      bids = await bids.json()
+
+      bids.sort((m1, m2) => m1.timestamp > m2.timestamp ? -1 : 1)
+
+      store.commit('setBids', bids)
+  },
     async fetchAllMessagesByUserId(store) {
         let user = await fetch('/whoami')
         user = await user.json()
