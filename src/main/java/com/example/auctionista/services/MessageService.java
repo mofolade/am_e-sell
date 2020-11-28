@@ -22,6 +22,10 @@ public class MessageService {
         return messageRepo.findAll();
     }
 
+    public List<Message> getAllMessagesByUserId(int user_id){
+        return messageRepo.findAllByUserId(user_id);
+    }
+
     public boolean postNewMessage(Message message) {
 
         message.setTimestamp(Instant.now().toEpochMilli()); // Date.now()
@@ -29,8 +33,8 @@ public class MessageService {
         Message savedMessage = messageRepo.save(message);
 
         SocketDTO socketMessage = new SocketDTO("message", savedMessage);
-//        socketMessage.action = "message";
-//        socketMessage.payload = savedMessage;
+        socketMessage.action = "message";
+        socketMessage.payload = savedMessage;
 
         socketService.sendToAll(socketMessage);
 
