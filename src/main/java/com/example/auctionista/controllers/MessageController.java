@@ -9,18 +9,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/rest/messages")
+@RequestMapping
 public class MessageController {
 
     @Autowired
     MessageService messageService;
 
-    @GetMapping
+    @GetMapping("/rest/messages")
     public List<Message> getAllMessages() {
         return messageService.getAllMessages();
     }
 
-    @PostMapping
+    @GetMapping("/rest/messagesbyuserid/{user_id}")
+    public List<Message> getAllMessagesByUserId(@PathVariable int user_id) {
+        return messageService.getAllMessagesByUserId(user_id);
+    }
+
+    @PostMapping("/rest/messages")
     public ResponseEntity<Boolean> postNewMessage(@RequestBody Message message) {
         boolean didsave = messageService.postNewMessage(message);
 
