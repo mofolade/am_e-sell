@@ -25,8 +25,10 @@ export default {
         <div>
           <auctionCards />
         </div>
-        <newMessageInput :auction_id="37" :owner_user_id="46" />
-        <messageList />
       </div>
     `
+    /*
+        <newMessageInput :auction_id="37" :owner_user_id="46" />
+        <messageList />
+     */
   }

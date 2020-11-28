@@ -39,7 +39,7 @@ export default {
                 <div class="auction-card-container">
                   <h2>{{auction.name}}</h2>
                   <div class="auction-cat-pris-date-info-box">
-                    <router-link v-bind:to="'/list?id='+auction.category_id">
+                    <router-link v-bind:to="'/list/'+auction.category_id">
                       <button class="category-item">
                           <div class="d-flex flex-row align-items-center">
                               <div class="icon-container">
