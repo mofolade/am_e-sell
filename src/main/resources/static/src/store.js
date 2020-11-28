@@ -50,10 +50,13 @@ export const store = new Vuex.Store({
     async fetchAllMessagesByUserId(store) {
         let user = await fetch('/whoami')
         user = await user.json()
-        let messages = await fetch(`/rest/auctionmessagesbyuserid/`+ user.id);
+        //console.log(user.id)
+        //let messages = await fetch(`/rest/auctionmessagesbyuserid/`+ user.id);
+        let messages = await fetch('/rest/messagesbyuserid/'+ user.id);
         messages = await messages.json();
         messages.sort((m1, m2) => m1.timestamp > m2.timestamp ? -1 : 1)
-        this.messages = messages;
+        //console.log(messages)
+        //this.messages = messages;
         store.commit('setMessagesByUserId', messages)
     },
     async fetchAllCategories(store) {

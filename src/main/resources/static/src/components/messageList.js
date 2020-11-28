@@ -1,14 +1,13 @@
-import messageItem from './messageItem.js'
+import messageItem2 from './messageItem2.js'
 
 export default {
     components: {
-        messageItem
+        messageItem2
     },
     template: `
-        <div>
         <div class="messages-box">
             <ul>
-                <messageItem 
+                <messageItem2 
                     v-for="message of messages" 
                     :message="message"
                     :key="message.id"

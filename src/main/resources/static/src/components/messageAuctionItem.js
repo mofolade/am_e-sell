@@ -34,10 +34,12 @@ export default {
                     <div class="collapse-content" v-bind:id="'collapse'+auction.id">
                         <ul>
                         <messageItem 
-                            v-for="message of getMessages"
-                            :message="message"
-                            :key="message.id"
-                        />
+                              v-for="message of messages"
+                              :message="message"
+                              :auction_owner_id = "auction.owner_user_id"
+                              :owner_picture_url="auction.owner_picture_url"
+                              :key="message.id"
+                          />
                         </ul>
                     </div>
                 </div>
@@ -46,7 +48,6 @@ export default {
     `,
     data() {
         return {
-            messages : []
         }
     },
     props: ['auction'],
@@ -54,10 +55,14 @@ export default {
         time() {
             return new Date(this.message.timestamp).toLocaleString()
         },
-        getMessages(){
+        messages(){
             let self = this;
-            let messages = this.$store.state.messagesByUserId;
-            return this.$store.state.messagesByUserId.filter(function (message) {  return message.auction_id === self.auction.id});
+            let auction_id = this.auction.id
+            let allMessages = this.$store.state.messages
+            let messageByAuctionId = allMessages.filter(function (message) {  
+                return message.auction_id == auction_id
+            });
+            return messageByAuctionId;
         }
     },
     methods:{
