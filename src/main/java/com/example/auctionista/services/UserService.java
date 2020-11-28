@@ -1,11 +1,12 @@
 package com.example.auctionista.services;
 
-
 import com.example.auctionista.entities.User;
 import com.example.auctionista.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -24,6 +25,10 @@ public class UserService {
 
     public User registerUser(String name, String email, String password, String picture_url, String organize_number) {
         return myUserDetailsService.addUser(name, email, password, picture_url, organize_number);
+    }
+
+    public User getOneUser(long id) {
+        return userRepo.findOneUser(id);
     }
 
 

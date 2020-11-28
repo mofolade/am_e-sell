@@ -1,6 +1,5 @@
 package com.example.auctionista.controllers;
 
-
 import com.example.auctionista.entities.User;
 import com.example.auctionista.services.UserService;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
@@ -146,5 +145,10 @@ public class UserController {
         sc.setAuthentication(auth);
         HttpSession session = req.getSession(true);
         session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, sc);
+    }
+
+    @GetMapping("/rest/user/{id}")
+    public User getOneUser(@PathVariable long id) {
+        return userService.getOneUser(id);
     }
 }
