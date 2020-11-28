@@ -94,8 +94,10 @@ export default {
                         <div class="messages-box-little">
                           <ul>
                           <messageItem 
-                              v-for="message of getMessages"
+                              v-for="message of messages"
                               :message="message"
+                              :auction_owner_id = "auction.owner_user_id"
+                              :owner_picture_url="auction.owner_picture_url"
                               :key="message.id"
                           />
                           </ul>
@@ -127,10 +129,13 @@ export default {
     stopDateTime() {
       return new Date(this.auction.stop_date).toLocaleString()
     },
-    getMessages(){
+    messages(){
       let auction_id = this.$route.params.id
-      console.log(this.$store.state.messagesByUserId)
-      return this.$store.state.messagesByUserId.filter(function (message) {  return message.auction_id == auction_id});
+      let allMessages = this.$store.state.messages
+      let messageByAuctionId = allMessages.filter(function (message) {  
+          return message.auction_id == auction_id
+      });
+      return messageByAuctionId;
     }
   },
   async mounted() {    
