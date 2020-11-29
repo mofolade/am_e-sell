@@ -27,7 +27,7 @@ export default {
                     <div class="auction-little-box-category">
                         <div>
                             <span class="price-label">Pris:</span>
-                            <span>{{auction.current_price}}</span>
+                            <span>{{lastbid}}</span>
                             <span class="price-unit" itemprop="priceCurrency" content="Kr">Kr</span>
                         </div>
                         <span  v-bind:class="visibleCheck ? 'isVisble' : 'notVisible'">
@@ -52,7 +52,7 @@ export default {
             visibleCheck: false
         }
     },
-    props: ['auction'],    
+    props: ['auction','lastbid'],    
     async mounted() {    
         let self = this;
         
@@ -81,8 +81,8 @@ export default {
         },
         countDown(stop_date,auction_id){
             var countDownDate = new Date(stop_date).getTime();
-          // Update the count down every 1 second
-          var x = setInterval(function() {
+            // Update the count down every 1 second
+            var x = setInterval(function() {
     
             // Get today's date and time
             var now = new Date().getTime();
@@ -103,6 +103,6 @@ export default {
                 document.getElementById("countdown"+auction_id).innerHTML = hours + " h "+ minutes + " m " + seconds + "s ";
             }
           }, 1000);
-        }
+        },
     }
 }

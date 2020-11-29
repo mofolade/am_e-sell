@@ -9,6 +9,7 @@ export default {
             <auctionItem 
                 v-for="auction of auctions" 
                 :auction="auction"
+                :lastbid = "lastBid(auction.id)"
                 :key="auction.id"
             />
         </div>
@@ -19,16 +20,20 @@ export default {
         }
     },
     computed: {
-        /*auctions() {
-            return this.$store.state.auctions
-        }*/
     },
     async mounted(){
       let auctions = await fetch('/rest/auctionsinfo')
       auctions = await auctions.json()
       this.auctions = auctions;
-
-      console.log(auctions);
     },
-
+    methods:{
+        lastBid(auction_id){
+            this.bids = this.$store.state.bids;
+            let bidsByAuctionId = this.$store.state.bids.filter(bid => bid.auction_id == auction_id);
+            bidsByAuctionId.sort((m1, m2) => m1.creation_date > m2.creation_date ? -1 : 1)
+            if(bidsByAuctionId[0]){
+                return (bidsByAuctionId[0]['bid']);
+            }
+        }
+    }
 }

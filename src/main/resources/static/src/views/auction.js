@@ -43,7 +43,7 @@ export default {
                       <div class="price-wrapper">
                         <span class="">
                           <span class="price-label">Pris:</span>
-                          <span class="price-value" itemprop="price" content=current_price>{{auction.current_price}}</span>
+                          <span class="price-value" itemprop="price" content=current_price>{{lastBid()}}</span>
                           <span class="price-unit" itemprop="priceCurrency" content="Kr">Kr</span>
                         </span>
                         <span class="startprice">
@@ -206,6 +206,17 @@ export default {
         }
         
       }, 1000);
+    },
+    lastBid(){
+      this.bids = this.$store.state.bids;
+      let bidsByAuctionId = this.$store.state.bids.filter(bid => bid.auction_id == this.$route.params.id);
+      bidsByAuctionId.sort((m1, m2) => m1.creation_date > m2.creation_date ? -1 : 1)
+      if(bidsByAuctionId[0]){
+          return (bidsByAuctionId[0]['bid']);
+      }
+      else {
+        return this.auction.start_price;
+      }
     }
   },
-  }
+}
