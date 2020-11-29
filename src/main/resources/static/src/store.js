@@ -71,7 +71,7 @@ export const store = new Vuex.Store({
       let bids = await fetch('/rest/bids')
       bids = await bids.json()
 
-      bids.sort((m1, m2) => m1.timestamp > m2.timestamp ? -1 : 1)
+      //bids.sort((m1, m2) => m1.timestamp > m2.timestamp ? -1 : 1)
 
       store.commit('setBids', bids)
     },
