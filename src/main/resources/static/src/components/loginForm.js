@@ -68,6 +68,7 @@ export default {
                 let user = await fetch('/whoami')
                 user = await user.json()
                 this.$store.commit('setUser', user)
+                window.location.href = '/';
             }
 
           } else {

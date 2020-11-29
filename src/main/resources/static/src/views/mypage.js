@@ -1,23 +1,12 @@
-
-import searchBar from '../components/searchBar.js'
-import categoryButtons from '../components/categoryButtons.js'
 import messageListGroupByAuction from '../components/messageListGroupByAuction.js'
 
 
 export default {
   components: {
-    searchBar,
-    categoryButtons,
     messageListGroupByAuction
   },
     template: `
       <div class="content">
-        <div id="search-categories-container">
-          <searchBar />
-
-          <categoryButtons />
-          
-        </div>
         <div class="about-section">
           <h2>Profil</h2>
         </div>
@@ -32,7 +21,9 @@ export default {
           <div class="messages-container">
             <div class="d-flex flex-direction-column">
               <div class="chat_container">
-                  <messageListGroupByAuction />
+                  <messageListGroupByAuction 
+                    :user=this.$store.state.user
+                  />
               </div>
             </div>
           </div>
@@ -41,7 +32,12 @@ export default {
     `,
   computed: {
     user() {
+      if(this.$store.state.user !== null){
         return this.$store.state.user
+      }
+      else{
+        window.location.href = '/';
+      }
     }
   }
   }

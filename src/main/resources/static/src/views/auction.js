@@ -1,24 +1,14 @@
-import searchBar from '../components/searchBar.js'
-import categoryButtons from '../components/categoryButtons.js'
 import newBudInput from '../components/newBudInput.js'
 import newMessageInput from '../components/newMessageInput.js'
 import messageItem from '../components/messageItem.js'
 
 export default {
   components: {
-    searchBar,
-    categoryButtons,
     newBudInput,
     newMessageInput,
     messageItem
   },
   template: `
-    <div>
-      <div id="search-categories-container">
-        <searchBar />
-        <categoryButtons />
-        
-      </div>
       <div class="auction-container">
         <div class="auction-column">
           <div class="auction-card-big">
@@ -65,8 +55,7 @@ export default {
                     </section>                      
                     <section>
                       <label>Slutar:</label>
-                      {{stopDateTime}}
-                      <div id="countdown"></div>
+                      <div v-bind:id="'countdown'+auction.id">{{countDownAuction()}}{{stopDateTime}}</div>
                     </section>
                   </div>
                   <section class="bid-section" v-bind:class="visibleCheck ? 'isVisble' : 'notVisible'">
@@ -119,8 +108,7 @@ export default {
             </ul>
           </div>
         </div>
-      </div>      
-  </div>
+      </div>
   `,
   data() {
     return {
@@ -129,9 +117,6 @@ export default {
         auction_id: 0,
         visibleCheck: false
     }
-  },
-  created() {
-    this.countDown();
   },
   computed: {
     user() {
@@ -163,12 +148,18 @@ export default {
     if(comma_index > 0){
       this.images=images;
     }
-    //new bid input visible or not visible
-    if(this.$store.state.user.id !== auction.owner_user_id){
-      this.visibleCheck = true;
-    }else{
-      this.visibleCheck = false;
+    //new bid input and chat visible or not visible
+    if(this.$store.state.user !== null){
+      if(this.$store.state.user.id !== auction.owner_user_id){
+        this.visibleCheck = true;
+      }else{
+        this.visibleCheck = false;
+      }
     }
+    else{
+        this.visibleCheck = false;
+    }
+    
 
   },
   methods: {
@@ -176,15 +167,19 @@ export default {
       var expandImg = document.getElementById("expandedImg");
       document.getElementById("expandedImg").innerHTML='<img src="'+image+'" alt="">';
     },
-    openForm() {
-      document.getElementById("myChatBoxForm").style.display = "block";
+    async openForm() {
+      if(this.$store.state.user.id == null){
+        window.location.href = '/loginForm';
+      }else{
+        document.getElementById("myChatBoxForm").style.display = "block";
+      }
     },    
     closeForm() {
       document.getElementById("myChatBoxForm").style.display = "none";
     },
-    countDown(stop_date){
-      console.log(stop_date)
-      var countDownDate = new Date("Jan 5, 2021 15:37:25").getTime();
+    countDownAuction(){
+      let self = this;
+      var countDownDate = new Date(self.auction.stop_date).getTime();
 
       // Update the count down every 1 second
       var x = setInterval(function() {
@@ -200,16 +195,16 @@ export default {
         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-          
-        // Output the result in an element with id="demo"
-        document.getElementById("countdown").innerHTML = days + "d " + hours + "h "
-        + minutes + "m " + seconds + "s ";
-          
+        
         // If the count down is over, write some text 
         if (distance < 0) {
           clearInterval(x);
-          document.getElementById("countdown").innerHTML = "EXPIRED";
+          document.getElementById("countdown"+self.auction.id).innerHTML = "Avslutad";
+        }else if(days < 1){
+          document.getElementById("countdown"+self.auction.id).innerHTML = hours + "tim "
+          + minutes + "min " + seconds + "s ";          
         }
+        
       }, 1000);
     }
   },

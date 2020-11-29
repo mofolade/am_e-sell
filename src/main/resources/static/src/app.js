@@ -6,15 +6,25 @@ export default {
     headerSection,
     footerSection
   },
+  data() {
+    return {
+        user: []
+    }
+  },
+  mounted(){
+      this.user = this.$store.state.user;
+  },
   methods: {
   },
     template: `
       <div id="app">
-        <headerSection />
-        <main id="wrapper">
-          <router-view />
+        <main>
+          <headerSection :user="user" />
+            <div id="wrapper">
+              <router-view />
+            </div>
+          <footerSection />
         </main>
-        <footerSection />
       </div>
     `,
     async created() {
@@ -23,7 +33,8 @@ export default {
       this.$store.dispatch('fetchAllMessages')
       this.$store.dispatch('fetchAllBids')
       this.$store.dispatch('fetchAllMessagesByUserId')
+    },
+    mounted(){
 
-      //this.$store.dispatch('fetchAllAuctions')     
     }
   }

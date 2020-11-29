@@ -6,16 +6,23 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
     display: flex;
+    min-height: 100vh;
     flex-direction: column;
 }
-#app{
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+#app, main{
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 }
 #wrapper{
-    flex: 1 0 auto;
-    margin: 10px;
+    flex: 1;
+}
+#about-wrapper{
+  margin: 10px;
+}
+#list-wrapper{
+  flex: 1 0 auto;
+  margin: 10px;
 }
 .content {
   flex: 1 0 auto;
@@ -40,8 +47,13 @@ body {
   width: 2rem;
   height: 2rem;
 }
-
-
+.category-list-section {
+  padding: 50px;
+  text-align: center;
+  background-color: #474e5d;
+  color: white;
+  border-radius: 5px;
+}
 #categories-cover {
   width: 100%;
   padding-top: 1%;
@@ -481,7 +493,8 @@ input[type=number] {
 .auction-little-box-category{
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-around;  
+  align-items: center;
 }
 .bid-little-btn{
   width: 100%; 
@@ -500,8 +513,16 @@ input[type=number] {
   margin-bottom: 15px;
 }
 
+.mb5{
+  margin-bottom: 5px;
+}
+
 .bp .bg-light {
   background-color: #f9f9f9!important;
+}
+
+.end-date-box{
+  font-size: 12px;
 }
 
 .new-auction-container {
@@ -520,8 +541,12 @@ label{
 }
 
 #auction-cover{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   justify-content: center;
- flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin: 15px;
 }
 
 .auction-card {
@@ -591,16 +616,18 @@ label{
 }
 
 #search-categories-container{
-  position: absolute;
+  /*position: absolute;
   top: 30%;
   left: 0;
-  right: 0;   
+  right: 0;  */ 
   padding: 15px;
-  margin: -83px auto 0 auto;
+  /*margin: -83px auto 0 auto;*/
   text-align: center;  
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  /*width: 75%;*/
 }
 
 #search-cover
@@ -922,9 +949,9 @@ background:#2196f3;
 
 .bg {
     background-image: url(/src/assets/headerpic.jpg);
-    min-height: 55%;
-    position: relative;
-    opacity: 0.65;
+    min-height: 350px;
+    /*position: relative;*/
+    opacity: 0.85;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -932,6 +959,7 @@ background:#2196f3;
 .navbar {
     overflow: hidden;
     font-family: Arial, Helvetica, sans-serif;
+    z-index: 10;
 }
 .navbar a {
     float: left;
