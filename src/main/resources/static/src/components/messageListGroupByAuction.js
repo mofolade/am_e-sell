@@ -10,7 +10,7 @@ export default {
             <div class="message-wrapper-title">Meddelande</div>
             <div class="messages-box">
                 <ul>
-                <messageAuctionItem 
+                <messageAuctionItem
                     v-for="auction of auctions" 
                     :auction="auction"
                     :key="auction.id"
@@ -21,23 +21,26 @@ export default {
     `,
     data() {
         return {
-            auctions: []
+           auctions:[]
         }
     },
+    props: ['user'],
     computed: {
-        user() {
-            return this.$store.state.user
-        },
-        auctionsByUserId() {
+        /*auctionsByUserId() {
             return this.$store.state.auctions
-        }
+        },*/
+        /*getMessagesByUserId(){
+            this.fetchMessagesByUserId();
+        }*/
     },
-    async mounted() {        
-        let auctions = await fetch(`/rest/auctionsmessagesbyuserid/`+ this.$store.state.user.id);
-        auctions = await auctions.json();
-        this.auctions = auctions;
-    },
-    methods: {
+    async mounted() { 
+        let user = await fetch('/whoami')
+        user = await user.json()
+        if(user.status !== 404){
+            let auctions = await fetch(`/rest/auctionsmessagesbyuserid/`+ user.id);
+            auctions = await auctions.json();
+            this.auctions = auctions;
+        }                   
         
-    }
+    },
 }

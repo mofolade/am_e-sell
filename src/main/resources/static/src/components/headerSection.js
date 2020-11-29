@@ -1,4 +1,11 @@
+import searchBar from '../components/searchBar.js'
+import categoryButtons from '../components/categoryButtons.js'
+
 export default {
+  components: {
+    searchBar,
+    categoryButtons,
+  },
     template: `
     <header class="bg">
     
@@ -30,15 +37,29 @@ export default {
           </div> 
           
           <div id="navbar-r">
-              <router-link v-if="!$store.state.user" to="/signUp">Bli medlem</router-link>
-              <router-link to="/loginForm">Logga in</router-link>
-              <router-link v-if="$store.state.user" to="/mypage">Profil</router-link>
               <router-link to="/about">Om oss</router-link>
+                <router-link v-if="!$store.state.user" to="/signUp">Bli medlem</router-link>              
+                <router-link v-if="!$store.state.user" to="/loginForm" id="sign-in-link">Logga in</router-link>
+
+                <router-link v-if="$store.state.user" to="/mypage" id="profil-link">Profil</router-link>
+                <a href  v-if="$store.state.user" id="logout-link"  @click="logoutButton">Logga ut</a>
             </div>
           
         </nav>
+        
+        <div id="search-categories-container">
+          <searchBar />
+
+          <categoryButtons />
+          
+        </div>
     </header>
     `,
+    data() {
+      return {
+          visibleCheck: false,
+      }
+    },
     methods: {
       showNavMenu() {
         document.getElementById("myDropdown").style.visibility = "visible";
@@ -53,6 +74,11 @@ export default {
         document.getElementById("show-menu-button").style.visibility = "visible";
         document.getElementById("close-menu-button").style.visibility = "hidden";
         document.getElementById("close-menu-button").style.display = "none";
+      },
+      logoutButton() {
+        fetch('/logout')
+        this.$store.commit('setUser', null)
+        window.location.href = '/';
       }
     }
 }
