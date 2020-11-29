@@ -1,6 +1,6 @@
 export default {
     template: `
-      <div>
+      <div id="about-wrapper">
         
         <div class="about-section">
           <h2>Auctionista</h2>

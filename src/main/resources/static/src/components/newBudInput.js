@@ -23,19 +23,23 @@ export default {
     props: ['auction_id'],
     methods: {
         async newBid() {
-            let bid = {
-                auction_id: this.auction_id,
-                bidder_user_id: this.$store.state.user.id,
-                bid: this.bid,
-                creation_date: Date.now()
+            if(this.$store.state.user.id == null){
+                window.location.href = '/loginForm';
             }
+            else{
+                let bid = {
+                    auction_id: this.auction_id,
+                    bidder_user_id: this.$store.state.user.id,
+                    bid: this.bid,
+                    creation_date: Date.now()
+                }
 
-            // clear input
-            this.bid = ''
+                // clear input
+                this.bid = ''
 
-            // send bid with websocket
-            sendBid(bid)
-            
+                // send bid with websocket
+                sendBid(bid)
+            }
         }
     }
 }

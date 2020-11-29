@@ -9,7 +9,7 @@ export const store = new Vuex.Store({
     messagesByUserId: [],
     categories: [],
     auctions: [],
-    user: null
+    user: []
   },
   mutations: {
     setUser(state, user) {
@@ -35,14 +35,27 @@ export const store = new Vuex.Store({
     },
     prependBid(state, bid) {
       state.bids.unshift(bid)
+    },
   },
+  getters : {
+    isLogged: state => {
+      if(state.user){
+        return true
+      }else{
+        return false
+      }
+    }
   },
   actions: {
     async fetchUser(store){
       let user = await fetch('/whoami')
       user = await user.json()
       console.log(user);
-      store.commit('setUser', user)
+      if(user.status == 404){
+        store.commit('setUser', null)
+      }else{
+        store.commit('setUser', user)
+      }
     },
     async fetchAllMessages(store) {
         let messages = await fetch('/rest/messages')
@@ -61,24 +74,26 @@ export const store = new Vuex.Store({
       bids.sort((m1, m2) => m1.timestamp > m2.timestamp ? -1 : 1)
 
       store.commit('setBids', bids)
-  },
+    },
     async fetchAllMessagesByUserId(store) {
-        let user = await fetch('/whoami')
-        user = await user.json()
+        let user = store.user; //await fetch('/whoami')
+        //user = await user.json()
         //console.log(user.id)
         //let messages = await fetch(`/rest/auctionmessagesbyuserid/`+ user.id);
-        let messages = await fetch('/rest/messagesbyuserid/'+ user.id);
-        messages = await messages.json();
-        messages.sort((m1, m2) => m1.timestamp > m2.timestamp ? -1 : 1)
-        //console.log(messages)
-        //this.messages = messages;
-        store.commit('setMessagesByUserId', messages)
+        if(user){
+          let messages = await fetch('/rest/messagesbyuserid/'+ user.id);
+          messages = await messages.json();
+          messages.sort((m1, m2) => m1.timestamp > m2.timestamp ? -1 : 1)
+          //console.log(messages)
+          //this.messages = messages;
+          store.commit('setMessagesByUserId', messages)
+        }
     },
     async fetchAllCategories(store) {
       let categories = await fetch('/rest/categories')
       categories = await categories.json()
 
-      //console.log(categories);
+      console.log(categories);
       store.commit('setCategories', categories)
     },
     async fetchAllAuctions(store) {

@@ -27,10 +27,13 @@ export default {
         getUserPictureUrl(sender_user_id){
             let self = this;
             let current_user = this.$store.state.user;
+
             if(sender_user_id == this.auction_owner_id){
                 return this.owner_picture_url;
             }
-            return current_user.picture_url
+            if(current_user !== null){
+                return current_user.picture_url
+            }
         }
     }
 }
