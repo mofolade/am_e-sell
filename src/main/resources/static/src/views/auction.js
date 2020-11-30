@@ -55,7 +55,7 @@ export default {
                     </section>                      
                     <section>
                       <label>Slutar:</label>
-                      <div v-bind:id="'countdown'+auction.id">{{countDownAuction()}}{{stopDateTime}}</div>
+                      <div class="countdown-box" v-bind:id="'countdown'+auction.id">{{countDownAuction()}}{{stopDateTime}}</div>
                     </section>
                   </div>
                   <section class="bid-section" v-bind:class="visibleCheck ? 'isVisble' : 'notVisible'">
@@ -115,7 +115,8 @@ export default {
         auction: [],
         images: [],
         auction_id: 0,
-        visibleCheck: false
+        visibleCheck: false,
+        GlobalVar: 0
     }
   },
   computed: {
@@ -158,8 +159,7 @@ export default {
     }
     else{
         this.visibleCheck = false;
-    }
-    
+    }    
 
   },
   methods: {
@@ -182,7 +182,7 @@ export default {
       var countDownDate = new Date(self.auction.stop_date).getTime();
 
       // Update the count down every 1 second
-      var x = setInterval(function() {
+      this.GlobalVar = setInterval(function() {
 
         // Get today's date and time
         var now = new Date().getTime();
@@ -198,11 +198,11 @@ export default {
         
         // If the count down is over, write some text 
         if (distance < 0) {
-          clearInterval(x);
+          clearInterval(this.GlobalVar);
           document.getElementById("countdown"+self.auction.id).innerHTML = "Avslutad";
         }else if(days < 1){
-          document.getElementById("countdown"+self.auction.id).innerHTML = hours + "tim "
-          + minutes + "min " + seconds + "s ";          
+          document.getElementById("countdown"+self.auction.id).innerHTML = hours + "h "
+          + minutes + "m " + seconds + "s ";          
         }
         
       }, 1000);
@@ -219,4 +219,7 @@ export default {
       }
     }
   },
+  beforeDestroy () {
+      clearInterval(this.GlobalVar)
+  }
 }
