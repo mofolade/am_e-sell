@@ -17,6 +17,11 @@ export default {
             <div class="profile_email"> {{user.email}} </div>
             <label>Organize nummer</label>
             <div class="profile_orgnm"> {{user.organize_number}} </div>
+            <router-link v-bind:to="'/newauction'">
+                <div class="btn">
+                Nytt auktion
+                </div>
+            </router-link>
           </div>
           <div class="messages-container">
             <div class="d-flex flex-direction-column">
