@@ -1,30 +1,24 @@
 import newBudInput from '../components/newBudInput.js'
 import newMessageInput from '../components/newMessageInput.js'
 import messageItem from '../components/messageItem.js'
+import auctionGallery from '../components/auctionGallery.js'
 
 export default {
   components: {
     newBudInput,
     newMessageInput,
-    messageItem
+    messageItem,
+    auctionGallery
   },
   template: `
       <div class="auction-container">
         <div class="auction-column">
           <div class="auction-card-big">
             <ul class="flex-container">
-              <li class="flex-item">
-                <div class="auction-gallery">
-                  <div id="expandedImg" class="auction-big-image">
-                    <img v-bind:src="auction.default_image" alt="">
-                  </div>
-                  <div class="gallery-row">
-                    <div class="gallery-column" v-for="image of images" :key="image.image_path">
-                      <img v-bind:src=image style="width:100%" v-on:click="myGalleryFunction(image)">
-                    </div>
-                  </div>
-                </div>
-              </li>
+              <auctionGallery
+                :default_image ="auction.default_image"
+                :images="images"
+              />
               <li class="flex-item">
                 <div class="auction-card-container">
                   <h2>{{auction.name}}</h2>
@@ -68,7 +62,6 @@ export default {
                     <p>{{auction.description}}</p>
                   </div>
                 </div>
-
               </li>
               <li class="flex-item">
                 <div class="chat-box">
@@ -85,21 +78,21 @@ export default {
                     <div class="contact-block-row-desktop">
                       <span class="mdi mdi-message-text-outline contact-block-row-icon-desktop"></span>
                       <span class="contact-block-row-label closed ng-binding ng-scope">
-                      <button class="open-button" v-on:click="openForm()">Chat</button>
-                      <div class="chat-popup" id="myChatBoxForm">
-                        <newMessageInput :auction_id="auction.id" :owner_user_id="auction.owner_user_id" />
-                        <div class="messages-box-little">
-                          <ul>
-                          <messageItem 
-                              v-for="message of messages"
-                              :message="message"
-                              :auction_owner_id = "auction.owner_user_id"
-                              :owner_picture_url="auction.owner_picture_url"
-                              :key="message.id"
-                          />
-                          </ul>
-                      </div>
-                      </div>
+                        <button class="open-button" v-on:click="openForm()">Chat</button>
+                        <div class="chat-popup" id="myChatBoxForm">
+                          <newMessageInput :auction_id="auction.id" :owner_user_id="auction.owner_user_id" />
+                          <div class="messages-box-little">
+                            <ul>
+                            <messageItem 
+                                v-for="message of messages"
+                                :message="message"
+                                :auction_owner_id = "auction.owner_user_id"
+                                :owner_picture_url="auction.owner_picture_url"
+                                :key="message.id"
+                            />
+                            </ul>
+                          </div>
+                        </div>
                       </span>
                     </div>
                   </div>
@@ -120,9 +113,6 @@ export default {
     }
   },
   computed: {
-    user() {
-        return this.$store.state.user
-    },
     stopDateTime() {
       return new Date(this.auction.stop_date).toLocaleString()
     },
@@ -159,23 +149,15 @@ export default {
     }
     else{
         this.visibleCheck = false;
-    }    
-
+    }
   },
   methods: {
-    myGalleryFunction(image){
-      var expandImg = document.getElementById("expandedImg");
-      document.getElementById("expandedImg").innerHTML='<img src="'+image+'" alt="">';
-    },
     async openForm() {
       if(this.$store.state.user.id == null){
         window.location.href = '/loginForm';
       }else{
         document.getElementById("myChatBoxForm").style.display = "block";
       }
-    },    
-    closeForm() {
-      document.getElementById("myChatBoxForm").style.display = "none";
     },
     countDownAuction(){
       let self = this;
@@ -188,8 +170,7 @@ export default {
         var now = new Date().getTime();
           
         // Find the distance between now and the count down date
-        var distance = countDownDate - now;
-          
+        var distance = countDownDate - now;          
         // Time calculations for days, hours, minutes and seconds
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -203,8 +184,7 @@ export default {
         }else if(days < 1){
           document.getElementById("countdown"+self.auction.id).innerHTML = hours + "h "
           + minutes + "m " + seconds + "s ";          
-        }
-        
+        }        
       }, 1000);
     },
     lastBid(){
