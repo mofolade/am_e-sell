@@ -35,7 +35,7 @@ public class SocketControllerBid extends TextWebSocketHandler {
         SocketDTOBid socketDTOBid = objectMapper.readValue(message.getPayload(), SocketDTOBid.class);
 
         switch (socketDTOBid.action) {
-            case "message":
+            case "bid":
                 // call frankenstein to convert this payload
                 Bid bid = convertPayload(socketDTOBid.payload, Bid.class);
                 socketServiceBid.saveNewBid(bid);
