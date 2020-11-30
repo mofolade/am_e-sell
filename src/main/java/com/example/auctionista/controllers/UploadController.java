@@ -26,7 +26,7 @@ public class UploadController {
         }
     }
 
-    @PostMapping("/rest/newauction/uploadfiles")
+    @PostMapping("/rest/newfile/uploadfiles")
     public List<String> handleFileUpload(@RequestParam List<MultipartFile> files) {
         final List<String> supportedFileExtensions = List.of(".png,.jpg,.jpeg,.gif,.bmp,.jfif".split(","));
         List<String> resultingFilepaths = new ArrayList<String>();

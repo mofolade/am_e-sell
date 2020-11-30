@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.List;
 
 import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
 
@@ -150,5 +151,20 @@ public class UserController {
     @GetMapping("/rest/user/{id}")
     public User getOneUser(@PathVariable long id) {
         return userService.getOneUser(id);
+    }
+
+    @GetMapping("/rest/users")
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
+    }
+
+    @PostMapping("/rest/users")
+    public User createUser(@RequestBody User user) {
+        return userService.createUser(user);
+    }
+
+    @DeleteMapping("/rest/users/{id}")
+    public void deleteUser(@PathVariable int id) {
+        userService.deleteUser(id);
     }
 }
