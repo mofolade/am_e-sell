@@ -52,11 +52,18 @@ export default {
                       <div class="countdown-box" v-bind:id="'countdown'+auction.id">{{countDownAuction()}}{{stopDateTime}}</div>
                     </section>
                   </div>
-                  <section class="bid-section" v-bind:class="visibleCheck ? 'isVisble' : 'notVisible'">
+                  <section class="bid-section" v-bind:class="bidVisibleCheck ? 'isVisble' : 'notVisible'">
                     <newBudInput 
                       :auction_id="auction.id"
+                      :start_price="auction.start_price"
+                      :last_bid="lastBid()"
                     />
                   </section>
+                  <span  v-bind:class="this.bidVisibleCheck ? 'notVisible' : 'isVisble'">
+                      <button v-on:click="redirectLoginForm()" data-bid-submit-button="" class="bid-btn btn btn-lg btn-fluid mb-4 " type="submit"> 
+                          Lägg bud
+                      </button>
+                  </span>
                   <div class="description-box">
                     <b>Beskrivning</b>
                     <p>{{auction.description}}</p>
@@ -74,7 +81,7 @@ export default {
                       <div class="name">{{auction.owner_user_name}}</a></div>
                     </div>
                   </div>
-                  <div class="contact-block" v-bind:class="visibleCheck ? 'isVisble' : 'notVisible'">
+                  <div class="contact-block" v-bind:class="chatVisibleCheck ? 'isVisble' : 'notVisible'">
                     <div class="contact-block-row-desktop">
                       <span class="mdi mdi-message-text-outline contact-block-row-icon-desktop"></span>
                       <span class="contact-block-row-label closed ng-binding ng-scope">
@@ -108,7 +115,8 @@ export default {
         auction: [],
         images: [],
         auction_id: 0,
-        visibleCheck: false,
+        chatVisibleCheck: false,
+        bidVisibleCheck: false,
         GlobalVar: 0
     }
   },
@@ -142,16 +150,21 @@ export default {
     //new bid input and chat visible or not visible
     if(this.$store.state.user !== null){
       if(this.$store.state.user.id !== auction.owner_user_id){
-        this.visibleCheck = true;
+        this.bidVisibleCheck = true;
       }else{
-        this.visibleCheck = false;
+        this.bidVisibleCheck = false;
       }
+      this.chatVisibleCheck = true;
     }
     else{
-        this.visibleCheck = false;
+        this.chatVisibleCheck = false;
+        this.bidVisibleCheck = false;
     }
   },
   methods: {
+    redirectLoginForm(){
+        window.location.href = '/loginForm';
+    },
     async openForm() {
       if(this.$store.state.user.id == null){
         window.location.href = '/loginForm';

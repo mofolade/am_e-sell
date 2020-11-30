@@ -61,8 +61,12 @@ export default {
                                 <h3>File size: {{ file.size | formatBytes }}</h3>
                                 </div>
                                 <div class="remove-card">
-                                <button type="button" class="remove-card-btn" @click.prevent="deleteItem" v-bind:value="index"> Remove</button></div>
-                            </li>
+                                    <button type="button" class="remove-card-btn" @click.prevent="deleteItem" v-bind:value="index"> Ta bort</button>
+                                </div>
+                                <div class="primary-card">
+                                    <button type="button" class="primary-card-btn" @click.prevent="primary" v-bind:value="index"> Primär</button></div>
+                                </div>
+                                </li>
                         <!--       </transition-group> -->
                             </ul>
                         </div>    
@@ -146,6 +150,9 @@ export default {
             setTimeout(() => {
               parentCard.style.display = 'none';
             }, 1000);
+        },
+        primary(){
+
         },
         async addAuction(e) {
             let cardArray = [];

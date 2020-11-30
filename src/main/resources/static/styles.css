@@ -180,6 +180,32 @@ body {
   width: 100%;
 }
 
+.alert {
+  padding: 6px;
+  background-color: #e5584e; /* Red */
+  color: white;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  display: none;
+}
+
+/* The close button */
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* When moving the mouse over the close button */
+.closebtn:hover {
+  color: black;
+}
+
 .bid-section{
   background-color: #e9e5e5!important;
   padding: 1.5rem!important;
@@ -1465,7 +1491,7 @@ label {
   margin: 0.6rem;
 }
 
-.remove-card {
+.remove-card, .primary-card {
   flex-grow: 2;
   align-self: stretch;
   display: flex;
@@ -1475,7 +1501,14 @@ label {
 .remove-card-btn {
   appearance: none;
   border: 0;
-  color: var(--red);
+  color: #fff;
+  background-color: #f87767;
+}
+.primary-card-btn{
+  appearance: none;
+  border: 0;
+  color: #fff;
+  background-color: #176d7c;
 }
 .remove-card-btn:hover {
   text-decoration: underline;
