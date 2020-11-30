@@ -26,6 +26,10 @@ public class AuctionInformationService {
         return auctionInformationRepo.findByCategoryId(category_id);
     }
 
+    public List<AuctionInformation> getAllAuctionsBySearchText(String text) {
+        return auctionInformationRepo.findBySearchText(text);
+    }
+
     public List<AuctionInformation> getAllAuctionsMessagesByUserId(int user_id) {
         return auctionInformationRepo.findAllAuctionMessagesByUserId(user_id);
     }
