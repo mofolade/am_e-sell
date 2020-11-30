@@ -24,9 +24,12 @@ export default {
     },
     methods: {
       parseSearchString(e) {
-          
         // Trim search string
-        const trimmedSearchString = this.text.trim();
+        let trimmedSearchString = this.text.trim();
+        trimmedSearchString = trimmedSearchString.replace(/[\u00A0-\u9999<>\&]/g, function(i) {
+          return '&#'+i.charCodeAt(0)+';';
+        });
+        window.location.href = '/search/'+trimmedSearchString;
       }
         
     }
