@@ -1,36 +1,33 @@
 export default {
   template: `
     <div class="login-container">
-    <form action="">
-        <div class="row">
+      <div class="row">
         <h2 style="text-align:center">Logga in</h2>
-
         <div class="login-col">
-            <div class="hide-md-lg">
-            <p>Or sign in manually:</p>
-            </div>
+          <form @submit.prevent="signInManually">
+              <input type="text" v-model="email" name="email" placeholder="Email" required>
+              <input type="password" v-model="password" name="password" placeholder="Lösenord" required>
+              <button data-test-submit-button="" data-bid-submit-button="" class="bid-btn btn btn-lg btn-fluid mb-4 " type="submit"> 
+              Logga in
+              </button>
+          </form>
+          <div class="hl">
+            <span class="hl-innertext">eller</span>
+          </div>
 
-            <input type="text" name="username" placeholder="Användare" required>
-            <input type="password" name="password" placeholder="Lösenord" required>
-            <input type="submit" value="Logga in">
-
-            <div class="hl">
-              <span class="hl-innertext">eller</span>
-            </div>
-
-            <button  @click="signInButton" class="google btn"><i class="fa fa-google fa-fw">
-            </i> Logga in med Google
-            </button>
+          <button  @click="signInButton" class="google btn"><i class="fa fa-google fa-fw">
+          </i> Logga in med Google
+          </button>
         </div>
-        
-        </div>
-    </form>
+      </div>
     </div>
   `,
   data() {
       return {
           auth2: null,
-          current_user: null
+          current_user: null,
+          email: '',
+          password: ''
       }
   },
   computed: {
@@ -46,13 +43,55 @@ export default {
       signInButton() {
           this.auth2.grantOfflineAccess().then(this.signInCallback);
       },
+      async signInManually(){
+        //securityLogin
+        console.log('signinmanually')
+        var email = this.email;
+        var password = this.password;
+        password = encodeURIComponent(password);
+        let req='';
+
+        const login = {
+          email, 
+          password
+        }
+        try {
+          const credentials = 'email=' + encodeURIComponent(email) + '&password=' + encodeURIComponent(password)
+          /*await fetch('/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(login)
+          })*/
+          console.log('bejelentkezes kuldes')
+          let response = await fetch("/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: credentials
+          });
+          if(response.url.includes('error')) {
+            console.log('Fel email eller lösenord!')
+          }else{
+            let res = await fetch('/auth/user')
+            try {
+              res = await res.json()
+              setUser(res)
+            } catch {
+              console.log('Not authenticated');
+            }
+            window.location.href = '/'; 
+          }
+
+        } catch (error) {
+          throw error;
+        }
+
+      },
       async signInCallback(authResult) {
           console.log('authResult', authResult);
         
           if (authResult['code']) {
         
-            // Hide the sign-in button now that the user is authorized
-        
+            // Hide the sign-in button now that the user is authorized        
             // Send the code to the server
             let result = await fetch('/storeauthcode', {
               method: 'POST',
