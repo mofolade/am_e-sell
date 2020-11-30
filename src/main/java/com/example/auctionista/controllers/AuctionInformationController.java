@@ -31,6 +31,11 @@ public class AuctionInformationController {
         return auctionInformationService.getAllAuctionsByCategoryId(category_id);
     }
 
+    @GetMapping("/rest/auctionsinfo/search/{text}")
+    public List<AuctionInformation> getAllAuctionsBySearchText(@PathVariable String text) {
+        return auctionInformationService.getAllAuctionsBySearchText(text);
+    }
+
     @GetMapping("/rest/auctionsmessagesbyuserid/{user_id}")
     public List<AuctionInformation> getAllAuctionsMessagesByCategoryId(@PathVariable int user_id) {
         return auctionInformationService.getAllAuctionsMessagesByUserId(user_id);
