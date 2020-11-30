@@ -43,13 +43,9 @@ export default {
 
             // send message with websocket
             sendMessage(message)
-
-            // await fetch('/rest/messages', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json'},
-            //     body: JSON.stringify(message)
-            // })
-            
+        },
+        closeForm(){
+            document.getElementById("myChatBoxForm").style.display = "none";
         }
     }
 }

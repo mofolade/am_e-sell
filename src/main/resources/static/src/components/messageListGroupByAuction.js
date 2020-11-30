@@ -26,12 +26,6 @@ export default {
     },
     props: ['user'],
     computed: {
-        /*auctionsByUserId() {
-            return this.$store.state.auctions
-        },*/
-        /*getMessagesByUserId(){
-            this.fetchMessagesByUserId();
-        }*/
     },
     async mounted() { 
         let user = await fetch('/whoami')

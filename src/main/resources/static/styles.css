@@ -30,6 +30,7 @@ body {
 }
 .content {
   flex: 1 0 auto;
+  margin: 10px;
 }
 .flex{
     display: flex;
@@ -74,6 +75,7 @@ body {
   padding-left: 0px;
   padding-top: 0px;
   padding-bottom: 0px;
+  display: inline-block;
 }
 
 .category-btn{
@@ -404,6 +406,15 @@ input[type=number] {
   min-height: 200px;
 }
 
+textarea {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  resize: none;
+  min-height: 200px;
+}
+
 /* When the textarea gets focus, do something */
 .chat-form-container textarea:focus {
   background-color: #ddd;
@@ -455,12 +466,35 @@ input[type=number] {
 .about-card-category{
   color: grey;
 }
+.category-item-btn{
+  display: flex; 
+  flex-direction: row;
+  align-items: center;
+  background-color:#efefef;
+  color:#000;
+  font: 400 13.3333px Arial;
+  border-radius: 5px;
+  border-color: #a8a7a7;
+  border: none;
+  padding: 0px 6px 0px 0px;
+}
 .icon-container{
   background-color: #fcfcfc;
   margin-right: 5px;
   padding: 12px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
+  -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    color: -internal-light-dark(black, white);
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    text-align: center;
+    cursor: default;
+    font: 400 13.3333px Arial;
 }
 .icon-container-little{
   background-color: #fcfcfc;
@@ -1112,7 +1146,25 @@ background:#2196f3;
   background-color: #4CAF50;
   color: white;
 }
-  
+
+.profile .btn{
+  background-color: #4CAF50;
+  color: white;
+}
+
+.btn select, .btn :focus, .btn :after, .btn :active {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-color: #a8a7a7;
+  border-radius: 4px;
+  margin: 5px 0;
+  opacity: 0.85;
+  display: inline-block;
+  font-size: 17px;
+  line-height: 20px;
+  text-decoration: none;
+}
 /* style inputs and link buttons */
 input,
 .btn,
@@ -1127,7 +1179,8 @@ select {
   display: inline-block;
   font-size: 17px;
   line-height: 20px;
-  text-decoration: none;
+  text-decoration: none;  
+  cursor:pointer;
 }
   
 input:hover,
@@ -1221,11 +1274,11 @@ footer {
     color: #fff;
 }
 .footer a:hover {
-    text-decoration: underline;
+    text-decoration: none;
     color: #fff;
 }
 .footer a:active {
-    text-decoration: underline;
+    text-decoration: none;
     color: #fff;
 }
 footer h5, footer{

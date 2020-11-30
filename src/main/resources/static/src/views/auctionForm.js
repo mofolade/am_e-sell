@@ -1,11 +1,14 @@
 export default {
+    components: {
+        
+    },
     template: `
       <div class="new-auction-container">
-        <form @submit.prevent="addAuction">
+      <form @submit.prevent="addAuction">
             <div class="row">
                 <h2 style="text-align:center">Ny auktion</h2>
   
-                <div class="login-col">
+                <div class="login-col">{{user}}
                     <label>Produkt namn</label>
                     <input v-model="name"  type="text" name="name" maxlength="160" required>
                     
@@ -28,7 +31,7 @@ export default {
                     <input type="datetime-local" v-model="stop_date" name="stop_date" required>
 
                     <label>Beskrivning</label>
-                    <input type="text" v-model="description" name="description" maxlength="300" required>
+                    <textarea v-model="description" name="description" required="required"></textarea>
 
                     <label>Pris</label>
                     <input type="text" v-model="price" name="price" required>
@@ -87,39 +90,30 @@ export default {
             imageUrlArray: [],
             itemToDelete: '',
             checkboxes: [],
+            owner_user_id : 0
         }
     },
     components: {
         'vue-upload-multiple-image': () => import('../components/vue-upload-multiple-image.js')
-     },
+    },
+    async mounted() {    
+        if(this.$store.state.user !== null){
+            this.owner_user_id = this.$store.state.user.id
+        }else{
+            window.location.href = '/loginForm';
+        }
+
+    },
+    computed:{
+        user() {
+            if(this.$store.state.user !== null){
+                this.owner_user_id = this.$store.state.user.id
+            }else{
+                window.location.href = '/loginForm';
+            }
+        }
+    },
     methods: {
-        uploadImageSuccess(e,t,n){
-            console.log("data: ",e,t,n);
-        },
-        async fileList(e) {
-            // handle file changes
-            const formData = new FormData();
-            var files = e.target.files || e.dataTransfer.files;
-            console.log(files)
-
-            var photos='';
-            if (!files.length) return;
-
-            // append the files to FormData
-            Array.from(Array(files.length).keys())
-            .map(x => {
-                formData.append("files", files[x], files[x].name);
-                photos = photos+files[x].name+' ';
-            });
-
-            let response = await fetch('/rest/newauction/uploadfiles', {
-                method: 'POST',
-                body: formData
-            }).catch(console.warn)
-
-            response = await response.json()
-            console.log(response);
-        },
         listUploads(e) {
             this.showUploads = true;
             let files = e.srcElement.files;
@@ -169,7 +163,7 @@ export default {
                 auction_images = auction_images+this.files[x].name+' ';
             });
 
-            let image_upload_response = await fetch('/rest/newauction/uploadfiles', {
+            let image_upload_response = await fetch('/rest/newfile/uploadfiles', {
                 method: 'POST',
                 body: formData
             }).catch(console.warn)
@@ -210,7 +204,7 @@ export default {
 
             var name = this.name;
             var category_id = this.category_id;
-            var user_id = 2;
+            var owner_user_id = this.owner_user_id;
             var start_price = this.price;
             var description = this.description;
             var current_price = 0;
@@ -226,7 +220,7 @@ export default {
             const auction = {
                 name, 
                 category_id,
-                user_id,
+                owner_user_id,
                 start_date,
                 stop_date,
                 start_price,
@@ -267,6 +261,7 @@ export default {
                     }
                 }
 
+                window.location.href = '/myPage';
                 return response;
 
             } catch (error) {
