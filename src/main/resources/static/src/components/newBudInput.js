@@ -4,7 +4,7 @@ export default {
     template: `
         <form @submit.prevent="newBid">
             <div class="bid-input">
-                <input type="number" class="form-control" v-model="bid" name="bid" autocomplete="off" value="">
+                <input type="number" class="form-control" v-model="bid" name="bid" autocomplete="off" value="" required>
                 <input type="hidden" v-model="auction_id">
                 <h4 style="top: 0px; right: 0px;">kr</h4>
             </div>
