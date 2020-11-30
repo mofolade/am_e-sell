@@ -24,6 +24,10 @@ body {
   flex: 1 0 auto;
   margin: 10px;
 }
+#search-wrapper{
+  flex: 1 0 auto;
+  margin: 10px;
+}
 .content {
   flex: 1 0 auto;
 }
@@ -51,7 +55,7 @@ body {
   width: 100px;
 }
 .category-list-section {
-  padding: 50px;
+  padding: 20px;
   text-align: center;
   background-color: #474e5d;
   color: white;
