@@ -93,7 +93,6 @@ function connectbid() {
     }
 
     wsBid.onopen = (e) => {
-        console.log('es ez mikor van???')
         sendf({
             action: 'connection',
             payload: 'user connected'
@@ -118,14 +117,10 @@ function disconnect() {
 }
 
 function send(data) {
-    
-    console.log('send resz')
     ws.send(JSON.stringify(data));
 }
 
 function sendMessage(message) {
-    
-    console.log('sendMessage resz')
     send({
         action: 'message',
         payload: message
@@ -133,14 +128,10 @@ function sendMessage(message) {
 }
 
 function sendf(data) {
-    //#2
-    console.log('send resz bid')
     wsBid.send(JSON.stringify(data));
 }
 
 function sendMessageBid(message) {
-    //#1
-    console.log('sendMessage resz bid')
     sendf({
         action: 'bid',
         payload: message
