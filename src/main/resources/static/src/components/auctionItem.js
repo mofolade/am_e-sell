@@ -22,7 +22,7 @@ export default {
                     </div>
                     <div class="end-date-box mb5">
                         <span>Slutar:</span>                            
-                        <span v-bind:id="'countdown'+auction.id">{{countDown(auction.stop_date,auction.id)}}{{stopDateTime}}</span>
+                        <span class="countdown-box" v-bind:id="'countdown'+auction.id">{{countDown(auction.stop_date,auction.id)}}{{stopDateTime}}</span>
                     </div>
                     <div class="auction-little-box-category">
                         <div>
@@ -49,7 +49,8 @@ export default {
     `,
     data() {
         return {
-            visibleCheck: false
+            visibleCheck: false,
+            GlobalVar: 0
         }
     },
     props: ['auction','lastbid'],    
@@ -82,7 +83,7 @@ export default {
         countDown(stop_date,auction_id){
             var countDownDate = new Date(stop_date).getTime();
             // Update the count down every 1 second
-            var x = setInterval(function() {
+            this.GlobalVar = setInterval(function() {
     
             // Get today's date and time
             var now = new Date().getTime();
@@ -97,12 +98,20 @@ export default {
             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
             // If the count down is over, write some text 
             if (distance < 0) {
-              clearInterval(x);
-              document.getElementById("countdown"+auction_id).innerHTML = "Avslutad";
+                clearInterval(this.GlobalVar);
+                if(document.getElementById("countdown"+auction_id)){
+                    document.getElementById("countdown"+auction_id).innerHTML = "Avslutad";
+                }
             }else if(days < 1){
-                document.getElementById("countdown"+auction_id).innerHTML = hours + " h "+ minutes + " m " + seconds + "s ";
+                if(document.getElementById("countdown"+auction_id)){
+                    document.getElementById("countdown"+auction_id).innerHTML = hours + " h "+ minutes + " m " + seconds + "s ";
+                }
             }
           }, 1000);
-        },
+        }
+    },
+    beforeDestroy () {
+        this.GlobalVar=null;
+        clearInterval(this.GlobalVar)
     }
 }
