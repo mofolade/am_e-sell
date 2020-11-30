@@ -27,7 +27,8 @@ export default {
                     <div class="auction-little-box-category">
                         <div>
                             <span class="price-label">Pris:</span>
-                            <span>{{lastbid}}</span>
+                            <span v-if="lastbid">{{lastbid}}</span>
+                            <span v-else>{{auction.start_price}}</span>
                             <span class="price-unit" itemprop="priceCurrency" content="Kr">Kr</span>
                         </div>
                         <span  v-bind:class="visibleCheck ? 'isVisble' : 'notVisible'">
