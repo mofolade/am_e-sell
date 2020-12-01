@@ -21,6 +21,11 @@ export default {
                 Nytt auktion
                 </div>
             </router-link>
+            <router-link v-bind:to="'/myauctions/'+user.id">
+                <div class="btn">
+                Mina auktioner
+                </div>
+            </router-link>
           </div>
           <div class="messages-container">
             <div class="d-flex flex-direction-column">
