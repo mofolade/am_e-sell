@@ -7,7 +7,7 @@ export default {
     },
     template: `
         <div>
-            <div class="message-wrapper-title">Meddelande</div>
+            <div class="message-wrapper-title">Mina meddelanden</div>
             <div class="messages-box">
                 <ul>
                 <messageAuctionItem
