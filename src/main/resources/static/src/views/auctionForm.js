@@ -94,7 +94,6 @@ export default {
         }else{
             window.location.href = '/loginForm';
         }
-
     },
     computed:{
         user() {
@@ -108,12 +107,10 @@ export default {
     methods: {
         listUploads(e) {
             this.showUploads = true;
-            let files = e.srcElement.files;
-      
+            let files = e.srcElement.files;      
             if(files) {
               this.files = files;
-            }
-            
+            }            
             let self = this;
                         
             for (var index = 0; index < files.length; index++) {
@@ -124,8 +121,7 @@ export default {
                 const imageUrl = event.target.result;
                 const thumb = document.querySelectorAll('.thumb')[index];
                 self.imageUrlArray.push(imageUrl);
-              }
-      
+              }      
               reader.readAsDataURL(files[index]);
             }
         },
@@ -159,12 +155,10 @@ export default {
             let cardArray = [];
             const formData = new FormData();
             let fileCount = this.files.length;
-
             var auction_images='';
             
             if (!fileCount) return;
 
-            // append the files to FormData
             Array.from(Array(this.files.length).keys())
             .map(x => {
                 formData.append("files", this.files[x], this.files[x].name);
@@ -181,26 +175,19 @@ export default {
               cardArray.push(`card-${i}`);
             }
             
-            let cardIdsArray = [];
-            
-            cardArray.forEach((ref) => {
-      
+            let cardIdsArray = [];            
+            cardArray.forEach((ref) => {      
               let currentCard = document.getElementById(this.$refs[ref][0].id);
               cardIdsArray.push(currentCard);
             });
             
             cardIdsArray.forEach((id) => {
-              // check if card is ticked for upload
-              // if checkbox for this card is checked, set flag
               const uploadFlag = id.querySelectorAll('[type="checkbox"]:checked');
-      
-              // if this card has upload flag, upload
+
               if(uploadFlag) {
-                id.classList.toggle('is-uploading');
-      
+                id.classList.toggle('is-uploading');      
                 setTimeout(() => {
-                  id.classList.toggle('hidden');
-      
+                  id.classList.toggle('hidden');      
                   setTimeout(() => {
                     id.style.display = 'none';
                   }, 1000);
@@ -213,21 +200,6 @@ export default {
             var myEpoch_start_date = new_start_date.getTime();
             var new_stop_date = new Date(this.stop_date); // Your timezone!
             var myEpoch_stop_date = new_stop_date.getTime();
-
-            /*var name = this.name;
-            var category_id = this.category_id;
-            var owner_user_id = this.owner_user_id;
-            var start_price = this.price;
-            var description = this.description;
-            var current_price = 0;
-            var final_price = 0;
-            var bidder_user = 0;
-            var timestamp= Math.round(+new Date()/1000);
-            var stadate = new Date(this.start_date);
-            var start_date = stadate.getTime();
-            var stodate = new Date(this.stop_date);
-            var stop_date = stodate.getTime();
-            var images = this.images;*/
 
             const auction = {
                 name:this.name, 
@@ -269,7 +241,6 @@ export default {
                             image_path: img_path,
                             is_primary : is_primary
                         }
-
                         let auction_img_res = await fetch('/rest/auctionimages', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
@@ -278,7 +249,6 @@ export default {
                         auction_img_res = await auction_img_res.json()
                     }
                 }
-
                 window.location.href = '/myPage';
                 return response;
 
