@@ -923,6 +923,17 @@ label{
   color: #62748F;
   width: 80%;
 }
+.router-link-active{
+  margin-top: 10px;
+}
+.header-message-avatar{
+  float: right;
+}
+.header-message-avatar img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
 .message-box .message-avatar {
   position: absolute;
   left: 30px;
@@ -1060,7 +1071,7 @@ background:#2196f3;
     overflow: hidden;
     font-family: Arial, Helvetica, sans-serif;
     z-index: 10;
-    padding-top: 15px;
+    padding-top: 5px;
 }
 .navbar a {
     float: left;
@@ -1073,6 +1084,13 @@ background:#2196f3;
 
 #navbar-r {
     float: right;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.profil-box-header{
+  display: flex;
+  flex-direction: row;
 }
 .dropdown {
     float: left;
@@ -1597,13 +1615,15 @@ button{
   text-decoration: none;
   padding: 15px 26px;
   position: relative;
-  display: inline-block;
   border-radius: 2px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 .notification .badge {
   position: absolute;
-  top: -10px;
-  right: -8px;
+  top: 3px;
+  right: 10px;
   padding: 3px 6px;
   border-radius: 50%;
   background: #a32c2c;
