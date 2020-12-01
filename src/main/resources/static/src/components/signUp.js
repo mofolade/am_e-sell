@@ -91,8 +91,6 @@ export default {
       }
   },
   deleteItem: function(e) {
-      let currentFiles = this.files;
-      let target = toString(e.srcElement.value);
       let parentCard = e.srcElement.parentNode.parentNode;
       
       parentCard.classList.toggle('hidden');
@@ -109,7 +107,6 @@ export default {
  
       if (!fileCount) return;
 
-      // append the files to FormData
       Array.from(Array(this.files.length).keys())
       .map(x => {
           formData.append("files", this.files[x], this.files[x].name);
@@ -135,8 +132,6 @@ export default {
       });
       
       cardIdsArray.forEach((id) => {
-        // check if card is ticked for upload
-        // if checkbox for this card is checked, set flag
         const uploadFlag = id.querySelectorAll('[type="checkbox"]:checked');
 
         // if this card has upload flag, upload
@@ -157,18 +152,13 @@ export default {
       for(var i = 0; i < image_upload_response.length; i++) {
         var picture_url = image_upload_response[i];
       }
-
-      var email = this.email;
-      var name = this.name;
-      var password = this.password;
-      var organize_number = this.organizeNumber;
       
       const user = {
-          email,
-          name, 
-          password,
+          email:this.email,
+          name:this.name, 
+          password:this.password,
           picture_url,
-          organize_number 
+          organize_number:this.organizeNumber 
       }
       try {
           console.log('new user')
@@ -196,7 +186,6 @@ export default {
       return output;
     },        
     getIndexedImage(val, index) {
-      // console.log(`This: ${val}`);
       return val[index];
     },        
     formatBytes(a, b) {

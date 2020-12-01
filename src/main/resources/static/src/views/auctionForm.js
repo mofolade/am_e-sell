@@ -114,7 +114,6 @@ export default {
             let self = this;
                         
             for (var index = 0; index < files.length; index++) {
-              // generate a new FileReader object
               var reader = new FileReader();
       
               reader.onload = function(event) {
@@ -126,8 +125,8 @@ export default {
             }
         },
         deleteItem: function(e) {
-            let currentFiles = this.files;
-            let target = toString(e.srcElement.value);
+            /*let currentFiles = this.files;
+            let target = toString(e.srcElement.value);*/
             let parentCard = e.srcElement.parentNode.parentNode;
             
             parentCard.classList.toggle('hidden');
@@ -139,9 +138,9 @@ export default {
             let prevPrimaryIndex = this.primary_image_index;
             document.getElementById('card-'+prevPrimaryIndex).style.background="#fff";
             document.getElementById('primarybtn'+prevPrimaryIndex).style.display="flex";
-            let currentFiles = this.files;
+            /*let currentFiles = this.files;
             let target = toString(e.srcElement.value);
-            let parentCard = e.srcElement.parentNode.parentNode;
+            let parentCard = e.srcElement.parentNode.parentNode;*/
             console.log(e.srcElement.value)
             this.primary_image_index=e.srcElement.value;
             document.getElementById('primarybtn'+e.srcElement.value).style.display="none";

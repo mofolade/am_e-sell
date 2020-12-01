@@ -56,8 +56,7 @@ export default {
     },
     props: ['auction','lastbid'],    
     async mounted() {    
-        let self = this;
-        
+        let self = this;        
         //new bid input visible or not visible
         if(this.$store.state.user !== null){
             if(this.$store.state.user.id !== self.auction.owner_user_id){
@@ -68,8 +67,7 @@ export default {
         }
         else{
             this.visibleCheck = false;
-        }
-        
+        }        
 
     },
     computed:{

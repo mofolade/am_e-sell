@@ -554,6 +554,29 @@ textarea {
   justify-content: center;
 }
 
+.status-link-box{
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  margin: 15px 0px;
+}
+
+.status-link-box a{
+  margin-right: 10px;
+  text-decoration: none;
+  color:#fff;
+  font-weight: 500;
+  padding: 8px;
+  background-color: #a5bba4;
+  border-radius: 5px;
+}
+
+.status-link-box a:visited,.status-link-box a:link{
+  margin-right: 10px;
+  text-decoration: none;
+}
+
 .auction-little-box-category{
   display: flex;
   flex-direction: row;
