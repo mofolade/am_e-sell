@@ -129,14 +129,15 @@ public class UserController {
         return "OK";
     }
 
-    @PostMapping("/login")
+    @PostMapping("/loginuser")
     public ResponseEntity<String> login(@RequestBody User user, HttpServletRequest req) {
         // validate user fields
-        System.out.println(user);
+        System.out.println("bejelentkezesi kiserlet "+user);
         securityLogin(user.getEmail(), user.getPassword(), req);
 
         return ResponseEntity.ok("ok");
     }
+
 
     // manually set logged in session for authenticated user
     // with Spring Security
