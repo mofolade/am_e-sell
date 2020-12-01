@@ -56,17 +56,10 @@ export default {
           password
         }
         try {
-          const credentials = 'email=' + encodeURIComponent(email) + '&password=' + encodeURIComponent(password)
           const user = {
             email:this.email, 
             password:this.password
           }
-          /*await fetch('/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(login)
-          })*/
-          console.log('bejelentkezes kuldes')
           let response = await fetch("/loginuser", {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
@@ -88,7 +81,7 @@ export default {
         } catch (error) {
           throw error;
         }
-
+        window.location.href = '/'; 
       },
       async signInCallback(authResult) {
           console.log('authResult', authResult);
