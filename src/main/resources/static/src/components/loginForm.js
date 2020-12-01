@@ -57,16 +57,20 @@ export default {
         }
         try {
           const credentials = 'email=' + encodeURIComponent(email) + '&password=' + encodeURIComponent(password)
+          const user = {
+            email:this.email, 
+            password:this.password
+          }
           /*await fetch('/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(login)
           })*/
           console.log('bejelentkezes kuldes')
-          let response = await fetch("/login", {
+          let response = await fetch("/loginuser", {
             method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: credentials
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(user)
           });
           if(response.url.includes('error')) {
             console.log('Fel email eller lösenord!')
