@@ -1060,6 +1060,7 @@ background:#2196f3;
     overflow: hidden;
     font-family: Arial, Helvetica, sans-serif;
     z-index: 10;
+    padding-top: 15px;
 }
 .navbar a {
     float: left;
@@ -1590,4 +1591,21 @@ button{
 
 .softIn-move {
   transition: all 200ms ease;
+}
+.notification {
+  color: white;
+  text-decoration: none;
+  padding: 15px 26px;
+  position: relative;
+  display: inline-block;
+  border-radius: 2px;
+}
+.notification .badge {
+  position: absolute;
+  top: -10px;
+  right: -8px;
+  padding: 3px 6px;
+  border-radius: 50%;
+  background: #a32c2c;
+  color: white;
 }
