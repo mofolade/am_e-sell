@@ -1,6 +1,5 @@
 import messageListGroupByAuction from '../components/messageListGroupByAuction.js'
 
-
 export default {
   components: {
     messageListGroupByAuction

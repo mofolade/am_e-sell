@@ -38,9 +38,7 @@ export default {
                 timestamp: Date.now()
             }
 
-            // clear input
             this.messageText = ''
-
             // send message with websocket
             sendMessage(message)
         },
