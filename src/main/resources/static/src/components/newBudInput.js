@@ -43,10 +43,8 @@ export default {
                         bid: this.bid,
                         creation_date: Date.now()
                     }
-
                     // clear input
                     this.bid = ''
-
                     // send bid with websocket
                     sendMessageBid(bid)
                 }

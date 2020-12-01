@@ -26,8 +26,6 @@ export default {
             auctions: []
         }
     },
-    computed: {
-    },
     async mounted(){
         let auctions = await fetch('/rest/auctionsinfo')
         auctions = await auctions.json()
@@ -37,6 +35,9 @@ export default {
         //pågående
         auctions = auctions.filter(auction => auction.stop_date > current_timestamp);
         this.auctions = auctions;
+    },
+    actions:{
+
     },
     methods:{
         lastBid(auction_id){

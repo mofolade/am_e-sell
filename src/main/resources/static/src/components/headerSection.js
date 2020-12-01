@@ -42,6 +42,6 @@ export default {
         fetch('/logout')
         this.$store.commit('setUser', null)
         window.location.href = '/';
-      }
+      },
     }
 }

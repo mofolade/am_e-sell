@@ -28,7 +28,7 @@ export default {
                     <div class="auction-little-box-category">
                         <div class="price-box">
                             <span class="price-label">Pris:</span>
-                            <span class="price" v-if="last_bid">{{last_bid}}</span>
+                            <span class="price" v-if="lastbid">{{lastbid}}</span>
                             <span class="price" v-else >{{auction.start_price}}</span>
                             <span class="price-unit" itemprop="priceCurrency" content="Kr">Kr</span>
                         </div>
@@ -53,13 +53,11 @@ export default {
         return {
             visibleCheck: false,
             GlobalVar: 0,
-            last_bid: 0,
         }
     },
     props: ['auction','lastbid'],    
-    async mounted() {    
-        let self = this;   
-        this.last_bid = self.lastbid;     
+    async mounted() {   
+        let self = this;
         //new bid input visible or not visible
         if(this.$store.state.user !== null){
             if(this.$store.state.user.id !== self.auction.owner_user_id){

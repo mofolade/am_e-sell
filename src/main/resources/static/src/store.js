@@ -71,20 +71,17 @@ export const store = new Vuex.Store({
       let bids = await fetch('/rest/bids')
       bids = await bids.json()
 console.log(bids)
-      //bids.sort((m1, m2) => m1.timestamp > m2.timestamp ? -1 : 1)
+      bids.sort((m1, m2) => m1.creation_date > m2.creation_date ? -1 : 1)
 
       store.commit('setBids', bids)
     },
     async fetchAllMessagesByUserId(store) {
         let user = store.user; //await fetch('/whoami')
-        //user = await user.json()
-        //console.log(user.id)
-        //let messages = await fetch(`/rest/auctionmessagesbyuserid/`+ user.id);
         if(user){
           let messages = await fetch('/rest/messagesbyuserid/'+ user.id);
           messages = await messages.json();
           messages.sort((m1, m2) => m1.timestamp > m2.timestamp ? -1 : 1)
-          //console.log(messages)
+console.log(messages)
           //this.messages = messages;
           store.commit('setMessagesByUserId', messages)
         }
@@ -93,14 +90,14 @@ console.log(bids)
       let categories = await fetch('/rest/categories')
       categories = await categories.json()
 
-      console.log(categories);
+console.log(categories);
       store.commit('setCategories', categories)
     },
     async fetchAllAuctions(store) {
       let auctions = await fetch('/rest/auctionsinfo')
       auctions = await auctions.json()
 
-      console.log(auctions);
+console.log(auctions);
       store.commit('setAuctions', auctions)
     }
   }
