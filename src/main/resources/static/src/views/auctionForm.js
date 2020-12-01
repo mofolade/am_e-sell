@@ -209,8 +209,12 @@ export default {
             });
       
             this.files = []; 
+            var new_start_date = new Date(this.start_date); // Your timezone!
+            var myEpoch_start_date = new_start_date.getTime();
+            var new_stop_date = new Date(this.stop_date); // Your timezone!
+            var myEpoch_stop_date = new_stop_date.getTime();
 
-            var name = this.name;
+            /*var name = this.name;
             var category_id = this.category_id;
             var owner_user_id = this.owner_user_id;
             var start_price = this.price;
@@ -223,20 +227,20 @@ export default {
             var start_date = stadate.getTime();
             var stodate = new Date(this.stop_date);
             var stop_date = stodate.getTime();
-            var images = this.images;
+            var images = this.images;*/
 
             const auction = {
-                name, 
-                category_id,
-                owner_user_id,
-                start_date,
-                stop_date,
-                start_price,
-                description,
-                current_price,
-                final_price,
-                bidder_user,
-                timestamp        
+                name:this.name, 
+                category_id:this.category_id,
+                owner_user_id:this.owner_user_id,
+                start_date:myEpoch_start_date,
+                stop_date:myEpoch_stop_date,
+                start_price:this.price,
+                description:this.description,
+                current_price:0,
+                final_price:0,
+                bidder_user:0,
+                timestamp:Math.round(+new Date()/1000)      
             }
             try {
                 console.log('new auction')
