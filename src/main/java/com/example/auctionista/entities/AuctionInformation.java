@@ -32,11 +32,12 @@ import javax.persistence.*;
         "                      (SELECT ai.image_path\n" +
         "                      FROM auction_images ai\n" +
         "                      WHERE ai.auction_id = a.id\n" +
+        "                   order by ai.is_primary desc\n" +
         "                      limit 1) default_image,\n" +
         "                      (SELECT GROUP_CONCAT(ai.image_path) \n" +
         "                         FROM auction_images ai \n" +
         "                         WHERE ai.auction_id = a.id \n" +
-        "                       Group BY ai.auction_id) images \n" +
+        "                      Group BY ai.auction_id) images \n" +
         "                     FROM auctions a,\n" +
         "                          categories c\n" +
         "                   WHERE a.category_id = c.id")
