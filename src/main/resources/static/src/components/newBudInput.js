@@ -37,7 +37,7 @@ export default {
                     document.getElementById('errorMsg').style.display='block';
                 }
                 else{
-                    /*let bid = {
+                    let bid = {
                         auction_id: this.auction_id,
                         bidder_user_id: this.$store.state.user.id,
                         bid: this.bid,
@@ -48,7 +48,7 @@ export default {
                     this.bid = ''
 
                     // send bid with websocket
-                    sendMessageBid(bid)*/
+                    sendMessageBid(bid)
                 }
             }
         },
