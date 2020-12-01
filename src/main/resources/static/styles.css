@@ -114,9 +114,6 @@ body {
 .auction-item-container a:link, .auction-item-container a:visited{
   text-decoration: none;
 }
-.auction-card-item-name-price :hover, .auction-card-item-name-price :active{
-  text-decoration: underline;
-}
 .auction-card-cat-name{
   font-size: 14px;
   color: #000;
@@ -643,11 +640,6 @@ label{
 #auction-cover a:link, #auction-cover a:visited{
   text-decoration: none;
 }
-
-#auction-cover a:hover, #auction-cover a:active{
-  text-decoration: underline;
-}
-
 .img-upload-wrapper {
   border: 2px dotted gray;
   margin-bottom: 15px;
@@ -1495,8 +1487,12 @@ label {
   flex-grow: 2;
   align-self: stretch;
   display: flex;
-  flex-basis: 10%;
+  /*flex-basis: 10%;*/
   flex-grow: 0;
+}
+button{
+  cursor: pointer;
+  text-decoration: none;
 }
 .remove-card-btn {
   appearance: none;
@@ -1508,10 +1504,7 @@ label {
   appearance: none;
   border: 0;
   color: #fff;
-  background-color: #176d7c;
-}
-.remove-card-btn:hover {
-  text-decoration: underline;
+  background-color: #62a0ab;
 }
 
 .checkbox-wrap {

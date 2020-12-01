@@ -1,17 +1,12 @@
 export default {
-    components: {
-        
-    },
     template: `
       <div class="new-auction-container">
       <form @submit.prevent="addAuction">
             <div class="row">
-                <h2 style="text-align:center">Ny auktion</h2>
-  
+                <h2 style="text-align:center">Ny auktion</h2>  
                 <div class="login-col">{{user}}
                     <label>Produkt namn</label>
-                    <input v-model="name"  type="text" name="name" maxlength="160" required>
-                    
+                    <input v-model="name"  type="text" name="name" maxlength="160" required>                    
                     <label>Kategori</label>
                     <select id="category" v-model="category_id" name="category">
                         <option value="1">Kläder</option>
@@ -23,16 +18,12 @@ export default {
                         <option value="7">Foto & Kameror</option>
                         <option value="8">Hemelektronik</option>
                     </select>
-
                     <label>Start datum</label>
                     <input type="datetime-local" v-model="start_date" name="start_date" required>
-
                     <label>Stop datum</label>
                     <input type="datetime-local" v-model="stop_date" name="stop_date" required>
-
                     <label>Beskrivning</label>
                     <textarea v-model="description" name="description" required="required"></textarea>
-
                     <label>Pris</label>
                     <input type="text" v-model="price" name="price" required>
                     <div class="img-upload-container">
@@ -46,28 +37,25 @@ export default {
                             <li v-for="(file, index) in files" :key="index" class="img-card" v-bind:ref="'card-'+index" v-bind:id="'card-'+index">
                                 <div class="upload-overlay">Uploading..</div>
                                 <div class="checkbox-wrap">
-                                <div class="checkbox-wrap-inner">  
-                                    <input type="checkbox" v-bind:id="'checkbox-'+index" :v-model="checkboxes[index]" checked>
-                                    <label v-bind:for="'checkbox-'+index"></label>
-                                    <span class="checkbox-sub-label">Upload</span>
+                                    <div class="checkbox-wrap-inner">  
+                                        <input type="checkbox" v-bind:id="'checkbox-'+index" :v-model="checkboxes[index]" checked>
+                                        <label v-bind:for="'checkbox-'+index"></label>
+                                        <span class="checkbox-sub-label">Upload</span>
+                                    </div>
                                 </div>
-                                </div>
-                                <span class="thumb">
-                                <img v-bind:src="imageUrlArray | getIndexedImage(index)">
-                                </span>
+                                <span class="thumb"><img v-bind:src="imageUrlArray | getIndexedImage(index)"></span>
                                 <div class="details">
-                                <h1>Item {{ index | addOne }}</h1>
-                                <h2>File name: {{ file.name }}</h2>
-                                <h3>File size: {{ file.size | formatBytes }}</h3>
+                                    <h1>Item {{ index | addOne }}</h1>
+                                    <h2>File name: {{ file.name }}</h2>
+                                    <h3>File size: {{ file.size | formatBytes }}</h3>
                                 </div>
                                 <div class="remove-card">
                                     <button type="button" class="remove-card-btn" @click.prevent="deleteItem" v-bind:value="index"> Ta bort</button>
                                 </div>
-                                <div class="primary-card">
-                                    <button type="button" class="primary-card-btn" @click.prevent="primary" v-bind:value="index"> Primär</button></div>
+                                <div class="primary-card" v-bind:id="'primarybtn'+index">
+                                    <button type="button" class="primary-card-btn" @click.prevent="primary" v-bind:value="index"> Primär</button>
                                 </div>
-                                </li>
-                        <!--       </transition-group> -->
+                            </li>
                             </ul>
                         </div>    
                     </div>
@@ -84,7 +72,7 @@ export default {
             start_date: 0,
             stop_date: 0,
             price: 0,
-            image_index: 0 ,
+            primary_image_index: 0 ,
             images: [],
             dataImages: [],
             description: '',
@@ -151,8 +139,21 @@ export default {
               parentCard.style.display = 'none';
             }, 1000);
         },
-        primary(){
-
+        primary: function(e) {
+            let prevPrimaryIndex = this.primary_image_index;
+            document.getElementById('card-'+prevPrimaryIndex).style.background="#fff";
+            document.getElementById('primarybtn'+prevPrimaryIndex).style.display="flex";
+            let currentFiles = this.files;
+            let target = toString(e.srcElement.value);
+            let parentCard = e.srcElement.parentNode.parentNode;
+            console.log(e.srcElement.value)
+            this.primary_image_index=e.srcElement.value;
+            document.getElementById('primarybtn'+e.srcElement.value).style.display="none";
+            document.getElementById('card-'+e.srcElement.value).style.background="#62a0ab";
+            this.changePrimaryBcgColor(e);
+        },
+        changePrimaryBcgColor: function(e){
+            document.getElementById('card-'+e.srcElement.value).style.background="#62a0ab";
         },
         async addAuction(e) {
             let cardArray = [];
@@ -250,13 +251,19 @@ export default {
                 console.log(new_auction_response.id)
                 if(new_auction_response.id){
                     let auction_id = new_auction_response.id;
-
+                    let is_primary = 0;
                     for(var i = 0; i < image_upload_response.length; i++) {
                         var img_path = image_upload_response[i];
+                        if(this.primary_image_index == i){
+                            is_primary = 1;
+                        }else{
+                            is_primary = 0;
+                        }
           
                         const img = {
                             auction_id, 
-                            image_path: img_path
+                            image_path: img_path,
+                            is_primary : is_primary
                         }
 
                         let auction_img_res = await fetch('/rest/auctionimages', {
