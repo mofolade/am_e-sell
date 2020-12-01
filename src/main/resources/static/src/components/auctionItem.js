@@ -12,7 +12,8 @@ export default {
                         <router-link v-bind:to="'/list/'+auction.category_id">
                             <button class="category-item">
                                 <div class="icon-container-little">
-                                <img v-bind:src=auction.category_image_path style="width: 20px;">
+                                <img v-bind:src=auction.category_image_path style="width: 20px;" 
+                                     v-bind:alt=auction.category_name />
                                 </div>
                             </button>
                         </router-link>
@@ -25,10 +26,10 @@ export default {
                         <span class="countdown-box" v-bind:id="'countdown'+auction.id">{{countDown(auction.stop_date,auction.id)}}{{stopDateTime}}</span>
                     </div>
                     <div class="auction-little-box-category">
-                        <div>
+                        <div class="price-box">
                             <span class="price-label">Pris:</span>
-                            <span v-if="lastbid">{{lastbid}}</span>
-                            <span v-else>{{auction.start_price}}</span>
+                            <span class="price" v-if="last_bid">{{last_bid}}</span>
+                            <span class="price" v-else >{{auction.start_price}}</span>
                             <span class="price-unit" itemprop="priceCurrency" content="Kr">Kr</span>
                         </div>
                         <span  v-bind:class="visibleCheck ? 'isVisble' : 'notVisible'">
@@ -51,12 +52,14 @@ export default {
     data() {
         return {
             visibleCheck: false,
-            GlobalVar: 0
+            GlobalVar: 0,
+            last_bid: 0,
         }
     },
     props: ['auction','lastbid'],    
     async mounted() {    
-        let self = this;        
+        let self = this;   
+        this.last_bid = self.lastbid;     
         //new bid input visible or not visible
         if(this.$store.state.user !== null){
             if(this.$store.state.user.id !== self.auction.owner_user_id){
