@@ -17,6 +17,7 @@ export default {
             <auctionItem 
                 v-for="auction of auctions" 
                 :auction="auction"
+                :lastbid = "lastBid(auction.id)"
                 :key="auction.id"
             />
         </div>
@@ -44,6 +45,14 @@ export default {
       }
     },
     methods: {
+      lastBid(auction_id){
+          this.bids = this.$store.state.bids;
+          let bidsByAuctionId = this.$store.state.bids.filter(bid => bid.auction_id == auction_id);
+          bidsByAuctionId.sort((m1, m2) => m1.creation_date > m2.creation_date ? -1 : 1)
+          if(bidsByAuctionId[0]){
+              return (bidsByAuctionId[0]['bid']);
+          }
+      },
       async getAuctionsByCategoryId() {      
         let category_id = this.$route.params.id         
         let auctions = await fetch(`/rest/auctionsbycategoryid/`+ category_id);
