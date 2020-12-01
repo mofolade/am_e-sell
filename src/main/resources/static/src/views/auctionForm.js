@@ -9,14 +9,9 @@ export default {
                     <input v-model="name"  type="text" name="name" maxlength="160" required>                    
                     <label>Kategori</label>
                     <select id="category" v-model="category_id" name="category">
-                        <option value="1">Kläder</option>
-                        <option value="2">Hem & Hushåll</option>
-                        <option value="3">Hobby</option>
-                        <option value="4">Datorer</option>
-                        <option value="5">Böcker</option>
-                        <option value="6">Leksaker</option>
-                        <option value="7">Foto & Kameror</option>
-                        <option value="8">Hemelektronik</option>
+                        <option v-for="category of categories()" 
+                        :key="category.id"
+                        v-bind:value="category.id">{{category.name}}</option>
                     </select>
                     <label>Start datum</label>
                     <input type="datetime-local" v-model="start_date" name="start_date" required>
@@ -115,7 +110,6 @@ export default {
                         
             for (var index = 0; index < files.length; index++) {
               var reader = new FileReader();
-      
               reader.onload = function(event) {
                 const imageUrl = event.target.result;
                 const thumb = document.querySelectorAll('.thumb')[index];
@@ -125,10 +119,7 @@ export default {
             }
         },
         deleteItem: function(e) {
-            /*let currentFiles = this.files;
-            let target = toString(e.srcElement.value);*/
-            let parentCard = e.srcElement.parentNode.parentNode;
-            
+            let parentCard = e.srcElement.parentNode.parentNode;            
             parentCard.classList.toggle('hidden');
             setTimeout(() => {
               parentCard.style.display = 'none';
@@ -138,9 +129,6 @@ export default {
             let prevPrimaryIndex = this.primary_image_index;
             document.getElementById('card-'+prevPrimaryIndex).style.background="#fff";
             document.getElementById('primarybtn'+prevPrimaryIndex).style.display="flex";
-            /*let currentFiles = this.files;
-            let target = toString(e.srcElement.value);
-            let parentCard = e.srcElement.parentNode.parentNode;*/
             console.log(e.srcElement.value)
             this.primary_image_index=e.srcElement.value;
             document.getElementById('primarybtn'+e.srcElement.value).style.display="none";
@@ -254,6 +242,9 @@ export default {
             } catch (error) {
                 throw error;
             }
+        },
+        categories(){
+            return this.$store.state.categories;
         }
     },
     filters: {    
@@ -263,7 +254,6 @@ export default {
           return output;
         },        
         getIndexedImage(val, index) {
-          // console.log(`This: ${val}`);
           return val[index];
         },        
         formatBytes(a, b) {
