@@ -132,7 +132,6 @@ public class UserController {
     @PostMapping("/loginuser")
     public ResponseEntity<String> login(@RequestBody User user, HttpServletRequest req) {
         // validate user fields
-        System.out.println("bejelentkezesi kiserlet "+user);
         securityLogin(user.getEmail(), user.getPassword(), req);
 
         return ResponseEntity.ok("ok");
@@ -160,6 +159,11 @@ public class UserController {
     @GetMapping("/rest/users")
     public List<User> getAllUsers() {
         return userService.getAllUsers();
+    }
+
+    @GetMapping("/rest/userspictures")
+    public List<User> getAllUsersPictures() {
+        return userService.getAllUsersPictures();
     }
 
     @PostMapping("/rest/users")
