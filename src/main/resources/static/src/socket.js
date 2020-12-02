@@ -3,11 +3,11 @@
 import {store} from './store.js'
 
 let ws;
-let wsBid;
+//let wsBid;
 let isConnected = false;
-let isConnectBid = false;
+//let isConnectBid = false;
 connect();
-connectbid();
+//connectbid();
 
 function connect() {
     // change PORT to your backends PORT
@@ -27,14 +27,10 @@ function connect() {
         switch(dataWrapper.action) {
             case 'bid':
                 console.log('New bid:', dataWrapper.payload);
-
-                // this will trigger a re-render of all components using the messages
                 store.commit('prependBid', dataWrapper.payload)
             break;
             case 'message':
                 console.log('New message:', dataWrapper.payload);
-
-                // this will trigger a re-render of all components using the messages
                 store.commit('prependMessage', dataWrapper.payload)
             break;
             case 'user-status':
@@ -60,7 +56,7 @@ function connect() {
     console.log("Connecting...");
 
 }
-
+/*
 function connectbid() {
     // change PORT to your backends PORT
     wsBid = new WebSocket('ws://localhost:4000/bids');
@@ -106,7 +102,7 @@ function connectbid() {
     
 
   console.log("Connecting...");
-}
+}*/
 
 function disconnect() {
     if (ws != null) {
@@ -120,13 +116,13 @@ function send(data) {
     ws.send(JSON.stringify(data));
 }
 
-function sendMessage(message) {
+function sendMessage(message,action) {
     send({
-        action: 'message',
+        action: action,
         payload: message
     })
 }
-
+/*
 function sendf(data) {
     wsBid.send(JSON.stringify(data));
 }
@@ -136,19 +132,17 @@ function sendMessageBid(message) {
         action: 'bid',
         payload: message
     })
-}
-
+}*/
+/*
 function disconnectf() {
     if (wsBid != null) {
         wsBid.close();
     }
     isConnectBid = false;
     console.log("Disconnected bid");
-}
+}*/
 
 export {
     send,
-    sendf,
-    sendMessageBid,
     sendMessage
 }

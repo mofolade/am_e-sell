@@ -69,23 +69,11 @@ export default {
                     <p>{{auction.description}}</p>
                   </div>
                 </div>
-              </li>
-              <li class="flex-item">
-                <div class="chat-box">
-                  <h2 class="title">Om säljaren</h2>
-                  <div class="auction-avatar-box ng-isolate-scope" data-advertiser="adReplyTemps.advertiser">
-                    <div class="message-avatar">
-                      <img  v-bind:src=auction.owner_picture_url  alt="">
-                    </div>
-                    <div class="user-info">
-                      <div class="name">{{auction.owner_user_name}}</a></div>
-                    </div>
-                  </div>
-                  <div class="contact-block" v-bind:class="chatVisibleCheck ? 'isVisble' : 'notVisible'">
+                <div class="contact-block" v-bind:class="chatVisibleCheck ? 'isVisble' : 'notVisible'">
                     <div class="contact-block-row-desktop">
                       <span class="mdi mdi-message-text-outline contact-block-row-icon-desktop"></span>
                       <span class="contact-block-row-label closed ng-binding ng-scope">
-                        <button class="open-button" v-on:click="openForm()">Chat</button>
+                        <button class="open-button" v-on:click="openForm()">Chat för säljaren</button>
                         <div class="chat-popup" id="myChatBoxForm">
                           <newMessageInput :auction_id="auction.id" :owner_user_id="auction.owner_user_id" />
                           <div class="messages-box-little">
@@ -103,6 +91,19 @@ export default {
                       </span>
                     </div>
                   </div>
+              </li>
+              <li class="flex-item">
+                <div class="chat-box" style="margin: 0px 15px; min-width: 300px;">
+                  <h2 class="title">Om säljaren</h2>
+                  <div class="auction-avatar-box ng-isolate-scope" data-advertiser="adReplyTemps.advertiser">
+                    <div class="message-avatar">
+                      <img  v-bind:src=auction.owner_picture_url  alt="">
+                    </div>
+                    <div class="user-info">
+                      <div class="name">{{auction.owner_user_name}}</a></div>
+                    </div>
+                  </div>
+                  
                 </div>
               </li>
             </ul>
