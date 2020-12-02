@@ -9,11 +9,15 @@ export const store = new Vuex.Store({
     messagesByUserId: [],
     categories: [],
     auctions: [],
-    user: []
+    user: [],
+    allUsers: []
   },
   mutations: {
     setUser(state, user) {
       state.user = user
+    },
+    setAllUsers(state, users) {
+      state.allUsers = users
     },
     setMessages(state, messages) {
       state.messages = messages
@@ -56,6 +60,12 @@ export const store = new Vuex.Store({
       }else{
         store.commit('setUser', user)
       }
+    },
+    async fetchAllUsers(store){
+      let users = await fetch('/rest/userspictures')
+      users = await users.json()
+      console.log(users);
+      store.commit('setAllUsers', users)
     },
     async fetchAllMessages(store) {
         let messages = await fetch('/rest/messages')

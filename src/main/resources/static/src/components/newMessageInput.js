@@ -40,7 +40,7 @@ export default {
 
             this.messageText = ''
             // send message with websocket
-            sendMessage(message)
+            sendMessage(message,'message')
         },
         closeForm(){
             document.getElementById("myChatBoxForm").style.display = "none";

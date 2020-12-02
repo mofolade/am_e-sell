@@ -2,7 +2,11 @@ export default {
     template: `
         <li>
                 <div class="message-avatar">
-                    <img v-bind:src="getUserPictureUrl(message.sender_user_id)">
+                    <img v-bind:src="getUserPictureUrl(message.sender_user_id)" v-bind:title="getUserName(message.sender_user_id)">
+                </div>
+                <div style="display: flex; align-items: center;"><i class="fas fa-arrow-right"></i></div>
+                <div class="message-avatar">
+                    <img v-bind:src="getUserPictureUrl(message.recipient_user_id)" v-bind:title="getUserName(message.recipient_user_id)">
                 </div>
                 <div class="message-body">
                     <div class="message-body-heading">
@@ -24,16 +28,33 @@ export default {
         }
     },
     methods:{
-        getUserPictureUrl(sender_user_id){
+        getUserPictureUrl(user_id){
             let self = this;
-            let current_user = this.$store.state.user;
+            let allUsers = this.$store.state.allUsers;
 
-            if(sender_user_id == this.auction_owner_id){
+            let user = allUsers.filter(user => user.id == user_id);
+            return user[0]['picture_url'];
+
+            /*if(sender_user_id == this.auction_owner_id){
                 return this.owner_picture_url;
             }
             if(current_user !== null){
                 return current_user.picture_url
+            }*/
+        },
+        getUserName(user_id){
+            let self = this;
+            let allUsers = this.$store.state.allUsers;
+
+            let user = allUsers.filter(user => user.id == user_id);
+            return user[0]['name'];
+
+            /*if(sender_user_id == this.auction_owner_id){
+                return this.owner_picture_url;
             }
+            if(current_user !== null){
+                return current_user.picture_url
+            }*/
         }
     }
 }

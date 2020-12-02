@@ -1,4 +1,4 @@
-import { sendMessageBid } from '../socket.js'
+import { sendMessage } from '../socket.js'
 
 export default {
     template: `
@@ -46,7 +46,7 @@ export default {
                     // clear input
                     this.bid = ''
                     // send bid with websocket
-                    sendMessageBid(bid)
+                    sendMessage(bid,'bid')
                 }
             }
         },
