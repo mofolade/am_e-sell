@@ -1,6 +1,7 @@
 package com.example.auctionista.services;
 
 
+import com.example.auctionista.entities.Bid;
 import com.example.auctionista.entities.Message;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,6 +21,9 @@ public class SocketService {
 
     @Autowired
     MessageService messageService;
+
+    @Autowired
+    BidService bidService;
 
     private List<WebSocketSession> sessions = new CopyOnWriteArrayList<>();
 
@@ -62,5 +66,10 @@ public class SocketService {
 
     public void saveNewMessage(Message message) {
         messageService.postNewMessage(message);
+    }
+
+    public void saveNewBid(Bid bid) {
+        System.out.println("saveNewBid"+bid.getBid());
+        bidService.postNewBid(bid);
     }
 }

@@ -1,6 +1,8 @@
 package com.example.auctionista.controllers;
 
 import com.example.auctionista.dtos.SocketDTO;
+import com.example.auctionista.dtos.SocketDTOBid;
+import com.example.auctionista.entities.Bid;
 import com.example.auctionista.entities.Message;
 import com.example.auctionista.services.SocketService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,6 +21,7 @@ public class SocketController extends TextWebSocketHandler {
 
     // NOTE: Can not use @Autowired here due to WebSocketConfig instantiating the SocketController
     private SocketService socketService;
+
     public void setSocketService(SocketService socketService) {
         this.socketService = socketService;
     }
@@ -26,25 +29,44 @@ public class SocketController extends TextWebSocketHandler {
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) throws IOException {
         System.out.println("Received msg: " + message.getPayload());
-
-        // gson.fromJson(), JSON.parse
-
-        // we use a DTO (data transfer object) to handle action and payload
-        SocketDTO socketDTO = objectMapper.readValue(message.getPayload(), SocketDTO.class);
-
-        switch (socketDTO.action) {
-            case "message":
-                // call frankenstein to convert this payload
-                Message msg = convertPayload(socketDTO.payload, Message.class);
-                socketService.saveNewMessage(msg);
-                break;
-            case "connection":
-                System.out.println("User connected");
-                break;
-            case "user-status":
-                break;
-            default:
-                System.out.println("Could not read action: " + socketDTO.action);
+        String newMsg = message.getPayload();
+        if(newMsg.contains("\"action\":\"bid\"")) {
+            System.out.println("ez uj bid");
+            SocketDTOBid socketDTOBid = objectMapper.readValue(message.getPayload(), SocketDTOBid.class);
+            switch (socketDTOBid.action) {
+                case "bid":
+                    System.out.println("new bid");
+                    Bid bid = convertPayload(socketDTOBid.payload, Bid.class);
+                    System.out.println(bid.getBidder_user_id()+" "+bid.getBid());
+                    socketService.saveNewBid(bid);
+                    break;
+                case "connection":
+                    System.out.println("User connected");
+                    break;
+                case "user-status":
+                    break;
+                default:
+                    System.out.println("Could not read action: " + socketDTOBid.action);
+            }
+        }
+        else{
+            System.out.println("ez uj msg");
+            // we use a DTO (data transfer object) to handle action and payload
+            SocketDTO socketDTO = objectMapper.readValue(message.getPayload(), SocketDTO.class);
+            switch (socketDTO.action) {
+                case "message":
+                    System.out.println("new message");
+                    Message msg = convertPayload(socketDTO.payload, Message.class);
+                    socketService.saveNewMessage(msg);
+                    break;
+                case "connection":
+                    System.out.println("User connected");
+                    break;
+                case "user-status":
+                    break;
+                default:
+                    System.out.println("Could not read action: " + socketDTO.action);
+            }
         }
 
         // Demonstration purpose only: send back "Hello" + same message as received

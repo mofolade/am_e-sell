@@ -24,4 +24,14 @@ public interface UserRepo extends JpaRepository<User, Long> {
             "      WHERE u.id = :id";
     @Query(value = FIND_USERBYID, nativeQuery = true)
     public User findOneUser(long id);
+
+    public static final String FIND_USERSPICTURES = "SELECT distinct u.id, \n" +
+            "            u.name, \n" +
+            "            '' email, \n" +
+            "            '' password, \n" +
+            "            u.picture_url, \n" +
+            "            u.organize_number \n" +
+            "       FROM users u";
+    @Query(value = FIND_USERSPICTURES, nativeQuery = true)
+    public List<User> findAllPictures();
 }
