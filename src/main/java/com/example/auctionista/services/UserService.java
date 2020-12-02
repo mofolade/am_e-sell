@@ -40,6 +40,10 @@ public class UserService {
         return userRepo.findAll();
     }
 
+    public List<User> getAllUsersPictures() {
+        return userRepo.findAllPictures();
+    }
+
     public User createUser(User user) {
         // generate custom password with unique info
         // from the user and a secret salt
