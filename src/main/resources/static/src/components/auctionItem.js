@@ -31,19 +31,22 @@ export default {
                             <span class="price" v-if="lastbid">{{lastbid}}</span>
                             <span class="price" v-else >{{auction.start_price}}</span>
                             <span class="price-unit" itemprop="priceCurrency" content="Kr">Kr</span>
+                            <span class="userbud" v-if="checkUserBid(lastbid,userbid)">({{checkUserBid(lastbid,userbid)}})</span>
                         </div>
-                        <span  v-bind:class="visibleCheck ? 'isVisble' : 'notVisible'">
-                            <router-link v-bind:to="'/auction/'+auction.id">
-                                <button data-bid-submit-button="" class="bid-little-btn" type="submit"> 
+                        <div v-bind:style="status(auction.stop_date)">
+                            <span v-bind:class="visibleCheck ? 'isVisble' : 'notVisible'">
+                                <router-link v-bind:to="'/auction/'+auction.id">
+                                    <button data-bid-submit-button="" class="bid-little-btn" type="submit"> 
+                                        Lägg bud
+                                    </button>
+                                </router-link>
+                            </span>
+                            <span  v-bind:class="visibleCheck ? 'notVisible' : 'isVisble'">
+                                <button v-on:click="redirectLoginForm()" data-bid-submit-button="" class="bid-little-btn" type="submit"> 
                                     Lägg bud
                                 </button>
-                            </router-link>
-                        </span>
-                        <span  v-bind:class="visibleCheck ? 'notVisible' : 'isVisble'">
-                            <button v-on:click="redirectLoginForm()" data-bid-submit-button="" class="bid-little-btn" type="submit"> 
-                                Lägg bud
-                            </button>
-                        </span>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -55,7 +58,7 @@ export default {
             GlobalVar: 0,
         }
     },
-    props: ['auction','lastbid'],    
+    props: ['auction','lastbid','userbid'],    
     async mounted() {   
         let self = this;
         //new bid input visible or not visible
@@ -77,6 +80,15 @@ export default {
         },
     },
     methods:{
+        status(stop_date){
+            var current_date = new Date(); // Your timezone!
+            var current_timestamp = current_date.getTime();
+            if(stop_date <= current_timestamp){
+                return "display:none;";
+            }else{
+                return "display:block;";
+            }
+        },
         redirectLoginForm(){
             window.location.href = '/loginForm';
         },
@@ -108,6 +120,11 @@ export default {
                 }
             }
           }, 1000);
+        },
+        checkUserBid(lastbid,userbid){
+            if(userbid && lastbid && (lastbid !== userbid)){
+                return "ditt bud: "+userbid;
+            }
         }
     },
     beforeDestroy () {
