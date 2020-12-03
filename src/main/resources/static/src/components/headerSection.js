@@ -17,7 +17,6 @@ export default {
               <div class="profil-box-header">
                 <router-link v-if="$store.state.user" to="/mypage" id="profil-link" class="notification">
                   <div style="margin-right: 10px;">Profil</div>
-                  <div class="badge">3</div>
                   <div class="header-message-avatar">
                     <img  v-bind:src=$store.state.user.picture_url  alt="">
                   </div>
