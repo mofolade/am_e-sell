@@ -20,7 +20,7 @@ export default {
               <a href="" type="button" v-on:click.prevent="setStatus(1)">Pågående</a>
               <a href="" type="button"  v-on:click.prevent="setStatus(0)">Såld</a>
             </div>
-            <div class="d-flex flex-row align-items-center" id="auction-cover">
+            <div class="d-flex flex-row align-items-center" id="my-auction-cover">
                 <auctionItem 
                     v-for="auction of auctions" 
                     :auction="auction"
