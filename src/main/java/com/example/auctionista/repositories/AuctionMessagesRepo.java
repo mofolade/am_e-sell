@@ -35,6 +35,7 @@ public interface AuctionMessagesRepo  extends JpaRepository<AuctionMessages, Int
             "           me.content, \n" +
             "           me.sender_user_id, \n" +
             "           me.recipient_user_id, \n" +
+            "           me.message_id, \n" +
             "           me.timestamp \n" +
             "       FROM messages me \n" +
             "      WHERE me.auction_id = :auction_id" +
@@ -63,6 +64,7 @@ public interface AuctionMessagesRepo  extends JpaRepository<AuctionMessages, Int
             "           me.content, \n" +
             "           me.sender_user_id, \n" +
             "           me.recipient_user_id, \n" +
+            "           me.message_id, \n" +
             "           me.timestamp \n" +
             "       FROM messages me \n" +
             "      WHERE (me.sender_user_id = :user_id or me.recipient_user_id = :user_id)";
