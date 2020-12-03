@@ -664,6 +664,15 @@ label{
   flex-direction: row;
   align-items: center;
   flex-wrap: wrap;
+  margin: 15px;  
+  justify-content: center;
+}
+
+#my-auction-cover{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
   margin: 15px;
 }
 
