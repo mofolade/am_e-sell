@@ -15,6 +15,7 @@ public interface MessageRepo extends JpaRepository<Message, Long> {
             "           me.auction_id, \n" +
             "           me.sender_user_id, \n" +
             "           me.recipient_user_id, \n" +
+            "           me.message_id, \n" +
             "           me.timestamp \n" +
             "       FROM messages me \n" +
             "      WHERE ((me.sender_user_id = :user_id) OR (me.recipient_user_id = :user_id))";

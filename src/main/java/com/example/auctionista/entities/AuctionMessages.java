@@ -27,6 +27,7 @@ import javax.persistence.*;
         "           me.content,\n" +
         "           me.sender_user_id,\n" +
         "           me.recipient_user_id,\n" +
+        "           me.message_id, \n" +
         "           me.timestamp\n" +
         "       FROM messages me")
 public class AuctionMessages {
@@ -48,13 +49,15 @@ public class AuctionMessages {
     private Integer sender_user_id;
     @Column(name = "recipient_user_id")
     private Integer recipient_user_id;
+    @Column(name = "message_id")
+    private Integer message_id;
     @Column(name = "timestamp")
     private long timestamp;
 
     public AuctionMessages() {
     }
 
-    public AuctionMessages(Integer id, Integer auction_id, String sender_user_name, String sender_picture_url, String recipient_user_name, String recipient_picture_url, String content, Integer sender_user_id, Integer recipient_user_id, long timestamp) {
+    public AuctionMessages(Integer id, Integer auction_id, String sender_user_name, String sender_picture_url, String recipient_user_name, String recipient_picture_url, String content, Integer sender_user_id, Integer recipient_user_id, Integer message_id, long timestamp) {
         this.id = id;
         this.auction_id = auction_id;
         this.sender_user_name = sender_user_name;
@@ -64,6 +67,7 @@ public class AuctionMessages {
         this.content = content;
         this.sender_user_id = sender_user_id;
         this.recipient_user_id = recipient_user_id;
+        this.message_id = message_id;
         this.timestamp = timestamp;
     }
 
@@ -137,6 +141,14 @@ public class AuctionMessages {
 
     public void setRecipient_user_id(Integer recipient_user_id) {
         this.recipient_user_id = recipient_user_id;
+    }
+
+    public Integer getMessage_id() {
+        return message_id;
+    }
+
+    public void setMessage_id(Integer message_id) {
+        this.message_id = message_id;
     }
 
     public long getTimestamp() {
