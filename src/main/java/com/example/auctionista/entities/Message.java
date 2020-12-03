@@ -20,6 +20,7 @@ public class Message {
     private Integer auction_id;
     private Integer sender_user_id;
     private Integer recipient_user_id;
+    private Integer message_id;
     private long timestamp;
 
     public long getId() {
@@ -60,6 +61,14 @@ public class Message {
 
     public void setRecipient_user_id(Integer recipient_user_id) {
         this.recipient_user_id = recipient_user_id;
+    }
+
+    public Integer getMessage_id() {
+        return message_id;
+    }
+
+    public void setMessage_id(Integer message_id) {
+        this.message_id = message_id;
     }
 
     public long getTimestamp() {
