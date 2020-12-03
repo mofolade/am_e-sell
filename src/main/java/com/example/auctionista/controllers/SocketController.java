@@ -31,7 +31,6 @@ public class SocketController extends TextWebSocketHandler {
         System.out.println("Received msg: " + message.getPayload());
         String newMsg = message.getPayload();
         if(newMsg.contains("\"action\":\"bid\"")) {
-            System.out.println("ez uj bid");
             SocketDTOBid socketDTOBid = objectMapper.readValue(message.getPayload(), SocketDTOBid.class);
             switch (socketDTOBid.action) {
                 case "bid":
@@ -50,7 +49,6 @@ public class SocketController extends TextWebSocketHandler {
             }
         }
         else{
-            System.out.println("ez uj msg");
             // we use a DTO (data transfer object) to handle action and payload
             SocketDTO socketDTO = objectMapper.readValue(message.getPayload(), SocketDTO.class);
             switch (socketDTO.action) {
