@@ -6,9 +6,9 @@ export default {
             <textarea  v-model="messageText" placeholder="Skriv meddelande.." name="msg" required></textarea>
             <input type="hidden" v-model="sender_user_id">
             <input type="hidden" v-model="owner_user_id">
-            <input type="hidden" v-model="this.auction_id">
+            <input type="hidden" v-model="this.auction_id">            
+            <input type="hidden" v-model="message_id">
             <button type="submit" class="btn" v-on:click="newMessage()">Skicka</button>
-            <button type="button" class="btn cancel" v-on:click="closeForm()">Stäng</button>
         </form>
     `,
     data() {
@@ -17,7 +17,7 @@ export default {
             sender_user_id: 0
         }
     },
-    props: ['auction_id','owner_user_id'],
+    props: ['auction_id','owner_user_id','recipient_user_id','message_id'],
     computed: {
         senderUserId: {
             get() {
@@ -30,11 +30,18 @@ export default {
     },
     methods: {
         async newMessage() {
+            let recipientUserId=this.owner_user_id;
+            if(this.recipient_user_id){
+                recipientUserId=this.recipient_user_id;
+            }else{
+                recipientUserId = this.owner_user_id;
+            }
             let message = {
                 sender_user_id: this.senderUserId,
-                recipient_user_id: this.owner_user_id,
+                recipient_user_id: recipientUserId,
                 content: this.messageText,
                 auction_id : this.auction_id,
+                message_id : this.message_id,
                 timestamp: Date.now()
             }
 
@@ -42,8 +49,5 @@ export default {
             // send message with websocket
             sendMessage(message,'message')
         },
-        closeForm(){
-            document.getElementById("myChatBoxForm").style.display = "none";
-        }
     }
 }

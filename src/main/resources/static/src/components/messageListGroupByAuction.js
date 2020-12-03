@@ -14,6 +14,7 @@ export default {
                     v-for="auction of auctions" 
                     :auction="auction"
                     :key="auction.id"
+                    :auctionInformationVisible="true"
                 />
                 </ul>
             </div>
@@ -38,6 +39,7 @@ export default {
         if(user.status !== 404){
             let auctions = await fetch(`/rest/auctionsmessagesbyuserid/`+ user.id);
             auctions = await auctions.json();
+            auctions.sort((m1, m2) => m1.stop_date > m2.stop_date ? -1 : 1)
             this.auctions = auctions;
         }                   
         

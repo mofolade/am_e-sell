@@ -8,7 +8,7 @@ export default {
                 <span>Budet måste vara högre än nyvarande pris.</span>
             </div>
             <div class="bid-input">
-                <input type="number" class="form-control" v-model="bid" name="bid" autocomplete="off" value="" required>
+                <input type="number" id="budInput" class="form-control" v-model="bid" name="bid" autocomplete="off" value="">
                 <input type="hidden" v-model="auction_id">
                 <h4 style="top: 0px; right: 0px;">kr</h4>
             </div>            
@@ -32,7 +32,6 @@ export default {
             }
             else{
                 let self = this;
-                console.log('startprice: '+self.start_price+ ' last_bid: '+self.last_bid)
                 if(self.start_price >= this.bid || self.last_bid >= this.bid){
                     document.getElementById('errorMsg').style.display='block';
                 }

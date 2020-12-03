@@ -10,11 +10,15 @@ export const store = new Vuex.Store({
     categories: [],
     auctions: [],
     user: [],
-    allUsers: []
+    allUsers: [],
+    currentUserId: 0
   },
   mutations: {
     setUser(state, user) {
       state.user = user
+    },
+    setCurrentUser(state, current_user_id){
+      state.currentUserId = current_user_id
     },
     setAllUsers(state, users) {
       state.allUsers = users
@@ -54,10 +58,12 @@ export const store = new Vuex.Store({
     async fetchUser(store){
       let user = await fetch('/whoami')
       user = await user.json()
-//console.log(user);
+console.log(user);
       if(user.status == 404){
+        store.commit('setCurrentUser', 0)
         store.commit('setUser', null)
       }else{
+        store.commit('setCurrentUser', user['id'])
         store.commit('setUser', user)
       }
     },
