@@ -36,15 +36,12 @@ export default {
       this.$store.dispatch('fetchAllBids')
       this.$store.dispatch('fetchAllMessagesByUserId')
 
-      let user = await fetch('/whoami')
+      /*let user = await fetch('/whoami')
       
       if(user.ok) {
         user = await user.json()
         console.log(user);
         this.$store.commit('setUser', user)
-      }
+      }*/
     },
-    mounted(){
-
-    }
   }

@@ -2,13 +2,15 @@ import newBudInput from '../components/newBudInput.js'
 import newMessageInput from '../components/newMessageInput.js'
 import messageItem from '../components/messageItem.js'
 import auctionGallery from '../components/auctionGallery.js'
+import messageAuctionItem from '../components/messageAuctionItem.js'
 
 export default {
   components: {
     newBudInput,
     newMessageInput,
     messageItem,
-    auctionGallery
+    auctionGallery,
+    messageAuctionItem
   },
   template: `
       <div class="auction-container">
@@ -69,28 +71,40 @@ export default {
                     <p>{{auction.description}}</p>
                   </div>
                 </div>
-                <div class="contact-block" v-bind:class="chatVisibleCheck ? 'isVisble' : 'notVisible'">
-                    <div class="contact-block-row-desktop">
-                      <span class="mdi mdi-message-text-outline contact-block-row-icon-desktop"></span>
-                      <span class="contact-block-row-label closed ng-binding ng-scope">
-                        <button class="open-button" v-on:click="openForm()">Chat för säljaren</button>
-                        <div class="chat-popup" id="myChatBoxForm">
-                          <newMessageInput :auction_id="auction.id" :owner_user_id="auction.owner_user_id" />
-                          <div class="messages-box-little">
-                            <ul>
-                            <messageItem 
-                                v-for="message of messages"
-                                :message="message"
-                                :auction_owner_id = "auction.owner_user_id"
-                                :owner_picture_url="auction.owner_picture_url"
-                                :key="message.id"
-                            />
-                            </ul>
-                          </div>
+                <div class="contact-block" v-bind:class="ownerMessageListVisibleCheck ? 'notVisible' : 'isVisble'">
+                  <div class="contact-block-row-desktop">
+                    <span class="mdi mdi-message-text-outline contact-block-row-icon-desktop"></span>
+                    <span class="contact-block-row-label closed ng-binding ng-scope">
+                      <button class="open-button" v-on:click="openForm(auction.id)">Chat för säljaren</button>
+                      <button style="display:none;" id="chatCloseBtn" type="button" class="btn cancel" v-on:click="closeForm(auction.id)">Stäng</button>
+                      <div class="chat-popup" v-bind:id="'myChatBoxForm'+auction.id">
+                        <newMessageInput :auction_id="auction.id" :owner_user_id="auction.owner_user_id" />
+                        <div class="messages-box-little">
+                          <ul>
+                          <messageItem 
+                              v-for="message of messages"
+                              :message="message"
+                              :auction_owner_id = "auction.owner_user_id"
+                              :owner_picture_url="auction.owner_picture_url"
+                              :key="message.id"
+                          />
+                          </ul>
                         </div>
-                      </span>
-                    </div>
+                      </div>
+                    </span>
                   </div>
+                </div>
+                <!-- Owner message list -->
+                <div v-if="ownerMessageListVisibleCheck == true">
+                  <div class="messages-box">
+                    <ul>
+                    <messageAuctionItem
+                        :auction="auction"
+                        :auctionInformationVisible="false"
+                    />
+                    </ul>
+                  </div>
+                </div>
               </li>
               <li class="flex-item">
                 <div class="chat-box" style="margin: 0px 15px; min-width: 300px;">
@@ -119,6 +133,7 @@ export default {
         chatVisibleCheck: false,
         bidVisibleCheck: false,
         loginVisibleCheck: false,
+        ownerMessageListVisibleCheck: false,
         GlobalVar: 0
     }
   },
@@ -149,10 +164,11 @@ export default {
       this.images=images;
     }
     //new bid input and chat visible or not visible
-    if(this.$store.state.user !== null){
+    if(this.$store.state.currentUserId > 0){
       if(this.$store.state.user['id'] !== auction.owner_user_id){
         this.bidVisibleCheck = true;
-      }else{
+      }else{        
+        this.ownerMessageListVisibleCheck = true;
         this.bidVisibleCheck = false;
       }
       this.chatVisibleCheck = true;
@@ -166,11 +182,12 @@ export default {
     redirectLoginForm(){
         window.location.href = '/loginForm';
     },
-    async openForm() {
+    async openForm(auction_id) {
       if(this.$store.state.user.id == null){
         window.location.href = '/loginForm';
       }else{
-        document.getElementById("myChatBoxForm").style.display = "block";
+        document.getElementById("myChatBoxForm"+auction_id).style.display = "block";
+        document.getElementById("chatCloseBtn").style.display = "block";
       }
     },
     countDownAuction(){
@@ -208,6 +225,11 @@ export default {
       else {
         return this.auction.start_price;
       }
+    },  
+    closeForm(auction_id){
+      console.log(auction_id)
+      document.getElementById("myChatBoxForm"+auction_id).style.display = "none";
+      document.getElementById("chatCloseBtn").style.display = "none";
     }
   },
   beforeDestroy () {
