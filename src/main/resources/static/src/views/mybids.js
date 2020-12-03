@@ -9,11 +9,11 @@ export default {
     template: `
       <div class="content">
         <div class="about-section">
-          <h2>Mina auktioner</h2>
+          <h2>Mina bud</h2>
         </div>
         <div id="myauction-container">
           <myProfilBox 
-            :user="currentUser"
+            :user=this.$store.state.user
           />
           <div>
             <div class="status-link-box">
@@ -36,29 +36,51 @@ export default {
     data () {
       return {
         all_auctions: [],
-        auctions: [],
         error: null,
         category_name: '',
         status_id:1,
-        user: null
+        bids:[],
+        user_id: null
       }
     },
     computed: {
-      currentUser(){
-        this.user = this.$store.state.user;
-        return this.user;
-      }
-    },
-    async mounted(){
-        let auctions = await fetch('/rest/auctionsinfo')
-        auctions = await auctions.json()
-        auctions = auctions.filter(auction => auction.owner_user_id == this.user.id);
-        var current_date = new Date(); // Your timezone!
-        var current_timestamp = current_date.getTime();
-        this.all_auctions = auctions;
-        //pågående
-        auctions = auctions.filter(auction => auction.stop_date > current_timestamp);
-        this.auctions = auctions;
+        auctions(status_id){
+            let user = this.$store.state.user;
+            let bids = this.$store.state.bids;
+            let auctions = this.$store.state.auctions;
+            if(user && bids && auctions){
+                let bids = this.$store.state.bids;
+                this.user_id = user['id'];
+                let auctionsByUserId = bids.filter(bid => bid.bidder_user_id == user['id']);
+
+                const filteredArr = auctionsByUserId.reduce((acc, current) => {
+                    const x = acc.find(item => item.auction_id === current.auction_id);
+                    if (!x) {
+                      return acc.concat([current]);
+                    } else {
+                      return acc;
+                    }
+                  }, []);
+
+                let userAuctions=[];
+                let count=0;
+                for (var key in filteredArr) {
+                    var auctionObject = filteredArr[key];
+                    let auction = auctions.filter(auction => auction.id === auctionObject['auction_id']);
+                    userAuctions[count]=auction[0];
+                    count=count+1;
+                }
+                this.all_auctions=userAuctions;
+                var current_date = new Date(); // Your timezone!
+                var current_timestamp = current_date.getTime();
+                if(this.status_id == 1){ //pågående
+                    userAuctions = userAuctions.filter(auction => auction.stop_date > current_timestamp);
+                }else if(this.status_id == 0){ // såld
+                    userAuctions = userAuctions.filter(auction => auction.stop_date <= current_timestamp);
+                }
+                return(userAuctions);
+            }
+        }
     },
     methods:{
         lastBid(auction_id){
@@ -79,15 +101,7 @@ export default {
         },
         setStatus(status_id){
           this.status_id = status_id;
-          let auctions=this.all_auctions
-          var current_date = new Date(); // Your timezone!
-          var current_timestamp = current_date.getTime();
-          if(this.status_id == 1){ //pågående
-            auctions = auctions.filter(auction => auction.stop_date > current_timestamp);
-          }else if(this.status_id == 0){ // såld
-            auctions = auctions.filter(auction => auction.stop_date <= current_timestamp);
-          }
-          this.auctions = auctions;
-        }
+        },
+        
     }
 }

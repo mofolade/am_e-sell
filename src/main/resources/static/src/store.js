@@ -54,7 +54,7 @@ export const store = new Vuex.Store({
     async fetchUser(store){
       let user = await fetch('/whoami')
       user = await user.json()
-      console.log(user);
+//console.log(user);
       if(user.status == 404){
         store.commit('setUser', null)
       }else{
@@ -64,23 +64,20 @@ export const store = new Vuex.Store({
     async fetchAllUsers(store){
       let users = await fetch('/rest/userspictures')
       users = await users.json()
-      console.log(users);
+//console.log(users);
       store.commit('setAllUsers', users)
     },
     async fetchAllMessages(store) {
         let messages = await fetch('/rest/messages')
         messages = await messages.json()
-
         messages.sort((m1, m2) => m1.timestamp > m2.timestamp ? -1 : 1)
-
-        //console.log(messages);
-
+//console.log(messages);
         store.commit('setMessages', messages)
     },
     async fetchAllBids(store) {
       let bids = await fetch('/rest/bids')
       bids = await bids.json()
-console.log(bids)
+//console.log(bids)
       bids.sort((m1, m2) => m1.creation_date > m2.creation_date ? -1 : 1)
 
       store.commit('setBids', bids)
@@ -91,7 +88,7 @@ console.log(bids)
           let messages = await fetch('/rest/messagesbyuserid/'+ user.id);
           messages = await messages.json();
           messages.sort((m1, m2) => m1.timestamp > m2.timestamp ? -1 : 1)
-console.log(messages)
+//console.log(messages)
           //this.messages = messages;
           store.commit('setMessagesByUserId', messages)
         }
@@ -100,14 +97,14 @@ console.log(messages)
       let categories = await fetch('/rest/categories')
       categories = await categories.json()
 
-console.log(categories);
+//console.log(categories);
       store.commit('setCategories', categories)
     },
     async fetchAllAuctions(store) {
       let auctions = await fetch('/rest/auctionsinfo')
       auctions = await auctions.json()
 
-console.log(auctions);
+//console.log(auctions);
       store.commit('setAuctions', auctions)
     }
   }

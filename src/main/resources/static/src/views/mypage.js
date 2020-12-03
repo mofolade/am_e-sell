@@ -1,8 +1,10 @@
 import messageListGroupByAuction from '../components/messageListGroupByAuction.js'
+import myProfilBox from '../components/myProfilBox.js'
 
 export default {
   components: {
-    messageListGroupByAuction
+    messageListGroupByAuction,
+    myProfilBox
   },
     template: `
       <div class="content">
@@ -10,28 +12,14 @@ export default {
           <h2>Profil</h2>
         </div>
         <div id="mypage-container">
-          <div class="profile">
-            <img v-bind:src=user.picture_url alt="" class="profile_image">
-            <div class="profile_name">{{user.name}}</div>
-            <div class="profile_email"> {{user.email}} </div>
-            <label>Organize nummer</label>
-            <div class="profile_orgnm"> {{user.organize_number}} </div>
-            <router-link v-bind:to="'/newauction'">
-                <div class="btn">
-                Nytt auktion
-                </div>
-            </router-link>
-            <router-link v-bind:to="'/myauctions/'+user.id">
-                <div class="btn">
-                Mina auktioner
-                </div>
-            </router-link>
-          </div>
+          <myProfilBox 
+            :user=this.$store.state.user
+          />
           <div class="messages-container">
             <div class="d-flex flex-direction-column">
               <div class="chat_container">
-                  <messageListGroupByAuction 
-                    :user=this.$store.state.user
+                  <messageListGroupByAuction
+                  :user=this.$store.state.user
                   />
               </div>
             </div>

@@ -881,7 +881,17 @@ label{
   max-width: 80%;
   margin-top: 15px;
 }
-
+#myauction-container{
+  display: flex;
+  flex-direction: row;
+  margin-top: 15px;
+}
+.userbud{
+  background-color: #dd4b39;
+  color: #fff;
+  padding: 3px;
+  font-size: 12px;
+}
 .auction-message-box{
   width: 100%;
 }
@@ -922,6 +932,9 @@ label{
   font-size: 15px;
   color: #62748F;
   width: 80%;
+}
+#newBidBox{
+  display: block;
 }
 .header-message-avatar{
   float: right;
@@ -1034,6 +1047,7 @@ background:#2196f3;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   padding: 20px;
   margin-right: 15px;
+  min-width: 300px;
 }
 
 .profile_image{
