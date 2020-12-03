@@ -25,9 +25,14 @@ export default {
         }
     },
     props: ['user'],
-    computed: {
-    },
-    async mounted() { 
+    /*methods: {
+        async auctions(user){
+            let auctions = await fetch(`/rest/auctionsmessagesbyuserid/`+ user.id);
+            auctions = await auctions.json();
+            return auctions;
+        }
+    },*/
+    async mounted() {
         let user = await fetch('/whoami')
         user = await user.json()
         if(user.status !== 404){

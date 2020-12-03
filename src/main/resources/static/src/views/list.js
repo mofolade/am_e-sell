@@ -18,6 +18,7 @@ export default {
                 v-for="auction of auctions" 
                 :auction="auction"
                 :lastbid = "lastBid(auction.id)"
+                :userbid = "userBid(auction.id)"
                 :key="auction.id"
             />
         </div>
@@ -48,6 +49,14 @@ export default {
       lastBid(auction_id){
           this.bids = this.$store.state.bids;
           let bidsByAuctionId = this.$store.state.bids.filter(bid => bid.auction_id == auction_id);
+          bidsByAuctionId.sort((m1, m2) => m1.creation_date > m2.creation_date ? -1 : 1)
+          if(bidsByAuctionId[0]){
+              return (bidsByAuctionId[0]['bid']);
+          }
+      },
+      userBid(auction_id){
+          let user = this.$store.state.user;
+          let bidsByAuctionId = this.$store.state.bids.filter(bid => bid.auction_id == auction_id && bid.bidder_user_id == user['id']);
           bidsByAuctionId.sort((m1, m2) => m1.creation_date > m2.creation_date ? -1 : 1)
           if(bidsByAuctionId[0]){
               return (bidsByAuctionId[0]['bid']);

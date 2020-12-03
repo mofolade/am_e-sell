@@ -59,7 +59,7 @@ export default {
                       :last_bid="lastBid()"
                     />
                   </section>
-                  <span  v-bind:class="this.bidVisibleCheck ? 'notVisible' : 'isVisble'">
+                  <span  v-bind:class="this.loginVisibleCheck ? 'isVisble' : 'notVisible'">
                       <button v-on:click="redirectLoginForm()" data-bid-submit-button="" class="bid-btn btn btn-lg btn-fluid mb-4 " type="submit"> 
                           Lägg bud
                       </button>
@@ -118,6 +118,7 @@ export default {
         auction_id: 0,
         chatVisibleCheck: false,
         bidVisibleCheck: false,
+        loginVisibleCheck: false,
         GlobalVar: 0
     }
   },
@@ -149,7 +150,7 @@ export default {
     }
     //new bid input and chat visible or not visible
     if(this.$store.state.user !== null){
-      if(this.$store.state.user.id !== auction.owner_user_id){
+      if(this.$store.state.user['id'] !== auction.owner_user_id){
         this.bidVisibleCheck = true;
       }else{
         this.bidVisibleCheck = false;
@@ -157,7 +158,7 @@ export default {
       this.chatVisibleCheck = true;
     }
     else{
-        this.chatVisibleCheck = false;
+        this.loginVisibleCheck = true;
         this.bidVisibleCheck = false;
     }
   },

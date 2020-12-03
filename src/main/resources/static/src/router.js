@@ -12,6 +12,7 @@ import loginForm from './views/loginForm.js'
 import signUp from './views/signUp.js'
 import mypage from './views/mypage.js'
 import myauctions from './views/myauctions.js'
+import mybids from './views/mybids.js'
 
 export const router = new VueRouter({
   mode: 'history',
@@ -63,8 +64,13 @@ export const router = new VueRouter({
     },
     {
       name: "myauctions",
-      path: '/myauctions/:id',
+      path: '/myauctions',
       component: myauctions
-    }
+    },
+    {
+      name: "mybids",
+      path: '/mybids', 
+      component: mybids
+    },
   ]
 });
