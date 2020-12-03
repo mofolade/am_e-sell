@@ -31,7 +31,9 @@ export default {
     computed: {
         auctions(){
             let user = this.$store.state.user;
-            this.user_id = user['id'];
+            if(user){
+                this.user_id = user['id'];
+            }
             let bids = this.$store.state.bids;
             let auctions = this.$store.state.auctions;
 

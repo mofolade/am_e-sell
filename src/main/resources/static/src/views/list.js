@@ -55,15 +55,18 @@ export default {
           }
       },
       userBid(auction_id){
-          let user = this.$store.state.user;
-          let bidsByAuctionId = this.$store.state.bids.filter(bid => bid.auction_id == auction_id && bid.bidder_user_id == user['id']);
-          bidsByAuctionId.sort((m1, m2) => m1.creation_date > m2.creation_date ? -1 : 1)
-          if(bidsByAuctionId[0]){
-              return (bidsByAuctionId[0]['bid']);
-          }
+        let user = this.$store.state.user;
+        if(user){
+            this.user_id = user['id'];
+            let bidsByAuctionId = this.$store.state.bids.filter(bid => bid.auction_id == auction_id && bid.bidder_user_id == user['id']);
+            bidsByAuctionId.sort((m1, m2) => m1.creation_date > m2.creation_date ? -1 : 1)
+            if(bidsByAuctionId[0]){
+                return (bidsByAuctionId[0]['bid']);
+            }
+        }
       },
       async getAuctionsByCategoryId() {      
-        let category_id = this.$route.params.id         
+        let category_id = this.$route.params.id
         let auctions = await fetch(`/rest/auctionsbycategoryid/`+ category_id);
         var current_date = new Date(); // Your timezone!
         var current_timestamp = current_date.getTime();

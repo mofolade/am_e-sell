@@ -15,7 +15,7 @@ export default {
           <myProfilBox 
             :user="currentUser"
           />
-          <div>
+          <div style="width:100%;">
             <div class="status-link-box">
               <a href="" type="button" v-on:click.prevent="setStatus(1)">Pågående</a>
               <a href="" type="button"  v-on:click.prevent="setStatus(0)">Såld</a>
