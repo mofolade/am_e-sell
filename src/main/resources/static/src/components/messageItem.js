@@ -138,7 +138,6 @@ export default {
         isAnswer(){
             let self = this;
             let answers = this.answers;
-            console.log(answers['length'])
             return answers['length']
         }
     }
