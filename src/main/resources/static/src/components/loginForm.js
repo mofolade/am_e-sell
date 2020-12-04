@@ -4,6 +4,10 @@ export default {
       <div class="row">
         <h2 style="text-align:center">Logga in</h2>
         <div class="login-col">
+          <div class="alert" id="errorMsg">
+              <span class="closebtn" @click="closeAlert()">×</span>
+              <span id="error-msg-text"></span>
+          </div>
           <form @submit.prevent="signInManually">
               <input type="text" v-model="email" name="email" placeholder="Email" required>
               <input type="password" v-model="password" name="password" placeholder="Lösenord" required>
@@ -43,6 +47,9 @@ export default {
       signInButton() {
           this.auth2.grantOfflineAccess().then(this.signInCallback);
       },
+      closeAlert(){
+          document.getElementById('errorMsg').style.display='none';
+      },
       async signInManually(){
         //securityLogin
         console.log('signinmanually')
@@ -66,28 +73,35 @@ export default {
             body: JSON.stringify(user)
           });
           if(response.url.includes('error')) {
+            document.getElementById('error-msg-text').innerHTML='Fel email eller lösenord!';            
+            document.getElementById('errorMsg').style.display='block';
             console.log('Fel email eller lösenord!')
           }else{
             let res = await fetch('/auth/user')
-            try {
-              res = await res.json()
-              setUser(res)
-            } catch {
-              console.log('Not authenticated');
-            }
-            window.location.href = '/'; 
-          }
 
+            if(res.ok) {
+              let user = await fetch('/whoami')
+              user = await user.json()
+
+              if(user['status']==404){
+                document.getElementById('error-msg-text').innerHTML='Fel email eller lösenord!';            
+                document.getElementById('errorMsg').style.display='block';
+              }else if(user['id'] > 0){
+                this.$store.commit('setUser', user)
+                window.location.href = '/';
+              }
+            }
+          }
         } catch (error) {
+          document.getElementById('error-msg-text').innerHTML='Fel email eller lösenord!';            
+          document.getElementById('errorMsg').style.display='block';
           throw error;
         }
-        window.location.href = '/'; 
       },
       async signInCallback(authResult) {
           console.log('authResult', authResult);
         
-          if (authResult['code']) {
-        
+          if (authResult['code']) {        
             // Hide the sign-in button now that the user is authorized        
             // Send the code to the server
             let result = await fetch('/storeauthcode', {
@@ -101,14 +115,22 @@ export default {
 
             // 200
             if(result.ok) {
-                let user = await fetch('/whoami')
-                user = await user.json()
+              let user = await fetch('/whoami')
+              user = await user.json()
+              if(user['status']==404){
+                document.getElementById('error-msg-text').innerHTML='Fel email eller lösenord!';            
+                document.getElementById('errorMsg').style.display='block';
+              }
+              else if(user['id'] > 0){
                 this.$store.commit('setUser', user)
                 window.location.href = '/';
+              }
             }
 
           } else {
             // There was an error.
+            document.getElementById('error-msg-text').innerHTML='Google-autentiseringsfel';            
+            document.getElementById('errorMsg').style.display='block';
             console.error('Google auth error');
           }
         }

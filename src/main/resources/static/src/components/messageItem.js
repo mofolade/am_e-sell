@@ -1,4 +1,5 @@
 import newMessageInput from '../components/newMessageInput.js'
+import { sendMessage } from '../socket.js'
 
 export default {
     components: {
@@ -10,10 +11,6 @@ export default {
             <div class="message-avatar">
                 <img v-bind:src="getUserPictureUrl(message.sender_user_id)" v-bind:title="getUserName(message.sender_user_id)">
             </div>
-            <!--div style="display: flex; align-items: center;"><i class="fas fa-arrow-right"></i></!--div>
-            <div class="message-avatar">
-                <img v-bind:src="getUserPictureUrl(message.recipient_user_id)" v-bind:title="getUserName(message.recipient_user_id)">
-            </!--div-->
             <div class="message-body">
                 <div class="message-body-heading">
                     <div>{{ time(message.timestamp) }}</div>
@@ -23,7 +20,7 @@ export default {
                 </div>
             </div>
             <div class="contact-block-row-desktop" v-if="message.sender_user_id !== auction_owner_id && currentUserId == auction_owner_id">
-                <span class="mdi mdi-message-text-outline contact-block-row-icon-desktop"></span>
+                <span class="mdi mdi-message-text-outline contact-block-row-icon-desktop"></span>    
                 <span class="contact-block-row-label closed ng-binding ng-scope">
                     <button v-bind:id="'ownerAnswerBtn'+auction_id+message.id" 
                     class="open-button" 
@@ -33,12 +30,10 @@ export default {
                     <button style="display:none;" v-bind:id="'ownerBoxFormClose'+auction_id+message.id" type="button" class="btn cancel" 
                     v-on:click="closeForm(auction_id,message.id)">Stäng</button>
                     <div class="chat-popup" v-bind:id="'ownerBoxForm'+auction_id+message.id">
-                    <newMessageInput 
-                        :auction_id="auction_id" 
-                        :owner_user_id="auction_owner_id"
-                        :recipient_user_id="message.sender_user_id"
-                        :message_id="message.id"
-                        />
+                        <form action="" class="chat-form-container" @submit.prevent="newMessage(auction_id+''+message.id)">
+                            <textarea  v-model="messageText" placeholder="Skriv meddelande.." name="msg" required></textarea>
+                            <button type="submit" class="btn">Skicka</button>
+                        </form>
                     </div>
                 </span>
             </div>                
@@ -68,6 +63,12 @@ export default {
         
     `,
     props: ['message','owner_picture_url','auction_owner_id','auction_id','answers'],
+    data() {
+        return {
+            messageText: '',
+            sender_user_id: 0
+        }
+    },
     computed: {
         getPictureUrl(){
             return this.senderPictureUrl;
@@ -76,6 +77,14 @@ export default {
             let current_user_id = this.$store.state.currentUserId;
             if(current_user_id > 0){
                 return current_user_id;
+            }
+        },
+        senderUserId: {
+            get() {
+                return this.$store.state.user.id
+            },
+            set(val) {
+                this.messageSenderUserId = val
             }
         }
     },
@@ -94,13 +103,6 @@ export default {
         closeForm(auction_id,message_id){
             document.getElementById("ownerBoxForm"+auction_id+message_id).style.display = "none";
             document.getElementById("ownerBoxFormClose"+auction_id+message_id).style.display = "none";
-
-            /*document.getElementById("ownerBoxForm"+auction_id).style.display = "block";
-            obj = document.getElementById("ownerBoxForm"+auction_id);
-            document.body.removeChild(obj);
-            
-            obj = document.getElementById("ownerAnswerBtn"+auction_id);
-            document.body.removeChild(obj);*/
         },
         getUserPictureUrl(user_id){
             let self = this;
@@ -108,13 +110,6 @@ export default {
 
             let user = allUsers.filter(user => user.id == user_id);
             return user[0]['picture_url'];
-
-            /*if(sender_user_id == this.auction_owner_id){
-                return this.owner_picture_url;
-            }
-            if(current_user !== null){
-                return current_user.picture_url
-            }*/
         },
         getUserName(user_id){
             let self = this;
@@ -139,6 +134,29 @@ export default {
             let self = this;
             let answers = this.answers;
             return answers['length']
+        },
+        async newMessage(elementId) {
+            let recipientUserId=0;
+            if(this.message.sender_user_id){
+                recipientUserId=this.message.sender_user_id;
+            }else{
+                recipientUserId = this.auction_owner_id;
+            }
+            let message = {
+                sender_user_id: this.senderUserId,
+                recipient_user_id: recipientUserId,
+                content: this.messageText,
+                auction_id : this.auction_id,
+                message_id : this.message.id,
+                timestamp: Date.now()
+            }
+
+            document.getElementById("ownerBoxFormClose"+elementId).style.display = "none";
+            document.getElementById("ownerBoxForm"+elementId).style.display = "none";
+            document.getElementById("ownerAnswerBtn"+elementId).style.display = "none";
+            this.messageText = ''
+            // send message with websocket
+            sendMessage(message,'message')
         }
     }
 }

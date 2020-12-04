@@ -3,6 +3,7 @@ import newMessageInput from '../components/newMessageInput.js'
 import messageItem from '../components/messageItem.js'
 import auctionGallery from '../components/auctionGallery.js'
 import messageAuctionItem from '../components/messageAuctionItem.js'
+import { sendMessage } from '../socket.js'
 
 export default {
   components: {
@@ -54,7 +55,7 @@ export default {
                       <div class="countdown-box" v-bind:id="'countdown'+auction.id">{{countDownAuction()}}{{stopDateTime}}</div>
                     </section>
                   </div>
-                  <section class="bid-section" v-bind:class="bidVisibleCheck ? 'isVisble' : 'notVisible'">
+                  <section class="bid-section" v-bind:class="bidVisibleCheck ? 'isVisble' : 'notVisible'"  v-bind:style="status(auction.stop_date)">
                     <newBudInput 
                       :auction_id="auction.id"
                       :start_price="auction.start_price"
@@ -71,37 +72,30 @@ export default {
                     <p>{{auction.description}}</p>
                   </div>
                 </div>
-                <div class="contact-block" v-bind:class="ownerMessageListVisibleCheck ? 'notVisible' : 'isVisble'">
+                <div class="contact-block" v-bind:class="ownerMessageListVisibleCheck ? 'notVisible' : 'isVisble'"   v-bind:style="status(auction.stop_date)">
                   <div class="contact-block-row-desktop">
                     <span class="mdi mdi-message-text-outline contact-block-row-icon-desktop"></span>
                     <span class="contact-block-row-label closed ng-binding ng-scope">
-                      <button class="open-button" v-on:click="openForm(auction.id)">Chat för säljaren</button>
-                      <button style="display:none;" id="chatCloseBtn" type="button" class="btn cancel" v-on:click="closeForm(auction.id)">Stäng</button>
+                      <button class="open-button" v-on:click="openForm(auction.id)">Meddelande för säljaren</button>
+                      <button style="display:none;" v-bind:id="'myChatCloseBtn'+auction.id" type="button" class="btn cancel" v-on:click="closeForm(auction.id)">Stäng</button>
                       <div class="chat-popup" v-bind:id="'myChatBoxForm'+auction.id">
-                        <newMessageInput :auction_id="auction.id" :owner_user_id="auction.owner_user_id" />
-                        <div class="messages-box-little">
-                          <ul>
-                          <messageItem 
-                              v-for="message of messages"
-                              :message="message"
-                              :auction_owner_id = "auction.owner_user_id"
-                              :owner_picture_url="auction.owner_picture_url"
-                              :answers="answers(message.id)"
-                              :key="message.id"
-                          />
-                          </ul>
-                        </div>
+                        <form action="" class="chat-form-container" @submit.prevent="newMessage(auction.id,auction.owner_user_id)">
+                            <textarea  v-model="messageText" placeholder="Skriv meddelande.." name="msg" required></textarea>
+                            <button type="submit" class="btn">Skicka</button>
+                        </form>
                       </div>
                     </span>
-                  </div>
-                </div>
-                <!-- Owner message list -->
-                <div v-if="ownerMessageListVisibleCheck == true">
-                  <div class="messages-box">
+                  </div>                  
+                  <div class="messages-box-little">
                     <ul>
-                    <messageAuctionItem
-                        :auction="auction"
-                        :auctionInformationVisible="false"
+                    <messageItem 
+                        v-for="message of messages"
+                        :message="message"
+                        :auction_owner_id = "auction.owner_user_id"
+                        :owner_picture_url="auction.owner_picture_url"
+                        :auction_id ="auction.id"
+                        :answers="answers(message.id)"
+                        :key="message.id"
                     />
                     </ul>
                   </div>
@@ -135,7 +129,8 @@ export default {
         bidVisibleCheck: false,
         loginVisibleCheck: false,
         ownerMessageListVisibleCheck: false,
-        GlobalVar: 0
+        GlobalVar: 0,
+        messageText: ''
     }
   },
   computed: {
@@ -186,20 +181,25 @@ export default {
         window.location.href = '/loginForm';
       }else{
         document.getElementById("myChatBoxForm"+auction_id).style.display = "block";
-        document.getElementById("chatCloseBtn").style.display = "block";
+        document.getElementById("myChatCloseBtn"+auction_id).style.display = "block";
+      }
+    },
+    status(stop_date){
+      var current_date = new Date(); // Your timezone!
+      var current_timestamp = current_date.getTime();
+      if(stop_date <= current_timestamp){
+          return "display:none;";
+      }else{
+          return "display:block;";
       }
     },
     countDownAuction(){
       let self = this;
       var countDownDate = new Date(self.auction.stop_date).getTime();
 
-      // Update the count down every 1 second
       this.GlobalVar = setInterval(function() {
-        // Get today's date and time
         var now = new Date().getTime();          
-        // Find the distance between now and the count down date
-        var distance = countDownDate - now;          
-        // Time calculations for days, hours, minutes and seconds
+        var distance = countDownDate - now;
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -228,12 +228,25 @@ export default {
     closeForm(auction_id){
       console.log(auction_id)
       document.getElementById("myChatBoxForm"+auction_id).style.display = "none";
-      document.getElementById("chatCloseBtn").style.display = "none";
+      document.getElementById("myChatCloseBtn"+auction_id).style.display = "none";
     },
     answers(message_id){
       let allMessages = this.$store.state.messages
       let answerByMessageId = allMessages.filter(message => message.message_id == message_id);
       return answerByMessageId;
+    },
+    async newMessage(auction_id,owner_user_id) {  
+      let message = {
+          sender_user_id: this.$store.state.currentUserId,
+          recipient_user_id: owner_user_id,
+          content: this.messageText,
+          auction_id : auction_id,
+          message_id : null,
+          timestamp: Date.now()
+      }
+      console.log(message)
+      this.messageText = ''
+      sendMessage(message,'message')
     }
   },
   beforeDestroy () {

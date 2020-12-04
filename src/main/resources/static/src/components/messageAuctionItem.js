@@ -1,10 +1,8 @@
 import messageItem from './messageItem.js'
-import newMessageInput from '../components/newMessageInput.js'
 
 export default {
     components: {
-        messageItem,
-        newMessageInput
+        messageItem
     },
     template: `
         <li class="d-flex">
