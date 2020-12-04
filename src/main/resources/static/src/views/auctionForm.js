@@ -40,9 +40,9 @@ export default {
                                     </div>
                                     <span class="thumb"><img v-bind:src="getIndexedImage(imageUrlArray,index)"></span>
                                     <div class="details">
-                                        <h1>Item {{ index | addOne }}</h1>
-                                        <h2>File name: {{ file.name }}</h2>
-                                        <h3>File size: {{ file.size | formatBytes }}</h3>
+                                        <h1>Bild {{ index | addOne }}</h1>
+                                        <h2>Filnamn: {{ file.name }}</h2>
+                                        <h3>Filstorlek: {{ file.size | formatBytes }}</h3>
                                         <div v-if="file.size > 1048576" class="alert" id="errorMsg" style="display:block;">
                                             <span id="error-msg-text">Det går inte att ladda upp. Max filstorlek på filer är 1 MB.</span>
                                         </div>
