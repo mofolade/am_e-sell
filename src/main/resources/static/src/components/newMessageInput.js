@@ -2,13 +2,13 @@ import { sendMessage } from '../socket.js'
 
 export default {
     template: `
-        <form action="" class="chat-form-container" @submit.prevent="newMessage">
-            <textarea  v-model="messageText" placeholder="Skriv meddelande.." name="msg" required></textarea>
+        <form action="" class="chat-form-container" @submit.prevent="newMessage()">
+            <textarea  v-model="messageText" placeholder="Skriv meddelande.." name="msg"></textarea>
             <input type="hidden" v-model="sender_user_id">
             <input type="hidden" v-model="owner_user_id">
             <input type="hidden" v-model="this.auction_id">            
             <input type="hidden" v-model="message_id">
-            <button type="submit" class="btn" v-on:click="newMessage()">Skicka</button>
+            <button type="submit" class="btn">Skicka</button>
         </form>
     `,
     data() {

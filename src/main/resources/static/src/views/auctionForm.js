@@ -1,7 +1,7 @@
 export default {
     template: `
       <div class="new-auction-container">
-      <form @submit.prevent="addAuction">
+        <form @submit.prevent="addAuction">
             <div class="row">
                 <h2 style="text-align:center">Ny auktion</h2>  
                 <div class="login-col">{{user}}
@@ -24,41 +24,44 @@ export default {
                     <div class="img-upload-container">
                         <div class="file-upload-form">
                             <div class="file-upload">
-                            <label>Välj en eller flera JPEG-filer att ladda upp.</label>
-                            <input type="file" class="file-btn" multiple @change.prevent="listUploads" ref="file-input" accept="image/jpeg">
+                            <label>Välj en eller flera JPEG-filer att ladda upp. Max 1 MB filstorlek.</label>
+                            <input type="file" id="file-input" class="file-btn" multiple @change.prevent="listUploads" accept="image/jpeg">
                             <input type="button" class="clear-btn" @click.prevent="resetFileField" value="rensa">
                             </div>
                             <ul v-show="showUploads" class="card-list">
-                            <li v-for="(file, index) in files" :key="index" class="img-card" v-bind:ref="'card-'+index" v-bind:id="'card-'+index">
-                                <div class="upload-overlay">Uploading..</div>
-                                <div class="checkbox-wrap">
-                                    <div class="checkbox-wrap-inner">  
-                                        <input type="checkbox" v-bind:id="'checkbox-'+index" :v-model="checkboxes[index]" checked>
-                                        <label v-bind:for="'checkbox-'+index"></label>
-                                        <span class="checkbox-sub-label">Upload</span>
+                                <li v-for="(file, index) in files" :key="index" class="img-card" v-bind:ref="'card-'+index" v-bind:id="'card-'+index">
+                                    <div class="upload-overlay">Uploading..</div>
+                                    <div class="checkbox-wrap">
+                                        <div class="checkbox-wrap-inner">  
+                                            <input type="checkbox" v-bind:id="'checkbox-'+index" :v-model="checkboxes[index]" checked>
+                                            <label v-bind:for="'checkbox-'+index"></label>
+                                            <span class="checkbox-sub-label">Upload</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <span class="thumb"><img v-bind:src="imageUrlArray | getIndexedImage(index)"></span>
-                                <div class="details">
-                                    <h1>Item {{ index | addOne }}</h1>
-                                    <h2>File name: {{ file.name }}</h2>
-                                    <h3>File size: {{ file.size | formatBytes }}</h3>
-                                </div>
-                                <div class="remove-card">
-                                    <button type="button" class="remove-card-btn" @click.prevent="deleteItem" v-bind:value="index"> Ta bort</button>
-                                </div>
-                                <div class="primary-card" v-bind:id="'primarybtn'+index">
-                                    <button type="button" class="primary-card-btn" @click.prevent="primary" v-bind:value="index"> Primär</button>
-                                </div>
-                            </li>
+                                    <span class="thumb"><img v-bind:src="getIndexedImage(imageUrlArray,index)"></span>
+                                    <div class="details">
+                                        <h1>Item {{ index | addOne }}</h1>
+                                        <h2>File name: {{ file.name }}</h2>
+                                        <h3>File size: {{ file.size | formatBytes }}</h3>
+                                        <div v-if="file.size > 1048576" class="alert" id="errorMsg" style="display:block;">
+                                            <span id="error-msg-text">Det går inte att ladda upp. Max filstorlek på filer är 1 MB.</span>
+                                        </div>
+                                    </div>
+                                    <div class="remove-card">
+                                        <button type="button" class="remove-card-btn" @click.prevent="deleteItem" v-bind:value="index"> Ta bort</button>
+                                    </div>
+                                    <div class="primary-card" v-bind:id="'primarybtn'+index">
+                                        <button type="button" class="primary-card-btn" @click.prevent="primary" v-bind:value="index"> Primär</button>
+                                    </div>
+                                </li>
                             </ul>
                         </div>    
                     </div>
                     <input type="submit" value="Skapa ny auktion">
                 </div>            
             </div>
-         </form>
-      </div>
+        </form>
+    </div>
     `,
     data() {
         return {
@@ -79,9 +82,6 @@ export default {
             checkboxes: [],
             owner_user_id : 0
         }
-    },
-    components: {
-        'vue-upload-multiple-image': () => import('../components/vue-upload-multiple-image.js')
     },
     async mounted() {    
         if(this.$store.state.user !== null){
@@ -143,13 +143,18 @@ export default {
             const formData = new FormData();
             let fileCount = this.files.length;
             var auction_images='';
-            
             if (!fileCount) return;
+
+            for (let i = 0; i < fileCount['length']; i++) {
+                    console.log(fileCount[i].size);
+              }
 
             Array.from(Array(this.files.length).keys())
             .map(x => {
-                formData.append("files", this.files[x], this.files[x].name);
-                auction_images = auction_images+this.files[x].name+' ';
+                if(this.files[x].size < 1048576){
+                    formData.append("files", this.files[x], this.files[x].name);
+                    auction_images = auction_images+this.files[x].name+' ';
+                }
             });
 
             let image_upload_response = await fetch('/rest/newfile/uploadfiles', {
@@ -181,7 +186,7 @@ export default {
                 }, 1000);
               }
             });
-      
+     
             this.files = []; 
             var new_start_date = new Date(this.start_date); // Your timezone!
             var myEpoch_start_date = new_start_date.getTime();
@@ -245,16 +250,25 @@ export default {
         },
         categories(){
             return this.$store.state.categories;
+        },
+        resetFileField(e) {
+            console.log('reset');
+            const fileInput = document.getElementById("file-input");
+            document.getElementById("file-input").value="";
+            console.log(typeof(fileInput));
+            fileInput.value = '';
+            this.files = [];
+        },        
+        getIndexedImage(imageUrlArray,index) {
+          return imageUrlArray[index];
         }
+        
     },
     filters: {    
         addOne(val) {
           let output = Number(val);
           output += 1;
           return output;
-        },        
-        getIndexedImage(val, index) {
-          return val[index];
         },        
         formatBytes(a, b) {
           if (0 == a) return "0 Bytes";
