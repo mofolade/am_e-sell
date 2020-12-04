@@ -86,6 +86,7 @@ export default {
                               :message="message"
                               :auction_owner_id = "auction.owner_user_id"
                               :owner_picture_url="auction.owner_picture_url"
+                              :answers="answers(message.id)"
                               :key="message.id"
                           />
                           </ul>
@@ -144,9 +145,7 @@ export default {
     messages(){
       let auction_id = this.$route.params.id
       let allMessages = this.$store.state.messages
-      let messageByAuctionId = allMessages.filter(function (message) {  
-          return message.auction_id == auction_id
-      });
+      let messageByAuctionId = allMessages.filter(message => message.auction_id == auction_id && message.message_id == null);
       return messageByAuctionId;
     }
   },
@@ -230,6 +229,11 @@ export default {
       console.log(auction_id)
       document.getElementById("myChatBoxForm"+auction_id).style.display = "none";
       document.getElementById("chatCloseBtn").style.display = "none";
+    },
+    answers(message_id){
+      let allMessages = this.$store.state.messages
+      let answerByMessageId = allMessages.filter(message => message.message_id == message_id);
+      return answerByMessageId;
     }
   },
   beforeDestroy () {

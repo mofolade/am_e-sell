@@ -236,7 +236,7 @@ export default {
                         auction_img_res = await auction_img_res.json()
                     }
                 }
-                window.location.href = '/myPage';
+                window.location.href = '/myauctions';
                 return response;
 
             } catch (error) {
