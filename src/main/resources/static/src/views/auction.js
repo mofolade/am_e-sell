@@ -55,14 +55,14 @@ export default {
                       <div class="countdown-box" v-bind:id="'countdown'+auction.id">{{countDownAuction()}}{{stopDateTime}}</div>
                     </section>
                   </div>
-                  <section class="bid-section" v-bind:class="bidVisibleCheck ? 'isVisble' : 'notVisible'"  v-bind:style="status(auction.stop_date)">
+                  <section class="bid-section" v-bind:class="bidVisibleCheck ? 'isVisble' : 'notVisible'"  v-bind:style="status(auction.stop_date,bidVisibleCheck)" >
                     <newBudInput 
                       :auction_id="auction.id"
                       :start_price="auction.start_price"
                       :last_bid="lastBid()"
                     />
                   </section>
-                  <span  v-bind:class="this.loginVisibleCheck ? 'isVisble' : 'notVisible'">
+                  <span  v-bind:class="loginVisibleCheck ? 'isVisble' : 'notVisible'">
                       <button v-on:click="redirectLoginForm()" data-bid-submit-button="" class="bid-btn btn btn-lg btn-fluid mb-4 " type="submit"> 
                           Lägg bud
                       </button>
@@ -72,11 +72,18 @@ export default {
                     <p>{{auction.description}}</p>
                   </div>
                 </div>
-                <div class="contact-block" v-bind:class="ownerMessageListVisibleCheck ? 'notVisible' : 'isVisble'"   v-bind:style="status(auction.stop_date)">
+                <div class="ml15">
+                  <span  v-bind:class="loginVisibleCheck ? 'isVisble' : 'notVisible'">
+                      <button class="open-button" v-on:click="redirectLoginForm()" type="submit"> 
+                      Meddelande för säljaren
+                      </button>
+                  </span>
+                </div>
+                <div class="contact-block" v-bind:class="loginVisibleCheck ? 'notVisible' : 'isVisble'" >
                   <div class="contact-block-row-desktop">
                     <span class="mdi mdi-message-text-outline contact-block-row-icon-desktop"></span>
                     <span class="contact-block-row-label closed ng-binding ng-scope">
-                      <button class="open-button" v-on:click="openForm(auction.id)">Meddelande för säljaren</button>
+                      <button class="open-button mb15" v-on:click="openForm(auction.id)">Meddelande för säljaren</button>
                       <button style="display:none;" v-bind:id="'myChatCloseBtn'+auction.id" type="button" class="btn cancel" v-on:click="closeForm(auction.id)">Stäng</button>
                       <div class="chat-popup" v-bind:id="'myChatBoxForm'+auction.id">
                         <form action="" class="chat-form-container" @submit.prevent="newMessage(auction.id,auction.owner_user_id)">
@@ -161,8 +168,7 @@ export default {
     if(this.$store.state.currentUserId > 0){
       if(this.$store.state.user['id'] !== auction.owner_user_id){
         this.bidVisibleCheck = true;
-      }else{        
-        this.ownerMessageListVisibleCheck = true;
+      }else{
         this.bidVisibleCheck = false;
       }
       this.chatVisibleCheck = true;
@@ -184,10 +190,10 @@ export default {
         document.getElementById("myChatCloseBtn"+auction_id).style.display = "block";
       }
     },
-    status(stop_date){
+    status(stop_date,bidVisibleCheck){
       var current_date = new Date(); // Your timezone!
       var current_timestamp = current_date.getTime();
-      if(stop_date <= current_timestamp){
+      if(stop_date <= current_timestamp || bidVisibleCheck == false){
           return "display:none;";
       }else{
           return "display:block;";
