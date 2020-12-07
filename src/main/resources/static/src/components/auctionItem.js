@@ -28,9 +28,8 @@ export default {
                     <div class="auction-little-box-category">
                         <div class="price-box">
                             <span class="price-label">Pris:</span>
-                            <span class="price" v-if="lastbid">{{lastbid}}</span>
-                            <span class="price" v-else >{{auction.start_price}}</span>
-                            <span class="price-unit" itemprop="priceCurrency" content="Kr">Kr</span>
+                            <span class="price" v-if="lastbid">{{toSek(lastbid)}}</span>
+                            <span class="price" v-else >{{toSek(auction.start_price)}}</span>
                             <span class="userbud" v-if="checkUserBid(lastbid,userbid)">({{checkUserBid(lastbid,userbid)}})</span>
                         </div>
                         <div v-bind:style="status(auction.stop_date)">
@@ -125,6 +124,9 @@ export default {
             if(userbid && lastbid && (lastbid !== userbid)){
                 return "ditt bud: "+userbid;
             }
+        },
+        toSek(price){
+            return Intl.NumberFormat('sv-SE', {style: 'currency', currency: 'SEK'}).format(price);
         }
     },
     beforeDestroy () {

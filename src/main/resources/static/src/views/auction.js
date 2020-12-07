@@ -1,27 +1,20 @@
 import newBudInput from '../components/newBudInput.js'
-import newMessageInput from '../components/newMessageInput.js'
 import messageItem from '../components/messageItem.js'
 import auctionGallery from '../components/auctionGallery.js'
-import messageAuctionItem from '../components/messageAuctionItem.js'
 import { sendMessage } from '../socket.js'
 
 export default {
   components: {
     newBudInput,
-    newMessageInput,
     messageItem,
-    auctionGallery,
-    messageAuctionItem
+    auctionGallery
   },
   template: `
       <div class="auction-container">
         <div class="auction-column">
           <div class="auction-card-big">
             <ul class="flex-container">
-              <auctionGallery
-                :default_image ="auction.default_image"
-                :images="images"
-              />
+              <auctionGallery  :default_image ="auction.default_image"  :images="images" />
               <li class="flex-item">
                 <div class="auction-card-container">
                   <h2>{{auction.name}}</h2>
@@ -40,13 +33,11 @@ export default {
                       <div class="price-wrapper">
                         <span class="">
                           <span class="price-label">Pris:</span>
-                          <span class="price-value" itemprop="price" content=current_price>{{lastBid()}}</span>
-                          <span class="price-unit" itemprop="priceCurrency" content="Kr">Kr</span>
+                          <span class="price-value" itemprop="price" content=current_price>{{toSek(lastBid())}}</span>
                         </span>
                         <span class="startprice">
                           <span class="price-label">(Utropspris:</span>
-                          <span content=start_price>{{auction.start_price}}</span>
-                          <span class="price-unit" content="Kr">Kr)</span>
+                          <span content=start_price>{{toSek(auction.start_price)}})</span>
                         </span>
                       </div>
                     </section>                      
@@ -56,10 +47,7 @@ export default {
                     </section>
                   </div>
                   <section class="bid-section" v-bind:class="bidVisibleCheck ? 'isVisble' : 'notVisible'"  v-bind:style="status(auction.stop_date,bidVisibleCheck)" >
-                    <newBudInput 
-                      :auction_id="auction.id"
-                      :start_price="auction.start_price"
-                      :last_bid="lastBid()"
+                    <newBudInput :auction_id="auction.id" :start_price="auction.start_price" :last_bid="lastBid()"
                     />
                   </section>
                   <span  v-bind:class="loginVisibleCheck ? 'isVisble' : 'notVisible'">
@@ -67,10 +55,7 @@ export default {
                           Lägg bud
                       </button>
                   </span>
-                  <div class="description-box">
-                    <b>Beskrivning</b>
-                    <p>{{auction.description}}</p>
-                  </div>
+                  <div class="description-box"><b>Beskrivning</b><p>{{auction.description}}</p></div>
                 </div>
                 <div class="ml15">
                   <span  v-bind:class="loginVisibleCheck ? 'isVisble' : 'notVisible'">
@@ -118,8 +103,7 @@ export default {
                     <div class="user-info">
                       <div class="name">{{auction.owner_user_name}}</a></div>
                     </div>
-                  </div>
-                  
+                  </div>                  
                 </div>
               </li>
             </ul>
@@ -253,6 +237,9 @@ export default {
       console.log(message)
       this.messageText = ''
       sendMessage(message,'message')
+    },
+    toSek(price){
+        return Intl.NumberFormat('sv-SE', {style: 'currency', currency: 'SEK'}).format(price);
     }
   },
   beforeDestroy () {
