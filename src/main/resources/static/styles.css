@@ -134,6 +134,10 @@ body {
   margin-block-start: 15px;
 }
 
+#ongoing-btn{
+  background-color: #474e5d;
+}
+
 .flex-container {
   width: 100%;
   padding: 0;
