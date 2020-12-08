@@ -4,7 +4,7 @@ export default {
             <div class="auction-item-container">
                 <div class="auction-card-little-picture">
                     <router-link v-bind:to="'/auction/'+auction.id">
-                        <img v-bind:src=auction.default_image style="width: 100%;height: 12vw;object-fit: contain;">
+                        <img class="auction-img" v-bind:src=auction.default_image>
                     </router-link>
                 </div>
                 <div class="d-flex flex-direction-column justify-content-space-around">
@@ -27,10 +27,13 @@ export default {
                     </div>
                     <div class="auction-little-box-category">
                         <div class="price-box">
-                            <span class="price-label">Pris:</span>
-                            <span class="price" v-if="lastbid">{{toSek(lastbid)}}</span>
-                            <span class="price" v-else >{{toSek(auction.start_price)}}</span>
-                            <span class="userbud" v-if="checkUserBid(lastbid,userbid)">({{checkUserBid(lastbid,userbid)}})</span>
+                            <div>
+                                <span class="price-label">Pris:</span>
+                                <span class="price" v-if="lastbid">{{toSek(lastbid)}}</span>
+                                <span class="price" v-else >{{toSek(auction.start_price)}}</span>
+                            </div>
+                            <span id="user-not-last-bid" v-if="checkUserIsLastBid(lastbid,userbid)">{{checkUserIsLastBid(lastbid,userbid)}}</span>
+                            <span id="user-bid" v-if="checkUserBid(lastbid,userbid)">{{checkUserBid(lastbid,userbid)}}</span>
                         </div>
                         <div v-bind:style="status(auction.stop_date)">
                             <span v-bind:class="visibleCheck ? 'isVisble' : 'notVisible'">
@@ -120,9 +123,14 @@ export default {
             }
           }, 1000);
         },
-        checkUserBid(lastbid,userbid){
+        checkUserIsLastBid(lastbid,userbid){
             if(userbid && lastbid && (lastbid !== userbid)){
-                return "ditt bud: "+userbid;
+                return "ditt bud: "+this.toSek(userbid);
+            }
+        },
+        checkUserBid(lastbid,userbid){
+            if(userbid && lastbid && (lastbid == userbid)){
+                return "ditt bud: "+this.toSek(userbid);
             }
         },
         toSek(price){
