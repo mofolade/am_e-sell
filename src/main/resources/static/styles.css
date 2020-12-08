@@ -101,11 +101,11 @@ body {
 .auction-column{
   margin-bottom: 16px;
   padding: 0 8px;
-  width: 80%;
+  /*width: 80%;*/
 }
 .auction-card-big {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  margin: 8px;
+  margin: 5px;
   display: flex;
 }
 
@@ -317,6 +317,7 @@ input[type=number] {
 .gallery-row{
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 }
 /* Clear floats after the columns */
 .gallery-row:after {
