@@ -39,6 +39,8 @@ export default {
                           <span class="price-label">(Utropspris:</span>
                           <span content=start_price>{{toSek(auction.start_price)}})</span>
                         </span>
+                        <span id="user-not-last-bid" v-if="checkUserIsLastBid(lastBid(),userBid(auction.id))">{{checkUserIsLastBid(lastBid(),userBid(auction.id))}}</span>
+                        <span id="user-bid" v-if="checkUserBid(lastBid(),userBid(auction.id))">{{checkUserBid(lastBid(),userBid(auction.id))}}</span>
                       </div>
                     </section>                      
                     <section>
@@ -135,7 +137,11 @@ export default {
       return messageByAuctionId;
     }
   },
-  async mounted() {    
+  async mounted() {   
+    let user = this.$store.state.user;
+    if(user){
+        this.user_id = user['id'];
+    } 
     let auction_id = this.$route.params.id
     let auction = await fetch(`/rest/auctioninfo/`+ auction_id);
     auction = await auction.json();
@@ -163,6 +169,24 @@ export default {
     }
   },
   methods: {
+    lastBid(){
+      this.bids = this.$store.state.bids;
+      let bidsByAuctionId = this.$store.state.bids.filter(bid => bid.auction_id == this.$route.params.id);
+      bidsByAuctionId.sort((m1, m2) => m1.creation_date > m2.creation_date ? -1 : 1)
+      if(bidsByAuctionId[0]){
+          return (bidsByAuctionId[0]['bid']);
+      }
+      else {
+        return this.auction.start_price;
+      }
+    },
+    userBid(auction_id){
+        let bidsByAuctionId = this.$store.state.bids.filter(bid => bid.auction_id == auction_id && bid.bidder_user_id == this.user_id);
+        bidsByAuctionId.sort((m1, m2) => m1.creation_date > m2.creation_date ? -1 : 1)
+        if(bidsByAuctionId[0]){
+            return (bidsByAuctionId[0]['bid']);
+        }
+    },
     redirectLoginForm(){
         window.location.href = '/loginForm';
     },
@@ -204,17 +228,6 @@ export default {
         }        
       }, 1000);
     },
-    lastBid(){
-      this.bids = this.$store.state.bids;
-      let bidsByAuctionId = this.$store.state.bids.filter(bid => bid.auction_id == this.$route.params.id);
-      bidsByAuctionId.sort((m1, m2) => m1.creation_date > m2.creation_date ? -1 : 1)
-      if(bidsByAuctionId[0]){
-          return (bidsByAuctionId[0]['bid']);
-      }
-      else {
-        return this.auction.start_price;
-      }
-    },  
     closeForm(auction_id){
       console.log(auction_id)
       document.getElementById("myChatBoxForm"+auction_id).style.display = "none";
@@ -240,7 +253,17 @@ export default {
     },
     toSek(price){
         return Intl.NumberFormat('sv-SE', {style: 'currency', currency: 'SEK'}).format(price);
-    }
+    },
+    checkUserIsLastBid(lastbid,userbid){
+        if(userbid && lastbid && (lastbid !== userbid)){
+            return "ditt bud: "+this.toSek(userbid);
+        }
+    },
+    checkUserBid(lastbid,userbid){
+        if(userbid && lastbid && (lastbid == userbid)){
+            return "ditt bud: "+this.toSek(userbid);
+        }
+    },
   },
   beforeDestroy () {
       clearInterval(this.GlobalVar)

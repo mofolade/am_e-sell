@@ -9,7 +9,7 @@ export default {
               <input type="text" v-model="email" name="email" placeholder="Email" required>
               <input type="text" v-model="name" name="name" placeholder="Användare" required>
               <input type="password" v-model="password" name="password" placeholder="Lösenord" required>
-              <input type="text" v-model="organizeNumber" name="organizeNumber" placeholder="Organisationsnummer" required>
+              <input type="text" v-model="organizeNumber" name="organizeNumber" placeholder="Organisationsnummer">
               
               <div class="img-upload-container">
                 <div class="file-upload-form">
@@ -171,7 +171,7 @@ export default {
 
           let new_user_response = await response.json()
           console.log(new_user_response.id)
-
+          window.location.href = '/loginform';
           return response;
 
       } catch (error) {
