@@ -10,8 +10,8 @@ export default {
           <h2>{{this.category_name}}</h2>
         </div>
         <div class="status-link-box">
-          <a href="" type="button" v-on:click.prevent="setStatus(1)">Pågående</a>
-          <a href="" type="button"  v-on:click.prevent="setStatus(0)">Såld</a>
+          <a href="" type="button" id="ongoing-btn" v-on:click.prevent="setStatus(1)">Pågående</a>
+          <a href="" type="button" id="sold-btn"  v-on:click.prevent="setStatus(0)">Såld</a>
         </div>
         <div class="d-flex flex-row align-items-center" id="auction-cover">
             <auctionItem 
@@ -73,7 +73,8 @@ export default {
         auctions = await auctions.json();        
         this.all_auctions = auctions;
         //pågående
-        auctions = auctions.filter(auction => auction.stop_date > current_timestamp);
+        auctions = auctions.filter(auction => auction.stop_date > current_timestamp && auction.start_date <= current_timestamp);
+        document.getElementById("ongoing-btn").style.backgroundColor="#474e5d";
         this.auctions = auctions;
       },
       setStatus(status_id){
@@ -82,9 +83,13 @@ export default {
         var current_date = new Date(); // Your timezone!
         var current_timestamp = current_date.getTime();
         if(this.status_id == 1){ //pågående
-          auctions = auctions.filter(auction => auction.stop_date > current_timestamp);
+          auctions = auctions.filter(auction => auction.stop_date > current_timestamp && auction.start_date <= current_timestamp);
+          document.getElementById("ongoing-btn").style.backgroundColor="#474e5d";
+          document.getElementById("sold-btn").style.backgroundColor="#a5bba4";
         }else if(this.status_id == 0){ // såld
           auctions = auctions.filter(auction => auction.stop_date <= current_timestamp);
+          document.getElementById("sold-btn").style.backgroundColor="#474e5d";
+          document.getElementById("ongoing-btn").style.backgroundColor="#a5bba4";
         }
         this.auctions = auctions;
       }
