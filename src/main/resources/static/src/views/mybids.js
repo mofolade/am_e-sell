@@ -17,8 +17,8 @@ export default {
           />
           <div style="width:100%;">
             <div class="status-link-box">
-              <a href="" type="button" v-on:click.prevent="setStatus(1)">Pågående</a>
-              <a href="" type="button"  v-on:click.prevent="setStatus(0)">Såld</a>
+              <a href="" type="button" id="ongoing-btn" v-on:click.prevent="setStatus(1)">Pågående</a>
+              <a href="" type="button" id="sold-btn" v-on:click.prevent="setStatus(0)">Såld</a>
             </div>
             <div class="d-flex flex-row align-items-center" id="my-auction-cover">
                 <auctionItem 
@@ -101,6 +101,13 @@ export default {
         },
         setStatus(status_id){
           this.status_id = status_id;
+          if(status_id == 1){ //pågående
+            document.getElementById("ongoing-btn").style.backgroundColor="#474e5d";
+            document.getElementById("sold-btn").style.backgroundColor="#a5bba4";
+          }else if(status_id == 0){ // såld
+            document.getElementById("sold-btn").style.backgroundColor="#474e5d";
+            document.getElementById("ongoing-btn").style.backgroundColor="#a5bba4";
+          }
         },
         
     }
